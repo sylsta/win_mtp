@@ -8,6 +8,11 @@ In the win_mtp directory there are two modules.
 
 For detailed description see (https://heribert17.github.io/win_mtp/)
 
+Tested with:
+* Python 3.10 and above
+* comptypes 1.2.0
+* Windows 10
+
 
 ## access.py
 This modules implements the access to the Windows WPD functions to read and write MTP devices like smartphones, tablets. etc.

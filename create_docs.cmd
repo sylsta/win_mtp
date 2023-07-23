@@ -10,7 +10,7 @@ rem ----------------------------------------------------------------------------
 rem set up virtual environment
 call .\.venv\Scripts\Activate.bat
 
-mkdocs build
+rem mkdocs build
 
 echo.
 echo Upload to github?
