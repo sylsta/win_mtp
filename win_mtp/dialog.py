@@ -2,7 +2,9 @@
 A module with wpd relevant dialogs for tkinter
 
 Author:  Heribert Füchtenhans
+
 Version: 1.0.1
+
 OS:      Windows
 
 Requirements:
