@@ -8,7 +8,7 @@ rem
 rem ------------------------------------------------------------------------------------------------
 
 rem set up virtual environment
-call .\.venv\Scripts\Activate.bat
+call .\venv\Scripts\Activate.bat
 
 @REM mkdocs build
 

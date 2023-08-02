@@ -1,30 +1,27 @@
 # -*- coding: mbcs -*-
 
 from ctypes import *
+from comtypes.automation import DISPPARAMS, EXCEPINFO, IDispatch, IEnumVARIANT
 from comtypes import (
     _check_version, BSTR, CoClass, COMMETHOD, dispid, DISPMETHOD,
     DISPPROPERTY, GUID, IUnknown
 )
-from comtypes.automation import DISPPARAMS, EXCEPINFO, IDispatch, IEnumVARIANT
 from ctypes.wintypes import VARIANT_BOOL
 from ctypes import HRESULT
 
 _lcid = 0  # change this if required
 typelib_path = 'C:\\Windows\\System32\\stdole2.tlb'
-OLE_COLOR = c_ulong
-FONTSIZE = c_longlong
-OLE_XPOS_PIXELS = c_int
 FONTBOLD = VARIANT_BOOL
-OLE_YPOS_PIXELS = c_int
-FONTITALIC = VARIANT_BOOL
-FONTUNDERSCORE = VARIANT_BOOL
 OLE_HANDLE = c_int
-OLE_YSIZE_PIXELS = c_int
-OLE_XPOS_HIMETRIC = c_int
-FONTSTRIKETHROUGH = VARIANT_BOOL
-OLE_YPOS_HIMETRIC = c_int
 OLE_XSIZE_HIMETRIC = c_int
 OLE_YSIZE_HIMETRIC = c_int
+OLE_XPOS_HIMETRIC = c_int
+OLE_YPOS_HIMETRIC = c_int
+FONTITALIC = VARIANT_BOOL
+OLE_YPOS_PIXELS = c_int
+FONTUNDERSCORE = VARIANT_BOOL
+OLE_YSIZE_PIXELS = c_int
+FONTSTRIKETHROUGH = VARIANT_BOOL
 OLE_XPOS_CONTAINER = c_float
 OLE_YPOS_CONTAINER = c_float
 OLE_XSIZE_CONTAINER = c_float
@@ -34,14 +31,10 @@ OLE_CANCELBOOL = VARIANT_BOOL
 OLE_XSIZE_PIXELS = c_int
 OLE_ENABLEDEFAULTBOOL = VARIANT_BOOL
 FONTNAME = BSTR
+OLE_XPOS_PIXELS = c_int
+OLE_COLOR = c_ulong
+FONTSIZE = c_longlong
 
-
-
-class StdFont(CoClass):
-    _reg_clsid_ = GUID('{0BE35203-8F91-11CE-9DE3-00AA004BB851}')
-    _idlflags_ = []
-    _typelib_path_ = typelib_path
-    _reg_typelib_ = ('{00020430-0000-0000-C000-000000000046}', 2, 0)
 
 
 class Font(IDispatch):
@@ -49,6 +42,25 @@ class Font(IDispatch):
     _iid_ = GUID('{BEF6E003-A874-101A-8BBA-00AA00300CAB}')
     _idlflags_ = []
     _methods_ = []
+
+
+Font._disp_methods_ = [
+    DISPPROPERTY([dispid(0)], BSTR, 'Name'),
+    DISPPROPERTY([dispid(2)], c_longlong, 'Size'),
+    DISPPROPERTY([dispid(3)], VARIANT_BOOL, 'Bold'),
+    DISPPROPERTY([dispid(4)], VARIANT_BOOL, 'Italic'),
+    DISPPROPERTY([dispid(5)], VARIANT_BOOL, 'Underline'),
+    DISPPROPERTY([dispid(6)], VARIANT_BOOL, 'Strikethrough'),
+    DISPPROPERTY([dispid(7)], c_short, 'Weight'),
+    DISPPROPERTY([dispid(8)], c_short, 'Charset'),
+]
+
+
+class StdFont(CoClass):
+    _reg_clsid_ = GUID('{0BE35203-8F91-11CE-9DE3-00AA004BB851}')
+    _idlflags_ = []
+    _typelib_path_ = typelib_path
+    _reg_typelib_ = ('{00020430-0000-0000-C000-000000000046}', 2, 0)
 
 
 class FontEvents(IDispatch):
@@ -68,12 +80,6 @@ class IFont(IUnknown):
 
 StdFont._com_interfaces_ = [Font, IFont]
 StdFont._outgoing_interfaces_ = [FontEvents]
-# values for enumeration 'LoadPictureConstants'
-Default = 0
-Monochrome = 1
-VgaColor = 2
-Color = 4
-LoadPictureConstants = c_int  # enum
 
 FontEvents._disp_methods_ = [
     DISPMETHOD(
@@ -83,6 +89,183 @@ FontEvents._disp_methods_ = [
         (['in'], BSTR, 'PropertyName')
     ),
 ]
+
+
+class IPicture(IUnknown):
+    """Picture Object"""
+    _case_insensitive_ = True
+    _iid_ = GUID('{7BF80980-BF32-101A-8BBB-00AA00300CAB}')
+    _idlflags_ = ['hidden']
+
+
+IPicture._methods_ = [
+    COMMETHOD(
+        ['propget'],
+        HRESULT,
+        'Handle',
+        (['out', 'retval'], POINTER(OLE_HANDLE), 'phandle')
+    ),
+    COMMETHOD(
+        ['propget'],
+        HRESULT,
+        'hPal',
+        (['out', 'retval'], POINTER(OLE_HANDLE), 'phpal')
+    ),
+    COMMETHOD(
+        ['propget'],
+        HRESULT,
+        'Type',
+        (['out', 'retval'], POINTER(c_short), 'ptype')
+    ),
+    COMMETHOD(
+        ['propget'],
+        HRESULT,
+        'Width',
+        (['out', 'retval'], POINTER(OLE_XSIZE_HIMETRIC), 'pwidth')
+    ),
+    COMMETHOD(
+        ['propget'],
+        HRESULT,
+        'Height',
+        (['out', 'retval'], POINTER(OLE_YSIZE_HIMETRIC), 'pheight')
+    ),
+    COMMETHOD(
+        [],
+        HRESULT,
+        'Render',
+        (['in'], c_int, 'hdc'),
+        (['in'], c_int, 'x'),
+        (['in'], c_int, 'y'),
+        (['in'], c_int, 'cx'),
+        (['in'], c_int, 'cy'),
+        (['in'], OLE_XPOS_HIMETRIC, 'xSrc'),
+        (['in'], OLE_YPOS_HIMETRIC, 'ySrc'),
+        (['in'], OLE_XSIZE_HIMETRIC, 'cxSrc'),
+        (['in'], OLE_YSIZE_HIMETRIC, 'cySrc'),
+        (['in'], c_void_p, 'prcWBounds')
+    ),
+    COMMETHOD(
+        ['propput'],
+        HRESULT,
+        'hPal',
+        (['in'], OLE_HANDLE, 'phpal')
+    ),
+    COMMETHOD(
+        ['propget'],
+        HRESULT,
+        'CurDC',
+        (['out', 'retval'], POINTER(c_int), 'phdcOut')
+    ),
+    COMMETHOD(
+        [],
+        HRESULT,
+        'SelectPicture',
+        (['in'], c_int, 'hdcIn'),
+        (['out'], POINTER(c_int), 'phdcOut'),
+        (['out'], POINTER(OLE_HANDLE), 'phbmpOut')
+    ),
+    COMMETHOD(
+        ['propget'],
+        HRESULT,
+        'KeepOriginalFormat',
+        (['out', 'retval'], POINTER(VARIANT_BOOL), 'pfkeep')
+    ),
+    COMMETHOD(
+        ['propput'],
+        HRESULT,
+        'KeepOriginalFormat',
+        (['in'], VARIANT_BOOL, 'pfkeep')
+    ),
+    COMMETHOD([], HRESULT, 'PictureChanged'),
+    COMMETHOD(
+        [],
+        HRESULT,
+        'SaveAsFile',
+        (['in'], c_void_p, 'pstm'),
+        (['in'], VARIANT_BOOL, 'fSaveMemCopy'),
+        (['out'], POINTER(c_int), 'pcbSize')
+    ),
+    COMMETHOD(
+        ['propget'],
+        HRESULT,
+        'Attributes',
+        (['out', 'retval'], POINTER(c_int), 'pdwAttr')
+    ),
+    COMMETHOD(
+        [],
+        HRESULT,
+        'SetHdc',
+        (['in'], OLE_HANDLE, 'hdc')
+    ),
+]
+
+################################################################
+# code template for IPicture implementation
+# class IPicture_Impl(object):
+#     @property
+#     def Handle(self):
+#         '-no docstring-'
+#         #return phandle
+#
+#     def _get(self):
+#         '-no docstring-'
+#         #return phpal
+#     def _set(self, phpal):
+#         '-no docstring-'
+#     hPal = property(_get, _set, doc = _set.__doc__)
+#
+#     @property
+#     def Type(self):
+#         '-no docstring-'
+#         #return ptype
+#
+#     @property
+#     def Width(self):
+#         '-no docstring-'
+#         #return pwidth
+#
+#     @property
+#     def Height(self):
+#         '-no docstring-'
+#         #return pheight
+#
+#     def Render(self, hdc, x, y, cx, cy, xSrc, ySrc, cxSrc, cySrc, prcWBounds):
+#         '-no docstring-'
+#         #return 
+#
+#     @property
+#     def CurDC(self):
+#         '-no docstring-'
+#         #return phdcOut
+#
+#     def SelectPicture(self, hdcIn):
+#         '-no docstring-'
+#         #return phdcOut, phbmpOut
+#
+#     def _get(self):
+#         '-no docstring-'
+#         #return pfkeep
+#     def _set(self, pfkeep):
+#         '-no docstring-'
+#     KeepOriginalFormat = property(_get, _set, doc = _set.__doc__)
+#
+#     def PictureChanged(self):
+#         '-no docstring-'
+#         #return 
+#
+#     def SaveAsFile(self, pstm, fSaveMemCopy):
+#         '-no docstring-'
+#         #return pcbSize
+#
+#     @property
+#     def Attributes(self):
+#         '-no docstring-'
+#         #return pdwAttr
+#
+#     def SetHdc(self, hdc):
+#         '-no docstring-'
+#         #return 
+#
 
 
 class StdPicture(CoClass):
@@ -97,13 +280,6 @@ class Picture(IDispatch):
     _iid_ = GUID('{7BF80981-BF32-101A-8BBB-00AA00300CAB}')
     _idlflags_ = []
     _methods_ = []
-
-
-class IPicture(IUnknown):
-    """Picture Object"""
-    _case_insensitive_ = True
-    _iid_ = GUID('{7BF80980-BF32-101A-8BBB-00AA00300CAB}')
-    _idlflags_ = ['hidden']
 
 
 StdPicture._com_interfaces_ = [Picture, IPicture]
@@ -329,17 +505,6 @@ IFont._methods_ = [
 #         #return 
 #
 
-Font._disp_methods_ = [
-    DISPPROPERTY([dispid(0)], BSTR, 'Name'),
-    DISPPROPERTY([dispid(2)], c_longlong, 'Size'),
-    DISPPROPERTY([dispid(3)], VARIANT_BOOL, 'Bold'),
-    DISPPROPERTY([dispid(4)], VARIANT_BOOL, 'Italic'),
-    DISPPROPERTY([dispid(5)], VARIANT_BOOL, 'Underline'),
-    DISPPROPERTY([dispid(6)], VARIANT_BOOL, 'Strikethrough'),
-    DISPPROPERTY([dispid(7)], c_short, 'Weight'),
-    DISPPROPERTY([dispid(8)], c_short, 'Charset'),
-]
-
 Picture._disp_methods_ = [
     DISPPROPERTY([dispid(0), 'readonly'], OLE_HANDLE, 'Handle'),
     DISPPROPERTY([dispid(2)], OLE_HANDLE, 'hPal'),
@@ -363,182 +528,13 @@ Picture._disp_methods_ = [
     ),
 ]
 IFontEventsDisp = FontEvents
-
-IPicture._methods_ = [
-    COMMETHOD(
-        ['propget'],
-        HRESULT,
-        'Handle',
-        (['out', 'retval'], POINTER(OLE_HANDLE), 'phandle')
-    ),
-    COMMETHOD(
-        ['propget'],
-        HRESULT,
-        'hPal',
-        (['out', 'retval'], POINTER(OLE_HANDLE), 'phpal')
-    ),
-    COMMETHOD(
-        ['propget'],
-        HRESULT,
-        'Type',
-        (['out', 'retval'], POINTER(c_short), 'ptype')
-    ),
-    COMMETHOD(
-        ['propget'],
-        HRESULT,
-        'Width',
-        (['out', 'retval'], POINTER(OLE_XSIZE_HIMETRIC), 'pwidth')
-    ),
-    COMMETHOD(
-        ['propget'],
-        HRESULT,
-        'Height',
-        (['out', 'retval'], POINTER(OLE_YSIZE_HIMETRIC), 'pheight')
-    ),
-    COMMETHOD(
-        [],
-        HRESULT,
-        'Render',
-        (['in'], c_int, 'hdc'),
-        (['in'], c_int, 'x'),
-        (['in'], c_int, 'y'),
-        (['in'], c_int, 'cx'),
-        (['in'], c_int, 'cy'),
-        (['in'], OLE_XPOS_HIMETRIC, 'xSrc'),
-        (['in'], OLE_YPOS_HIMETRIC, 'ySrc'),
-        (['in'], OLE_XSIZE_HIMETRIC, 'cxSrc'),
-        (['in'], OLE_YSIZE_HIMETRIC, 'cySrc'),
-        (['in'], c_void_p, 'prcWBounds')
-    ),
-    COMMETHOD(
-        ['propput'],
-        HRESULT,
-        'hPal',
-        (['in'], OLE_HANDLE, 'phpal')
-    ),
-    COMMETHOD(
-        ['propget'],
-        HRESULT,
-        'CurDC',
-        (['out', 'retval'], POINTER(c_int), 'phdcOut')
-    ),
-    COMMETHOD(
-        [],
-        HRESULT,
-        'SelectPicture',
-        (['in'], c_int, 'hdcIn'),
-        (['out'], POINTER(c_int), 'phdcOut'),
-        (['out'], POINTER(OLE_HANDLE), 'phbmpOut')
-    ),
-    COMMETHOD(
-        ['propget'],
-        HRESULT,
-        'KeepOriginalFormat',
-        (['out', 'retval'], POINTER(VARIANT_BOOL), 'pfkeep')
-    ),
-    COMMETHOD(
-        ['propput'],
-        HRESULT,
-        'KeepOriginalFormat',
-        (['in'], VARIANT_BOOL, 'pfkeep')
-    ),
-    COMMETHOD([], HRESULT, 'PictureChanged'),
-    COMMETHOD(
-        [],
-        HRESULT,
-        'SaveAsFile',
-        (['in'], c_void_p, 'pstm'),
-        (['in'], VARIANT_BOOL, 'fSaveMemCopy'),
-        (['out'], POINTER(c_int), 'pcbSize')
-    ),
-    COMMETHOD(
-        ['propget'],
-        HRESULT,
-        'Attributes',
-        (['out', 'retval'], POINTER(c_int), 'pdwAttr')
-    ),
-    COMMETHOD(
-        [],
-        HRESULT,
-        'SetHdc',
-        (['in'], OLE_HANDLE, 'hdc')
-    ),
-]
-
-################################################################
-# code template for IPicture implementation
-# class IPicture_Impl(object):
-#     @property
-#     def Handle(self):
-#         '-no docstring-'
-#         #return phandle
-#
-#     def _get(self):
-#         '-no docstring-'
-#         #return phpal
-#     def _set(self, phpal):
-#         '-no docstring-'
-#     hPal = property(_get, _set, doc = _set.__doc__)
-#
-#     @property
-#     def Type(self):
-#         '-no docstring-'
-#         #return ptype
-#
-#     @property
-#     def Width(self):
-#         '-no docstring-'
-#         #return pwidth
-#
-#     @property
-#     def Height(self):
-#         '-no docstring-'
-#         #return pheight
-#
-#     def Render(self, hdc, x, y, cx, cy, xSrc, ySrc, cxSrc, cySrc, prcWBounds):
-#         '-no docstring-'
-#         #return 
-#
-#     @property
-#     def CurDC(self):
-#         '-no docstring-'
-#         #return phdcOut
-#
-#     def SelectPicture(self, hdcIn):
-#         '-no docstring-'
-#         #return phdcOut, phbmpOut
-#
-#     def _get(self):
-#         '-no docstring-'
-#         #return pfkeep
-#     def _set(self, pfkeep):
-#         '-no docstring-'
-#     KeepOriginalFormat = property(_get, _set, doc = _set.__doc__)
-#
-#     def PictureChanged(self):
-#         '-no docstring-'
-#         #return 
-#
-#     def SaveAsFile(self, pstm, fSaveMemCopy):
-#         '-no docstring-'
-#         #return pcbSize
-#
-#     @property
-#     def Attributes(self):
-#         '-no docstring-'
-#         #return pdwAttr
-#
-#     def SetHdc(self, hdc):
-#         '-no docstring-'
-#         #return 
-#
+IFontDisp = Font
+IPictureDisp = Picture
 # values for enumeration 'OLE_TRISTATE'
 Unchecked = 0
 Checked = 1
 Gray = 2
 OLE_TRISTATE = c_int  # enum
-IPictureDisp = Picture
-IFontDisp = Font
 
 
 class Library(object):
@@ -547,21 +543,27 @@ class Library(object):
     _reg_typelib_ = ('{00020430-0000-0000-C000-000000000046}', 2, 0)
 
 
+# values for enumeration 'LoadPictureConstants'
+Default = 0
+Monochrome = 1
+VgaColor = 2
+Color = 4
+LoadPictureConstants = c_int  # enum
 
 __all__ = [
-    'Monochrome', 'OLE_XPOS_CONTAINER', 'OLE_XSIZE_CONTAINER',
-    'OLE_XPOS_HIMETRIC', 'Default', 'FONTNAME', 'OLE_YSIZE_CONTAINER',
-    'FONTSIZE', 'IFontDisp', 'FONTBOLD', 'IFont', 'OLE_OPTEXCLUSIVE',
-    'Checked', 'OLE_ENABLEDEFAULTBOOL', 'Picture',
-    'LoadPictureConstants', 'Font', 'FontEvents', 'StdFont', 'Color',
-    'OLE_CANCELBOOL', 'IFontEventsDisp', 'OLE_HANDLE', 'OLE_TRISTATE',
-    'StdPicture', 'OLE_YPOS_PIXELS', 'IPictureDisp', 'OLE_COLOR',
-    'FONTITALIC', 'FONTUNDERSCORE', 'OLE_YSIZE_PIXELS',
-    'OLE_YPOS_HIMETRIC', 'VgaColor', 'Unchecked',
-    'OLE_XSIZE_HIMETRIC', 'OLE_XPOS_PIXELS', 'OLE_XSIZE_PIXELS',
-    'OLE_YPOS_CONTAINER', 'OLE_YSIZE_HIMETRIC', 'IPicture',
-    'FONTSTRIKETHROUGH', 'Gray'
+    'OLE_XPOS_PIXELS', 'Checked', 'IPicture', 'Color',
+    'OLE_XPOS_HIMETRIC', 'OLE_CANCELBOOL', 'FONTNAME', 'IPictureDisp',
+    'Gray', 'FONTSTRIKETHROUGH', 'Font', 'OLE_YPOS_PIXELS',
+    'VgaColor', 'FONTBOLD', 'Default', 'OLE_OPTEXCLUSIVE',
+    'IFontEventsDisp', 'FONTUNDERSCORE', 'OLE_XSIZE_PIXELS',
+    'OLE_XPOS_CONTAINER', 'LoadPictureConstants', 'FONTSIZE',
+    'OLE_ENABLEDEFAULTBOOL', 'StdPicture', 'Picture',
+    'OLE_XSIZE_HIMETRIC', 'IFontDisp', 'Unchecked',
+    'OLE_YSIZE_HIMETRIC', 'OLE_XSIZE_CONTAINER', 'FontEvents',
+    'OLE_YSIZE_PIXELS', 'OLE_COLOR', 'OLE_HANDLE', 'StdFont',
+    'OLE_YPOS_HIMETRIC', 'OLE_TRISTATE', 'Monochrome', 'IFont',
+    'OLE_YSIZE_CONTAINER', 'OLE_YPOS_CONTAINER', 'FONTITALIC'
 ]
 
-_check_version('1.2.0', 1575709685.550032)
+# _check_version('1.2.0', 1575709685.550032)
 

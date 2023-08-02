@@ -10,7 +10,7 @@ rem ----------------------------------------------------------------------------
 set AllwaysArgs=--trusted-host files.pythonhosted.org --trusted-host pypi.org --retries 1 --upgrade
 
 rem set up virtual environment
-call .\.venv\Scripts\Activate.bat
+call .\venv\Scripts\Activate.bat
 
 python.exe -m pip install %AllwaysArgs% --upgrade pip
 pip3 install %AllwaysArgs% -r requirements.txt

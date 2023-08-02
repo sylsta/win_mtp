@@ -11,39 +11,14 @@ Requirements: Windows 10 and above
 """
 
 import os
+import shutil
 import comtypes.client      # pylint: disable=import-error
-
-# Dieses Kommando einmalig im Python Interpreter ausführen
-# import os
-# import comtypes.client
-# comtypes.client.GetModule("portabledeviceapi.dll")
-# comtypes.client.GetModule("portabledevicetypes.dll")
-#
-# Dann die unter %Appdata%\Python\Python311\site-packages\comtypes\gen
-# erstellten Dateien nach .\wpd_comtypes_gen kopieren
-# und dann folgende Änderungen vornehmen:
-#   - Then I had to define some parameters as in-out that were just out parameters.
-#     In `_1F001332_1A57_4934_BE31_AFFC99F4EE0A_0_1_0.py`
-#     (found it in `C:\Python27\Lib\site-packages\comtypes\gen`):
-#     - In `IEnumPortableDeviceObjectIDs`, in function `Next` change the parameter `pObjIDs` to
-#           `['in', 'out']`
-#     - In `IPortableDeviceContent`, in function `CreateObjectWithPropertiesAndData` change the
-#           parameter `ppData` to `['in', 'out']`
-#     - In `ISequentialStream`, in function `RemoteRead` change the parameters `pv` and `pcbRead`
-#           to `['in', 'out']`
-#     - In `IPortableDeviceResources`, in function `GetStream` change the parameter `ppStream`
-#           to `['in', 'out']`
-#     - In 'tag_inner_PROPVARIANT._fields_ = ' change
-#           '__MIDL____MIDL_itf_PortableDeviceApi_0001_00000001' to 'data'
-#   Not used any more
-#   - in '_1F001332_1A57_4934_BE31_AFFC99F4EE0A_0_1_0.py' und
-#           '_2B00BA2F_E750_4BEB_9235_97142EDE1D3E_0_1_0.py' comtypes.gen durch wpd_comtypes_gen
-#   - Disable '_check_version('1.1.14', 1617975879.051501)' in both files
 
 
 def gen_comtype_files() -> None:
     """Generate the files"""
     gen_path = os.path.join(os.path.dirname(__file__), "..\\win_mtp\\comtypes_gen")
+    shutil.rmtree(gen_path)
     os.makedirs(gen_path, exist_ok=True)
     comtypes.client.gen_dir = gen_path
     comtypes.client.GetModule("portabledeviceapi.dll")
@@ -118,6 +93,8 @@ def gen_comtype_files() -> None:
         with open(entry, "rt", encoding="utf-8") as inp:
             content = inp.read()
         content = content.replace("comtypes.gen", "win_mtp.comtypes_gen")
+        # Comment _check_version entry
+        content = content.replace("_check_version(", "# _check_version(")
         with open(entry, "wt", encoding="UTF-8") as outp:
             outp.write(content)
 
