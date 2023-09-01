@@ -1,26 +1,12 @@
 {
-    "python.linting.enabled": true,
     "python.envFile": "${workspaceFolder}/.env",
-    "python.analysis.diagnosticSeverityOverrides": {
-        "reportMissingImports": "information"
+
+    "[python]": {
+        "editor.defaultFormatter": "ms-python.black-formatter"
     },
-    "python.analysis.typeCheckingMode": "basic",
-
-    "python.linting.pylintEnabled": true,
-    "python.linting.pylintArgs": [
-        "--extension-pkg-allow-list=win32file",
-        "--max-line-length=119"
+    "black-formatter.args": [
+        "--line-length",
+        "119"
     ],
-
-    "python.linting.mypyEnabled": false,
-    "python.linting.mypyCategorySeverity.error":"Warning",
-    "python.linting.mypyArgs": [
-        "--follow-imports=silent",
-        "--show-column-numbers",
-        "--disallow-untyped-defs",
-        "--disallow-untyped-calls"
-    ],
-
-    "python.formatting.provider": "black",
-    "python.formatting.blackArgs": ["--line-length", "119"],
+    "python.analysis.typeCheckingMode": "basic"
 }

@@ -3,7 +3,7 @@ A module to access Mobile Devices from Windows via USB connection.
 
 Author:  Heribert Füchtenhans
 
-Version: 1.0.1
+Version: 1.0.2
 
 Implements access to basic functions of the Windows WPD API
 Yes I know, there are a lot of pylint disable and type ignors :-)
@@ -176,7 +176,10 @@ class PortableDeviceContent:  # pylint: disable=too-many-instance-attributes
         remove
 
     Public attributes:
-        name: Name on MTP device
+        name: Name on the MTP device
+        fullname: The full path name
+        date_created: The file date
+        size: The size of the file in bytes
         content_type: Type of the entry. One of the WPD_CONTENT_TYPE_ constants
 
     Exceptions:
@@ -200,7 +203,7 @@ class PortableDeviceContent:  # pylint: disable=too-many-instance-attributes
         self._plain_name = ""
         self.content_type = WPD_CONTENT_TYPE_UNDEFINED
         self.full_filename = ""
-        self._size = -1
+        self.size = -1
         self.date_created = datetime.datetime(1970, 1, 1)
         self._capacity = -1
         self._free_capacity = -1
@@ -254,7 +257,7 @@ class PortableDeviceContent:  # pylint: disable=too-many-instance-attributes
             return (
                 self.name,
                 self.content_type,
-                self._size,
+                self.size,
                 self.date_created,
                 self._capacity,
                 self._free_capacity,
@@ -304,7 +307,7 @@ class PortableDeviceContent:  # pylint: disable=too-many-instance-attributes
         else:
             # it's not a folder or storage
             self.content_type = WPD_CONTENT_TYPE_FILE
-            self._size = int(propvalues.GetUnsignedLargeIntegerValue(WPD_OBJECT_SIZE))
+            self.size = int(propvalues.GetUnsignedLargeIntegerValue(WPD_OBJECT_SIZE))
             filetime = propvalues.GetValue(WPD_OBJECT_DATE_MODIFIED).data.date
             days_since_1970 = int(filetime) - (datetime.datetime(1970, 1, 1) - datetime.datetime(1899, 12, 30)).days
             hours = (filetime - int(filetime)) * 24
@@ -321,7 +324,7 @@ class PortableDeviceContent:  # pylint: disable=too-many-instance-attributes
         return (
             self.name,
             self.content_type,
-            self._size,
+            self.size,
             self.date_created,
             self._capacity,
             self._free_capacity,
@@ -565,7 +568,7 @@ class PortableDeviceContent:  # pylint: disable=too-many-instance-attributes
                 buf, length = filestream.RemoteRead(buf, ctypes.c_ulong(blocksize))
                 if length == 0:
                     break
-                outputstream.write(bytearray(buf))
+                outputstream.write(bytearray(buf[:length]))
         except comtypes.COMError as err:
             raise IOError from err
 
