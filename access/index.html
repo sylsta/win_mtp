@@ -14,8 +14,9 @@
       
         <link rel="next" href="../dialog/">
       
+      
       <link rel="icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.18">
+      <meta name="generator" content="mkdocs-1.5.2, mkdocs-material-9.2.6">
     
     
       
@@ -23,11 +24,14 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.26e3688c.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.0e669242.min.css">
       
       
 
+
     
+    
+      
     
     
       
@@ -86,6 +90,7 @@
 
     </a>
     <label class="md-header__button md-icon" for="__drawer">
+      
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
     </label>
     <div class="md-header__title" data-md-component="header-title">
@@ -130,6 +135,7 @@
                     
 
 
+
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
     <a href=".." title="win_mtp" class="md-nav__button md-logo" aria-label="win_mtp" data-md-component="logo">
@@ -145,14 +151,18 @@
     
       
       
-      
-
   
   
   
     <li class="md-nav__item">
       <a href=".." class="md-nav__link">
-        Documentation
+        
+  
+  <span class="md-ellipsis">
+    Documentation
+  </span>
+  
+
       </a>
     </li>
   
@@ -160,8 +170,6 @@
     
       
       
-      
-
   
   
     
@@ -174,12 +182,24 @@
       
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
-          access
+          
+  
+  <span class="md-ellipsis">
+    access
+  </span>
+  
+
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <a href="./" class="md-nav__link md-nav__link--active">
-        access
+        
+  
+  <span class="md-ellipsis">
+    access
+  </span>
+  
+
       </a>
       
         
@@ -204,7 +224,7 @@
       
         <li class="md-nav__item">
   <a href="#win_mtp.access" class="md-nav__link">
-    win_mtp.access
+    access
   </a>
   
 </li>
@@ -364,14 +384,18 @@
     
       
       
-      
-
   
   
   
     <li class="md-nav__item">
       <a href="../dialog/" class="md-nav__link">
-        dialog
+        
+  
+  <span class="md-ellipsis">
+    dialog
+  </span>
+  
+
       </a>
     </li>
   
@@ -410,7 +434,7 @@
       
         <li class="md-nav__item">
   <a href="#win_mtp.access" class="md-nav__link">
-    win_mtp.access
+    access
   </a>
   
 </li>
@@ -583,27 +607,24 @@
 <div class="doc doc-object doc-module">
 
 
+
 <a id="win_mtp.access"></a>
   <div class="doc doc-contents first">
   
       <p>A module to access Mobile Devices from Windows via USB connection.</p>
 <p>Author:  Heribert Füchtenhans</p>
-<p>Version: 1.0.1</p>
+<p>Version: 1.0.2</p>
 <p>Implements access to basic functions of the Windows WPD API
 Yes I know, there are a lot of pylint disable and type ignors :-)
 For examples please look into the tests directory.</p>
 <p>If you install a new version of comptypes you must run the win_mtp_gen_comtypes.py
 programm in the utilities directory to generate the new comtypes_gen files!</p>
-<p>Requirements:</p>
-
-<details class="os" open>
-  <summary>OS</summary>
-  <p>Windows 10</p>
-</details>
-<details class="python" open>
-  <summary>Python</summary>
-  <p>comtypes</p>
-</details>      <p>The module contains the following functions:</p>
+<p>Requirements:
+OS:
+    Windows 10
+Python: 
+    comtypes</p>
+<p>The module contains the following functions:</p>
 <ul>
 <li>'get_portable_devices' Get all attached portable devices.</li>
 <li>'get_content_from_device_path' - Get the content of a path.</li>
@@ -615,6 +636,8 @@ programm in the utilities directory to generate the new comtypes_gen files!</p>
 <li>'PortableDeviceContent' - Class for one file, directory or storage</li>
 <li>'PortableDevice' - Class for one portable device found connected</li>
 </ul>
+
+
 
 <p><strong>Examples:</strong></p>
     <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">win_mtp.mtp_access</span>
@@ -637,8 +660,9 @@ programm in the utilities directory to generate the new comtypes_gen files!</p>
 
 
 
+
 <h2 id="win_mtp.access.PortableDevice" class="doc doc-heading">
-        <code>PortableDevice</code>
+          <code>PortableDevice</code>
 
 
 </h2>
@@ -657,6 +681,8 @@ until you know what you do.</p>
 get_content</p>
 </details>      <p>Public attributes:</p>
 
+
+
   <p><strong>Raises:</strong></p>
   <table>
     <thead>
@@ -668,7 +694,7 @@ get_content</p>
     <tbody>
         <tr>
           <td>
-                <code><span title="comtypes.automation">comtypes</span>.<span title="comtypes.automation.COMError">COMError</span></code>
+                <code><span title="comtypes.COMError">COMError</span></code>
           </td>
           <td>
             <div class="doc-md-description">
@@ -679,13 +705,9 @@ get_content</p>
     </tbody>
   </table>
 
-
-        <details class="quote">
-          <summary>Source code in <code>win_mtp\access.py</code></summary>
-          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">644</span>
-<span class="normal">645</span>
-<span class="normal">646</span>
-<span class="normal">647</span>
+            <details class="quote">
+              <summary>Source code in <code>win_mtp\access.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">647</span>
 <span class="normal">648</span>
 <span class="normal">649</span>
 <span class="normal">650</span>
@@ -778,7 +800,10 @@ get_content</p>
 <span class="normal">737</span>
 <span class="normal">738</span>
 <span class="normal">739</span>
-<span class="normal">740</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">PortableDevice</span><span class="p">:</span>
+<span class="normal">740</span>
+<span class="normal">741</span>
+<span class="normal">742</span>
+<span class="normal">743</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">PortableDevice</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Class with the infos for a connected portable device.</span>
 <span class="sd">    The instanzes of this class will be created internaly. User should not instanciate them manually</span>
 <span class="sd">    until you know what you do.</span>
@@ -876,7 +901,7 @@ get_content</p>
     <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;&lt;PortableDevice: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">get_description</span><span class="p">()</span><span class="si">}</span><span class="s2">&gt;&quot;</span>
 </code></pre></div></td></tr></table></div>
-        </details>
+            </details>
 
   
 
@@ -890,12 +915,14 @@ get_content</p>
 
 
 
+
 <div class="doc doc-object doc-function">
 
 
 
+
 <h3 id="win_mtp.access.PortableDevice.__init__" class="doc doc-heading">
-<code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="n">p_id</span><span class="p">)</span></code>
+          <code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="n">p_id</span><span class="p">)</span></code>
 
 </h3>
 
@@ -903,6 +930,8 @@ get_content</p>
   <div class="doc doc-contents ">
   
       <p>Init the class.</p>
+
+
 
   <p><strong>Parameters:</strong></p>
   <table>
@@ -932,18 +961,18 @@ get_content</p>
     </tbody>
   </table>
 
-      <details class="quote">
-        <summary>Source code in <code>win_mtp\access.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">659</span>
-<span class="normal">660</span>
-<span class="normal">661</span>
-<span class="normal">662</span>
+          <details class="quote">
+            <summary>Source code in <code>win_mtp\access.py</code></summary>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">662</span>
 <span class="normal">663</span>
 <span class="normal">664</span>
 <span class="normal">665</span>
 <span class="normal">666</span>
 <span class="normal">667</span>
-<span class="normal">668</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="normal">668</span>
+<span class="normal">669</span>
+<span class="normal">670</span>
+<span class="normal">671</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Init the class.</span>
 
 <span class="sd">    Args:</span>
@@ -954,17 +983,19 @@ get_content</p>
     <span class="bp">self</span><span class="o">.</span><span class="n">_name</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_device</span> <span class="o">=</span> <span class="kc">None</span>
 </code></pre></div></td></tr></table></div>
-      </details>
+          </details>
   </div>
 
 </div>
+
 
 <div class="doc doc-object doc-function">
 
 
 
+
 <h3 id="win_mtp.access.PortableDevice.get_content" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">get_content</span><span class="p">()</span></code>
+          <code class="highlight language-python"><span class="n">get_content</span><span class="p">()</span></code>
 
 </h3>
 
@@ -972,6 +1003,8 @@ get_content</p>
   <div class="doc doc-contents ">
   
       <p>Get the content of a device.</p>
+
+
 
   <p><strong>Returns:</strong></p>
   <table>
@@ -995,6 +1028,8 @@ get_content</p>
     </tbody>
   </table>
 
+
+
 <p><strong>Examples:</strong></p>
     <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">win_mtp.mtp_access</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">dev</span> <span class="o">=</span> <span class="n">win_mtp</span><span class="o">.</span><span class="n">mtp_access</span><span class="o">.</span><span class="n">get_portable_devices</span><span class="p">()</span>
@@ -1002,12 +1037,9 @@ get_content</p>
 <span class="go">&#39;&lt;PortableDeviceContent c_wchar_p(&#39;</span>
 </code></pre></div>
 
-      <details class="quote">
-        <summary>Source code in <code>win_mtp\access.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">725</span>
-<span class="normal">726</span>
-<span class="normal">727</span>
-<span class="normal">728</span>
+          <details class="quote">
+            <summary>Source code in <code>win_mtp\access.py</code></summary>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">728</span>
 <span class="normal">729</span>
 <span class="normal">730</span>
 <span class="normal">731</span>
@@ -1016,7 +1048,10 @@ get_content</p>
 <span class="normal">734</span>
 <span class="normal">735</span>
 <span class="normal">736</span>
-<span class="normal">737</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">get_content</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PortableDeviceContent</span><span class="p">:</span>
+<span class="normal">737</span>
+<span class="normal">738</span>
+<span class="normal">739</span>
+<span class="normal">740</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">get_content</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PortableDeviceContent</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Get the content of a device.</span>
 
 <span class="sd">    Returns:</span>
@@ -1030,17 +1065,19 @@ get_content</p>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">PortableDeviceContent</span><span class="p">(</span><span class="n">ctypes</span><span class="o">.</span><span class="n">c_wchar_p</span><span class="p">(</span><span class="s2">&quot;DEVICE&quot;</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_device</span><span class="p">()</span><span class="o">.</span><span class="n">Content</span><span class="p">(),</span> <span class="kc">None</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
-      </details>
+          </details>
   </div>
 
 </div>
+
 
 <div class="doc doc-object doc-function">
 
 
 
+
 <h3 id="win_mtp.access.PortableDevice.get_description" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">get_description</span><span class="p">()</span></code>
+          <code class="highlight language-python"><span class="n">get_description</span><span class="p">()</span></code>
 
 </h3>
 
@@ -1049,6 +1086,8 @@ get_content</p>
   
       <p>Get the name and the description of the device. If no description is available
 name and description will be identical.</p>
+
+
 
   <p><strong>Returns:</strong></p>
   <table>
@@ -1072,6 +1111,8 @@ name and description will be identical.</p>
     </tbody>
   </table>
 
+
+
 <p><strong>Examples:</strong></p>
     <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">win_mtp.mtp_access</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">dev</span> <span class="o">=</span> <span class="n">win_mtp</span><span class="o">.</span><span class="n">mtp_access</span><span class="o">.</span><span class="n">get_portable_devices</span><span class="p">()</span>
@@ -1079,12 +1120,9 @@ name and description will be identical.</p>
 <span class="go">(&#39;HSG1316&#39;, &#39;HSG1316&#39;)</span>
 </code></pre></div>
 
-      <details class="quote">
-        <summary>Source code in <code>win_mtp\access.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">670</span>
-<span class="normal">671</span>
-<span class="normal">672</span>
-<span class="normal">673</span>
+          <details class="quote">
+            <summary>Source code in <code>win_mtp\access.py</code></summary>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">673</span>
 <span class="normal">674</span>
 <span class="normal">675</span>
 <span class="normal">676</span>
@@ -1116,7 +1154,10 @@ name and description will be identical.</p>
 <span class="normal">702</span>
 <span class="normal">703</span>
 <span class="normal">704</span>
-<span class="normal">705</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">get_description</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
+<span class="normal">705</span>
+<span class="normal">706</span>
+<span class="normal">707</span>
+<span class="normal">708</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">get_description</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Get the name and the description of the device. If no description is available</span>
 <span class="sd">    name and description will be identical.</span>
 
@@ -1153,7 +1194,7 @@ name and description will be identical.</p>
     <span class="c1"># WPD_DEVICE_SERIAL_NUMBER</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_desc</span>
 </code></pre></div></td></tr></table></div>
-      </details>
+          </details>
   </div>
 
 </div>
@@ -1170,8 +1211,9 @@ name and description will be identical.</p>
 
 
 
+
 <h2 id="win_mtp.access.PortableDeviceContent" class="doc doc-heading">
-        <code>PortableDeviceContent</code>
+          <code>PortableDeviceContent</code>
 
 
 </h2>
@@ -1182,6 +1224,8 @@ name and description will be identical.</p>
   
       <p>Class for one file, directory or storage with it's properties.
 This class is only internaly created, use it only to read the properties</p>
+
+
 
   <p><strong>Parameters:</strong></p>
   <table>
@@ -1255,9 +1299,14 @@ remove</p>
 </details>
 <details class="public-attributes" open>
   <summary>Public attributes</summary>
-  <p>name: Name on MTP device
+  <p>name: Name on the MTP device
+fullname: The full path name
+date_created: The file date
+size: The size of the file in bytes
 content_type: Type of the entry. One of the WPD_CONTENT_TYPE_ constants</p>
 </details>
+
+
   <p><strong>Raises:</strong></p>
   <table>
     <thead>
@@ -1269,7 +1318,7 @@ content_type: Type of the entry. One of the WPD_CONTENT_TYPE_ constants</p>
     <tbody>
         <tr>
           <td>
-                <code><span title="comtypes.automation">comtypes</span>.<span title="comtypes.automation.COMError">COMError</span></code>
+                <code><span title="comtypes.COMError">COMError</span></code>
           </td>
           <td>
             <div class="doc-md-description">
@@ -1280,10 +1329,9 @@ content_type: Type of the entry. One of the WPD_CONTENT_TYPE_ constants</p>
     </tbody>
   </table>
 
-
-        <details class="quote">
-          <summary>Source code in <code>win_mtp\access.py</code></summary>
-          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">156</span>
+            <details class="quote">
+              <summary>Source code in <code>win_mtp\access.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">156</span>
 <span class="normal">157</span>
 <span class="normal">158</span>
 <span class="normal">159</span>
@@ -1764,7 +1812,10 @@ content_type: Type of the entry. One of the WPD_CONTENT_TYPE_ constants</p>
 <span class="normal">634</span>
 <span class="normal">635</span>
 <span class="normal">636</span>
-<span class="normal">637</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">PortableDeviceContent</span><span class="p">:</span>  <span class="c1"># pylint: disable=too-many-instance-attributes</span>
+<span class="normal">637</span>
+<span class="normal">638</span>
+<span class="normal">639</span>
+<span class="normal">640</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">PortableDeviceContent</span><span class="p">:</span>  <span class="c1"># pylint: disable=too-many-instance-attributes</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Class for one file, directory or storage with it&#39;s properties.</span>
 <span class="sd">    This class is only internaly created, use it only to read the properties</span>
 
@@ -1787,7 +1838,10 @@ content_type: Type of the entry. One of the WPD_CONTENT_TYPE_ constants</p>
 <span class="sd">        remove</span>
 
 <span class="sd">    Public attributes:</span>
-<span class="sd">        name: Name on MTP device</span>
+<span class="sd">        name: Name on the MTP device</span>
+<span class="sd">        fullname: The full path name</span>
+<span class="sd">        date_created: The file date</span>
+<span class="sd">        size: The size of the file in bytes</span>
 <span class="sd">        content_type: Type of the entry. One of the WPD_CONTENT_TYPE_ constants</span>
 
 <span class="sd">    Exceptions:</span>
@@ -1811,7 +1865,7 @@ content_type: Type of the entry. One of the WPD_CONTENT_TYPE_ constants</p>
         <span class="bp">self</span><span class="o">.</span><span class="n">_plain_name</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">content_type</span> <span class="o">=</span> <span class="n">WPD_CONTENT_TYPE_UNDEFINED</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">full_filename</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_size</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">size</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">date_created</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">1970</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_capacity</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_free_capacity</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
@@ -1865,7 +1919,7 @@ content_type: Type of the entry. One of the WPD_CONTENT_TYPE_ constants</p>
             <span class="k">return</span> <span class="p">(</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">content_type</span><span class="p">,</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_size</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">size</span><span class="p">,</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">date_created</span><span class="p">,</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_capacity</span><span class="p">,</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_free_capacity</span><span class="p">,</span>
@@ -1915,7 +1969,7 @@ content_type: Type of the entry. One of the WPD_CONTENT_TYPE_ constants</p>
         <span class="k">else</span><span class="p">:</span>
             <span class="c1"># it&#39;s not a folder or storage</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">content_type</span> <span class="o">=</span> <span class="n">WPD_CONTENT_TYPE_FILE</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_size</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">propvalues</span><span class="o">.</span><span class="n">GetUnsignedLargeIntegerValue</span><span class="p">(</span><span class="n">WPD_OBJECT_SIZE</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">size</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">propvalues</span><span class="o">.</span><span class="n">GetUnsignedLargeIntegerValue</span><span class="p">(</span><span class="n">WPD_OBJECT_SIZE</span><span class="p">))</span>
             <span class="n">filetime</span> <span class="o">=</span> <span class="n">propvalues</span><span class="o">.</span><span class="n">GetValue</span><span class="p">(</span><span class="n">WPD_OBJECT_DATE_MODIFIED</span><span class="p">)</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">date</span>
             <span class="n">days_since_1970</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">filetime</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">1970</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="o">-</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">1899</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">30</span><span class="p">))</span><span class="o">.</span><span class="n">days</span>
             <span class="n">hours</span> <span class="o">=</span> <span class="p">(</span><span class="n">filetime</span> <span class="o">-</span> <span class="nb">int</span><span class="p">(</span><span class="n">filetime</span><span class="p">))</span> <span class="o">*</span> <span class="mi">24</span>
@@ -1932,7 +1986,7 @@ content_type: Type of the entry. One of the WPD_CONTENT_TYPE_ constants</p>
         <span class="k">return</span> <span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">content_type</span><span class="p">,</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_size</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">size</span><span class="p">,</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">date_created</span><span class="p">,</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_capacity</span><span class="p">,</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_free_capacity</span><span class="p">,</span>
@@ -2176,7 +2230,7 @@ content_type: Type of the entry. One of the WPD_CONTENT_TYPE_ constants</p>
                 <span class="n">buf</span><span class="p">,</span> <span class="n">length</span> <span class="o">=</span> <span class="n">filestream</span><span class="o">.</span><span class="n">RemoteRead</span><span class="p">(</span><span class="n">buf</span><span class="p">,</span> <span class="n">ctypes</span><span class="o">.</span><span class="n">c_ulong</span><span class="p">(</span><span class="n">blocksize</span><span class="p">))</span>
                 <span class="k">if</span> <span class="n">length</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
                     <span class="k">break</span>
-                <span class="n">outputstream</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">bytearray</span><span class="p">(</span><span class="n">buf</span><span class="p">))</span>
+                <span class="n">outputstream</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">bytearray</span><span class="p">(</span><span class="n">buf</span><span class="p">[:</span><span class="n">length</span><span class="p">]))</span>
         <span class="k">except</span> <span class="n">comtypes</span><span class="o">.</span><span class="n">COMError</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">IOError</span> <span class="kn">from</span> <span class="nn">err</span>
 
@@ -2247,7 +2301,7 @@ content_type: Type of the entry. One of the WPD_CONTENT_TYPE_ constants</p>
                 <span class="k">return</span> <span class="n">pvar</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">uintVal</span>
         <span class="k">return</span> <span class="mi">0</span>
 </code></pre></div></td></tr></table></div>
-        </details>
+            </details>
 
   
 
@@ -2261,12 +2315,14 @@ content_type: Type of the entry. One of the WPD_CONTENT_TYPE_ constants</p>
 
 
 
+
 <div class="doc doc-object doc-function">
 
 
 
+
 <h3 id="win_mtp.access.PortableDeviceContent.create_content" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">create_content</span><span class="p">(</span><span class="n">dirname</span><span class="p">)</span></code>
+          <code class="highlight language-python"><span class="n">create_content</span><span class="p">(</span><span class="n">dirname</span><span class="p">)</span></code>
 
 </h3>
 
@@ -2274,6 +2330,8 @@ content_type: Type of the entry. One of the WPD_CONTENT_TYPE_ constants</p>
   <div class="doc doc-contents ">
   
       <p>Creates an empty directory content in this content.</p>
+
+
 
   <p><strong>Parameters:</strong></p>
   <table>
@@ -2303,6 +2361,8 @@ content_type: Type of the entry. One of the WPD_CONTENT_TYPE_ constants</p>
     </tbody>
   </table>
 
+
+
 <p><strong>Examples:</strong></p>
     <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">win_mtp.mtp_access</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">dev</span> <span class="o">=</span> <span class="n">win_mtp</span><span class="o">.</span><span class="n">mtp_access</span><span class="o">.</span><span class="n">get_portable_devices</span><span class="p">()</span>
@@ -2313,12 +2373,9 @@ content_type: Type of the entry. One of the WPD_CONTENT_TYPE_ constants</p>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">cont</span><span class="o">.</span><span class="n">create_content</span><span class="p">(</span><span class="s2">&quot;MyMusic&quot;</span><span class="p">)</span>
 </code></pre></div>
 
-      <details class="quote">
-        <summary>Source code in <code>win_mtp\access.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">420</span>
-<span class="normal">421</span>
-<span class="normal">422</span>
-<span class="normal">423</span>
+          <details class="quote">
+            <summary>Source code in <code>win_mtp\access.py</code></summary>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">423</span>
 <span class="normal">424</span>
 <span class="normal">425</span>
 <span class="normal">426</span>
@@ -2341,7 +2398,10 @@ content_type: Type of the entry. One of the WPD_CONTENT_TYPE_ constants</p>
 <span class="normal">443</span>
 <span class="normal">444</span>
 <span class="normal">445</span>
-<span class="normal">446</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">create_content</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dirname</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="normal">446</span>
+<span class="normal">447</span>
+<span class="normal">448</span>
+<span class="normal">449</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">create_content</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dirname</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Creates an empty directory content in this content.</span>
 
 <span class="sd">    Args:</span>
@@ -2369,17 +2429,19 @@ content_type: Type of the entry. One of the WPD_CONTENT_TYPE_ constants</p>
         <span class="n">object_properties</span><span class="p">,</span> <span class="n">ctypes</span><span class="o">.</span><span class="n">POINTER</span><span class="p">(</span><span class="n">ctypes</span><span class="o">.</span><span class="n">c_wchar_p</span><span class="p">)()</span>
     <span class="p">)</span>
 </code></pre></div></td></tr></table></div>
-      </details>
+          </details>
   </div>
 
 </div>
+
 
 <div class="doc doc-object doc-function">
 
 
 
+
 <h3 id="win_mtp.access.PortableDeviceContent.download_file" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">download_file</span><span class="p">(</span><span class="n">outputfilename</span><span class="p">)</span></code>
+          <code class="highlight language-python"><span class="n">download_file</span><span class="p">(</span><span class="n">outputfilename</span><span class="p">)</span></code>
 
 </h3>
 
@@ -2388,6 +2450,8 @@ content_type: Type of the entry. One of the WPD_CONTENT_TYPE_ constants</p>
   
       <p>Download of a file from MTP device
 The used ProtableDeviceContent instance must be a file!</p>
+
+
 
   <p><strong>Parameters:</strong></p>
   <table>
@@ -2418,6 +2482,8 @@ The used ProtableDeviceContent instance must be a file!</p>
     </tbody>
   </table>
 
+
+
 <p><strong>Examples:</strong></p>
     <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">win_mtp.mtp_access</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">dev</span> <span class="o">=</span> <span class="n">win_mtp</span><span class="o">.</span><span class="n">mtp_access</span><span class="o">.</span><span class="n">get_portable_devices</span><span class="p">()</span>
@@ -2427,12 +2493,9 @@ The used ProtableDeviceContent instance must be a file!</p>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">cont</span><span class="o">.</span><span class="n">download_file</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
 </code></pre></div>
 
-      <details class="quote">
-        <summary>Source code in <code>win_mtp\access.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">572</span>
-<span class="normal">573</span>
-<span class="normal">574</span>
-<span class="normal">575</span>
+          <details class="quote">
+            <summary>Source code in <code>win_mtp\access.py</code></summary>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">575</span>
 <span class="normal">576</span>
 <span class="normal">577</span>
 <span class="normal">578</span>
@@ -2446,7 +2509,10 @@ The used ProtableDeviceContent instance must be a file!</p>
 <span class="normal">586</span>
 <span class="normal">587</span>
 <span class="normal">588</span>
-<span class="normal">589</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">download_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">outputfilename</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="normal">589</span>
+<span class="normal">590</span>
+<span class="normal">591</span>
+<span class="normal">592</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">download_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">outputfilename</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Download of a file from MTP device</span>
 <span class="sd">    The used ProtableDeviceContent instance must be a file!</span>
 
@@ -2465,17 +2531,19 @@ The used ProtableDeviceContent instance must be a file!</p>
     <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">outputfilename</span><span class="p">,</span> <span class="s2">&quot;wb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">output_stream</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">download_stream</span><span class="p">(</span><span class="n">output_stream</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
-      </details>
+          </details>
   </div>
 
 </div>
+
 
 <div class="doc doc-object doc-function">
 
 
 
+
 <h3 id="win_mtp.access.PortableDeviceContent.download_stream" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">download_stream</span><span class="p">(</span><span class="n">outputstream</span><span class="p">)</span></code>
+          <code class="highlight language-python"><span class="n">download_stream</span><span class="p">(</span><span class="n">outputstream</span><span class="p">)</span></code>
 
 </h3>
 
@@ -2485,6 +2553,8 @@ The used ProtableDeviceContent instance must be a file!</p>
       <p>Download a file from MTP device.
 The used ProtableDeviceContent instance must be a file!
 For easier usage use download_file</p>
+
+
 
   <p><strong>Parameters:</strong></p>
   <table>
@@ -2514,6 +2584,8 @@ For easier usage use download_file</p>
     </tbody>
   </table>
 
+
+
 <p><strong>Examples:</strong></p>
     <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">win_mtp.mtp_access</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">dev</span> <span class="o">=</span> <span class="n">win_mtp</span><span class="o">.</span><span class="n">mtp_access</span><span class="o">.</span><span class="n">get_portable_devices</span><span class="p">()</span>
@@ -2525,12 +2597,9 @@ For easier usage use download_file</p>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">outp</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 </code></pre></div>
 
-      <details class="quote">
-        <summary>Source code in <code>win_mtp\access.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">530</span>
-<span class="normal">531</span>
-<span class="normal">532</span>
-<span class="normal">533</span>
+          <details class="quote">
+            <summary>Source code in <code>win_mtp\access.py</code></summary>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">533</span>
 <span class="normal">534</span>
 <span class="normal">535</span>
 <span class="normal">536</span>
@@ -2567,7 +2636,10 @@ For easier usage use download_file</p>
 <span class="normal">567</span>
 <span class="normal">568</span>
 <span class="normal">569</span>
-<span class="normal">570</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">download_stream</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">outputstream</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="normal">570</span>
+<span class="normal">571</span>
+<span class="normal">572</span>
+<span class="normal">573</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">download_stream</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">outputstream</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Download a file from MTP device.</span>
 <span class="sd">    The used ProtableDeviceContent instance must be a file!</span>
 <span class="sd">    For easier usage use download_file</span>
@@ -2605,21 +2677,23 @@ For easier usage use download_file</p>
             <span class="n">buf</span><span class="p">,</span> <span class="n">length</span> <span class="o">=</span> <span class="n">filestream</span><span class="o">.</span><span class="n">RemoteRead</span><span class="p">(</span><span class="n">buf</span><span class="p">,</span> <span class="n">ctypes</span><span class="o">.</span><span class="n">c_ulong</span><span class="p">(</span><span class="n">blocksize</span><span class="p">))</span>
             <span class="k">if</span> <span class="n">length</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
                 <span class="k">break</span>
-            <span class="n">outputstream</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">bytearray</span><span class="p">(</span><span class="n">buf</span><span class="p">))</span>
+            <span class="n">outputstream</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">bytearray</span><span class="p">(</span><span class="n">buf</span><span class="p">[:</span><span class="n">length</span><span class="p">]))</span>
     <span class="k">except</span> <span class="n">comtypes</span><span class="o">.</span><span class="n">COMError</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">IOError</span> <span class="kn">from</span> <span class="nn">err</span>
 </code></pre></div></td></tr></table></div>
-      </details>
+          </details>
   </div>
 
 </div>
+
 
 <div class="doc doc-object doc-function">
 
 
 
+
 <h3 id="win_mtp.access.PortableDeviceContent.get_child" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">get_child</span><span class="p">(</span><span class="n">name</span><span class="p">)</span></code>
+          <code class="highlight language-python"><span class="n">get_child</span><span class="p">(</span><span class="n">name</span><span class="p">)</span></code>
 
 </h3>
 
@@ -2628,6 +2702,8 @@ For easier usage use download_file</p>
   
       <p>Returns a PortableDeviceContent for one child whos name is known.
 The search is case sensitive.</p>
+
+
 
   <p><strong>Parameters:</strong></p>
   <table>
@@ -2656,6 +2732,8 @@ The search is case sensitive.</p>
         </tr>
     </tbody>
   </table>
+
+
 
   <p><strong>Returns:</strong></p>
   <table>
@@ -2689,6 +2767,8 @@ The search is case sensitive.</p>
     </tbody>
   </table>
 
+
+
 <p><strong>Examples:</strong></p>
     <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">win_mtp.mtp_access</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">dev</span> <span class="o">=</span> <span class="n">win_mtp</span><span class="o">.</span><span class="n">mtp_access</span><span class="o">.</span><span class="n">get_portable_devices</span><span class="p">()</span>
@@ -2697,12 +2777,9 @@ The search is case sensitive.</p>
 <span class="go">&quot;&lt;PortableDeviceContent s10001: (&#39;Interner Speicher&#39;, 0, -1&quot;</span>
 </code></pre></div>
 
-      <details class="quote">
-        <summary>Source code in <code>win_mtp\access.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">370</span>
-<span class="normal">371</span>
-<span class="normal">372</span>
-<span class="normal">373</span>
+          <details class="quote">
+            <summary>Source code in <code>win_mtp\access.py</code></summary>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">373</span>
 <span class="normal">374</span>
 <span class="normal">375</span>
 <span class="normal">376</span>
@@ -2718,7 +2795,10 @@ The search is case sensitive.</p>
 <span class="normal">386</span>
 <span class="normal">387</span>
 <span class="normal">388</span>
-<span class="normal">389</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">get_child</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="s2">&quot;PortableDeviceContent&quot;</span><span class="p">]:</span>
+<span class="normal">389</span>
+<span class="normal">390</span>
+<span class="normal">391</span>
+<span class="normal">392</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">get_child</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="s2">&quot;PortableDeviceContent&quot;</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Returns a PortableDeviceContent for one child whos name is known.</span>
 <span class="sd">    The search is case sensitive.</span>
 
@@ -2739,17 +2819,19 @@ The search is case sensitive.</p>
     <span class="n">matches</span> <span class="o">=</span> <span class="p">[</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_children</span><span class="p">()</span> <span class="k">if</span> <span class="n">c</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="n">name</span><span class="p">]</span>
     <span class="k">return</span> <span class="n">matches</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">if</span> <span class="n">matches</span> <span class="k">else</span> <span class="kc">None</span>
 </code></pre></div></td></tr></table></div>
-      </details>
+          </details>
   </div>
 
 </div>
+
 
 <div class="doc doc-object doc-function">
 
 
 
+
 <h3 id="win_mtp.access.PortableDeviceContent.get_children" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">get_children</span><span class="p">()</span></code>
+          <code class="highlight language-python"><span class="n">get_children</span><span class="p">()</span></code>
 
 </h3>
 
@@ -2757,6 +2839,8 @@ The search is case sensitive.</p>
   <div class="doc doc-contents ">
   
       <p>Get the child items of a folder.</p>
+
+
 
   <p><strong>Returns:</strong></p>
   <table>
@@ -2780,6 +2864,8 @@ The search is case sensitive.</p>
     </tbody>
   </table>
 
+
+
 <p><strong>Examples:</strong></p>
     <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">win_mtp.mtp_access</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">dev</span> <span class="o">=</span> <span class="n">win_mtp</span><span class="o">.</span><span class="n">mtp_access</span><span class="o">.</span><span class="n">get_portable_devices</span><span class="p">()</span>
@@ -2788,12 +2874,9 @@ The search is case sensitive.</p>
 <span class="go">&quot;&lt;PortableDeviceContent s10001: (&#39;Interner Speicher&#39;, 0, -1&quot;</span>
 </code></pre></div>
 
-      <details class="quote">
-        <summary>Source code in <code>win_mtp\access.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">331</span>
-<span class="normal">332</span>
-<span class="normal">333</span>
-<span class="normal">334</span>
+          <details class="quote">
+            <summary>Source code in <code>win_mtp\access.py</code></summary>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">334</span>
 <span class="normal">335</span>
 <span class="normal">336</span>
 <span class="normal">337</span>
@@ -2827,7 +2910,10 @@ The search is case sensitive.</p>
 <span class="normal">365</span>
 <span class="normal">366</span>
 <span class="normal">367</span>
-<span class="normal">368</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">get_children</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="s2">&quot;PortableDeviceContent&quot;</span><span class="p">]:</span>
+<span class="normal">368</span>
+<span class="normal">369</span>
+<span class="normal">370</span>
+<span class="normal">371</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">get_children</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="s2">&quot;PortableDeviceContent&quot;</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Get the child items of a folder.</span>
 
 <span class="sd">    Returns:</span>
@@ -2866,17 +2952,19 @@ The search is case sensitive.</p>
     <span class="n">ret_objs</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">entry</span><span class="p">:</span> <span class="n">entry</span><span class="o">.</span><span class="n">date_created</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">ret_objs</span>
 </code></pre></div></td></tr></table></div>
-      </details>
+          </details>
   </div>
 
 </div>
+
 
 <div class="doc doc-object doc-function">
 
 
 
+
 <h3 id="win_mtp.access.PortableDeviceContent.get_path" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">get_path</span><span class="p">(</span><span class="n">path</span><span class="p">)</span></code>
+          <code class="highlight language-python"><span class="n">get_path</span><span class="p">(</span><span class="n">path</span><span class="p">)</span></code>
 
 </h3>
 
@@ -2884,6 +2972,8 @@ The search is case sensitive.</p>
   <div class="doc doc-contents ">
   
       <p>Returns a PortableDeviceContent for a child whos path in the tree is known</p>
+
+
 
   <p><strong>Parameters:</strong></p>
   <table>
@@ -2913,6 +3003,8 @@ The search is case sensitive.</p>
         </tr>
     </tbody>
   </table>
+
+
 
   <p><strong>Returns:</strong></p>
   <table>
@@ -2946,6 +3038,8 @@ The search is case sensitive.</p>
     </tbody>
   </table>
 
+
+
 <p><strong>Examples:</strong></p>
     <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">win_mtp.mtp_access</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">dev</span> <span class="o">=</span> <span class="n">win_mtp</span><span class="o">.</span><span class="n">mtp_access</span><span class="o">.</span><span class="n">get_portable_devices</span><span class="p">()</span>
@@ -2954,12 +3048,9 @@ The search is case sensitive.</p>
 <span class="go">&quot;&lt;PortableDeviceContent oE: (&#39;data&#39;, 1, -1&quot;</span>
 </code></pre></div>
 
-      <details class="quote">
-        <summary>Source code in <code>win_mtp\access.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">391</span>
-<span class="normal">392</span>
-<span class="normal">393</span>
-<span class="normal">394</span>
+          <details class="quote">
+            <summary>Source code in <code>win_mtp\access.py</code></summary>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">394</span>
 <span class="normal">395</span>
 <span class="normal">396</span>
 <span class="normal">397</span>
@@ -2979,7 +3070,10 @@ The search is case sensitive.</p>
 <span class="normal">411</span>
 <span class="normal">412</span>
 <span class="normal">413</span>
-<span class="normal">414</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">get_path</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="s2">&quot;PortableDeviceContent&quot;</span><span class="p">]:</span>
+<span class="normal">414</span>
+<span class="normal">415</span>
+<span class="normal">416</span>
+<span class="normal">417</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">get_path</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="s2">&quot;PortableDeviceContent&quot;</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Returns a PortableDeviceContent for a child whos path in the tree is known</span>
 
 <span class="sd">    Args:</span>
@@ -3004,17 +3098,19 @@ The search is case sensitive.</p>
         <span class="n">cur</span> <span class="o">=</span> <span class="n">cur</span><span class="o">.</span><span class="n">get_child</span><span class="p">(</span><span class="n">part</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">cur</span>
 </code></pre></div></td></tr></table></div>
-      </details>
+          </details>
   </div>
 
 </div>
+
 
 <div class="doc doc-object doc-function">
 
 
 
+
 <h3 id="win_mtp.access.PortableDeviceContent.get_properties" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">get_properties</span><span class="p">()</span></code>
+          <code class="highlight language-python"><span class="n">get_properties</span><span class="p">()</span></code>
 
 </h3>
 
@@ -3022,6 +3118,8 @@ The search is case sensitive.</p>
   <div class="doc doc-contents ">
   
       <p>Get the properties of this content.</p>
+
+
 
   <p><strong>Returns:</strong></p>
   <table>
@@ -3066,7 +3164,7 @@ The search is case sensitive.</p>
         </tr>
         <tr>
 <td><code>date_created</code></td>          <td>
-                <code>datetime.<span title="datetime.datetime">datetime</span></code>
+                <code><span title="datetime.datetime">datetime</span></code>
           </td>
           <td>
             <div class="doc-md-description">
@@ -3110,6 +3208,8 @@ The search is case sensitive.</p>
     </tbody>
   </table>
 
+
+
 <p><strong>Examples:</strong></p>
     <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">win_mtp.mtp_access</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">dev</span> <span class="o">=</span> <span class="n">win_mtp</span><span class="o">.</span><span class="n">mtp_access</span><span class="o">.</span><span class="n">get_portable_devices</span><span class="p">()</span>
@@ -3118,12 +3218,9 @@ The search is case sensitive.</p>
 <span class="go">(&#39;HSG1316&#39;, 0, -1, datetime.datetime(1970, 1, 1, 0, 0), -1, -1, &#39;DQVSSCM799999999&#39;)</span>
 </code></pre></div>
 
-      <details class="quote">
-        <summary>Source code in <code>win_mtp\access.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">227</span>
-<span class="normal">228</span>
-<span class="normal">229</span>
-<span class="normal">230</span>
+          <details class="quote">
+            <summary>Source code in <code>win_mtp\access.py</code></summary>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">230</span>
 <span class="normal">231</span>
 <span class="normal">232</span>
 <span class="normal">233</span>
@@ -3222,7 +3319,10 @@ The search is case sensitive.</p>
 <span class="normal">326</span>
 <span class="normal">327</span>
 <span class="normal">328</span>
-<span class="normal">329</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">get_properties</span><span class="p">(</span>
+<span class="normal">329</span>
+<span class="normal">330</span>
+<span class="normal">331</span>
+<span class="normal">332</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">get_properties</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Get the properties of this content.</span>
@@ -3252,7 +3352,7 @@ The search is case sensitive.</p>
         <span class="k">return</span> <span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">content_type</span><span class="p">,</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_size</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">size</span><span class="p">,</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">date_created</span><span class="p">,</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_capacity</span><span class="p">,</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_free_capacity</span><span class="p">,</span>
@@ -3302,7 +3402,7 @@ The search is case sensitive.</p>
     <span class="k">else</span><span class="p">:</span>
         <span class="c1"># it&#39;s not a folder or storage</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">content_type</span> <span class="o">=</span> <span class="n">WPD_CONTENT_TYPE_FILE</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_size</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">propvalues</span><span class="o">.</span><span class="n">GetUnsignedLargeIntegerValue</span><span class="p">(</span><span class="n">WPD_OBJECT_SIZE</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">size</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">propvalues</span><span class="o">.</span><span class="n">GetUnsignedLargeIntegerValue</span><span class="p">(</span><span class="n">WPD_OBJECT_SIZE</span><span class="p">))</span>
         <span class="n">filetime</span> <span class="o">=</span> <span class="n">propvalues</span><span class="o">.</span><span class="n">GetValue</span><span class="p">(</span><span class="n">WPD_OBJECT_DATE_MODIFIED</span><span class="p">)</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">date</span>
         <span class="n">days_since_1970</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">filetime</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">1970</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="o">-</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">1899</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">30</span><span class="p">))</span><span class="o">.</span><span class="n">days</span>
         <span class="n">hours</span> <span class="o">=</span> <span class="p">(</span><span class="n">filetime</span> <span class="o">-</span> <span class="nb">int</span><span class="p">(</span><span class="n">filetime</span><span class="p">))</span> <span class="o">*</span> <span class="mi">24</span>
@@ -3319,24 +3419,26 @@ The search is case sensitive.</p>
     <span class="k">return</span> <span class="p">(</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">content_type</span><span class="p">,</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_size</span><span class="p">,</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">size</span><span class="p">,</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">date_created</span><span class="p">,</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_capacity</span><span class="p">,</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_free_capacity</span><span class="p">,</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_serialnumber</span><span class="p">,</span>
     <span class="p">)</span>
 </code></pre></div></td></tr></table></div>
-      </details>
+          </details>
   </div>
 
 </div>
+
 
 <div class="doc doc-object doc-function">
 
 
 
+
 <h3 id="win_mtp.access.PortableDeviceContent.remove" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">remove</span><span class="p">()</span></code>
+          <code class="highlight language-python"><span class="n">remove</span><span class="p">()</span></code>
 
 </h3>
 
@@ -3349,6 +3451,8 @@ The search is case sensitive.</p>
   <summary>Return</summary>
   <p>0 on OK, else a windows errorcode</p>
 </details>
+
+
 <p><strong>Examples:</strong></p>
     <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">win_mtp.mtp_access</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">dev</span> <span class="o">=</span> <span class="n">win_mtp</span><span class="o">.</span><span class="n">mtp_access</span><span class="o">.</span><span class="n">get_portable_devices</span><span class="p">()</span>
@@ -3364,12 +3468,9 @@ The search is case sensitive.</p>
 <span class="go">0</span>
 </code></pre></div>
 
-      <details class="quote">
-        <summary>Source code in <code>win_mtp\access.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">591</span>
-<span class="normal">592</span>
-<span class="normal">593</span>
-<span class="normal">594</span>
+          <details class="quote">
+            <summary>Source code in <code>win_mtp\access.py</code></summary>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">594</span>
 <span class="normal">595</span>
 <span class="normal">596</span>
 <span class="normal">597</span>
@@ -3412,7 +3513,10 @@ The search is case sensitive.</p>
 <span class="normal">634</span>
 <span class="normal">635</span>
 <span class="normal">636</span>
-<span class="normal">637</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">remove</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="normal">637</span>
+<span class="normal">638</span>
+<span class="normal">639</span>
+<span class="normal">640</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">remove</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Deletes the current directory or file.</span>
 
 <span class="sd">    Return:</span>
@@ -3460,17 +3564,19 @@ The search is case sensitive.</p>
             <span class="k">return</span> <span class="n">pvar</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">uintVal</span>
     <span class="k">return</span> <span class="mi">0</span>
 </code></pre></div></td></tr></table></div>
-      </details>
+          </details>
   </div>
 
 </div>
+
 
 <div class="doc doc-object doc-function">
 
 
 
+
 <h3 id="win_mtp.access.PortableDeviceContent.upload_file" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">upload_file</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">inputfilename</span><span class="p">)</span></code>
+          <code class="highlight language-python"><span class="n">upload_file</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">inputfilename</span><span class="p">)</span></code>
 
 </h3>
 
@@ -3478,6 +3584,8 @@ The search is case sensitive.</p>
   <div class="doc doc-contents ">
   
       <p>Upload of a file to MTP device.</p>
+
+
 
   <p><strong>Parameters:</strong></p>
   <table>
@@ -3521,6 +3629,8 @@ The search is case sensitive.</p>
     </tbody>
   </table>
 
+
+
 <p><strong>Examples:</strong></p>
     <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">win_mtp.mtp_access</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">dev</span> <span class="o">=</span> <span class="n">win_mtp</span><span class="o">.</span><span class="n">mtp_access</span><span class="o">.</span><span class="n">get_portable_devices</span><span class="p">()</span>
@@ -3532,12 +3642,9 @@ The search is case sensitive.</p>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">cont</span><span class="o">.</span><span class="n">upload_file</span><span class="p">(</span><span class="s2">&quot;Test.mp3&quot;</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
 </code></pre></div>
 
-      <details class="quote">
-        <summary>Source code in <code>win_mtp\access.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">509</span>
-<span class="normal">510</span>
-<span class="normal">511</span>
-<span class="normal">512</span>
+          <details class="quote">
+            <summary>Source code in <code>win_mtp\access.py</code></summary>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">512</span>
 <span class="normal">513</span>
 <span class="normal">514</span>
 <span class="normal">515</span>
@@ -3553,7 +3660,10 @@ The search is case sensitive.</p>
 <span class="normal">525</span>
 <span class="normal">526</span>
 <span class="normal">527</span>
-<span class="normal">528</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">upload_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">inputfilename</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="normal">528</span>
+<span class="normal">529</span>
+<span class="normal">530</span>
+<span class="normal">531</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">upload_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">inputfilename</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Upload of a file to MTP device.</span>
 
 <span class="sd">    Args:</span>
@@ -3574,17 +3684,19 @@ The search is case sensitive.</p>
     <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">inputfilename</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">input_stream</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">upload_stream</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">input_stream</span><span class="p">,</span> <span class="n">length</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
-      </details>
+          </details>
   </div>
 
 </div>
+
 
 <div class="doc doc-object doc-function">
 
 
 
+
 <h3 id="win_mtp.access.PortableDeviceContent.upload_stream" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">upload_stream</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">inputstream</span><span class="p">,</span> <span class="n">stream_len</span><span class="p">)</span></code>
+          <code class="highlight language-python"><span class="n">upload_stream</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">inputstream</span><span class="p">,</span> <span class="n">stream_len</span><span class="p">)</span></code>
 
 </h3>
 
@@ -3593,6 +3705,8 @@ The search is case sensitive.</p>
   
       <p>Upload a steam to a file on the MTP device.
 For an easier usage use upload_file</p>
+
+
 
   <p><strong>Parameters:</strong></p>
   <table>
@@ -3650,6 +3764,8 @@ For an easier usage use upload_file</p>
     </tbody>
   </table>
 
+
+
 <p><strong>Examples:</strong></p>
     <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">win_mtp.mtp_access</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">dev</span> <span class="o">=</span> <span class="n">win_mtp</span><span class="o">.</span><span class="n">mtp_access</span><span class="o">.</span><span class="n">get_portable_devices</span><span class="p">()</span>
@@ -3664,12 +3780,9 @@ For an easier usage use upload_file</p>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">inp</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 </code></pre></div>
 
-      <details class="quote">
-        <summary>Source code in <code>win_mtp\access.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">448</span>
-<span class="normal">449</span>
-<span class="normal">450</span>
-<span class="normal">451</span>
+          <details class="quote">
+            <summary>Source code in <code>win_mtp\access.py</code></summary>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">451</span>
 <span class="normal">452</span>
 <span class="normal">453</span>
 <span class="normal">454</span>
@@ -3725,7 +3838,10 @@ For an easier usage use upload_file</p>
 <span class="normal">504</span>
 <span class="normal">505</span>
 <span class="normal">506</span>
-<span class="normal">507</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">upload_stream</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">inputstream</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">stream_len</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="normal">507</span>
+<span class="normal">508</span>
+<span class="normal">509</span>
+<span class="normal">510</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">upload_stream</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">inputstream</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">stream_len</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Upload a steam to a file on the MTP device.</span>
 <span class="sd">    For an easier usage use upload_file</span>
 
@@ -3786,7 +3902,7 @@ For an easier usage use upload_file</p>
     <span class="n">stgc_default</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="n">filestream</span><span class="o">.</span><span class="n">Commit</span><span class="p">(</span><span class="n">stgc_default</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
-      </details>
+          </details>
   </div>
 
 </div>
@@ -3798,14 +3914,16 @@ For an easier usage use upload_file</p>
   </div>
 
 </div>
+
 
 
 <div class="doc doc-object doc-function">
 
 
 
+
 <h2 id="win_mtp.access.get_content_from_device_path" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">get_content_from_device_path</span><span class="p">(</span><span class="n">dev</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span></code>
+          <code class="highlight language-python"><span class="n">get_content_from_device_path</span><span class="p">(</span><span class="n">dev</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span></code>
 
 </h2>
 
@@ -3813,6 +3931,8 @@ For an easier usage use upload_file</p>
   <div class="doc doc-contents ">
   
       <p>Get the content of a path.</p>
+
+
 
   <p><strong>Parameters:</strong></p>
   <table>
@@ -3856,6 +3976,8 @@ For an easier usage use upload_file</p>
     </tbody>
   </table>
 
+
+
   <p><strong>Returns:</strong></p>
   <table>
     <thead>
@@ -3879,6 +4001,8 @@ else None is returned.</p>
     </tbody>
   </table>
 
+
+
   <p><strong>Raises:</strong></p>
   <table>
     <thead>
@@ -3890,7 +4014,7 @@ else None is returned.</p>
     <tbody>
         <tr>
           <td>
-                <code><span title="comtypes.automation">comtypes</span>.<span title="comtypes.automation.COMError">COMError</span></code>
+                <code><span title="comtypes.COMError">COMError</span></code>
           </td>
           <td>
             <div class="doc-md-description">
@@ -3901,6 +4025,8 @@ else None is returned.</p>
     </tbody>
   </table>
 
+
+
 <p><strong>Examples:</strong></p>
     <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">win_mtp.mtp_access</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">dev</span> <span class="o">=</span> <span class="n">win_mtp</span><span class="o">.</span><span class="n">mtp_access</span><span class="o">.</span><span class="n">get_portable_devices</span><span class="p">()</span>
@@ -3910,12 +4036,9 @@ else None is returned.</p>
 <span class="go">&quot;&lt;PortableDeviceContent o3: (&#39;Ringtones&#39;, 1, -1&quot;</span>
 </code></pre></div>
 
-      <details class="quote">
-        <summary>Source code in <code>win_mtp\access.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">782</span>
-<span class="normal">783</span>
-<span class="normal">784</span>
-<span class="normal">785</span>
+          <details class="quote">
+            <summary>Source code in <code>win_mtp\access.py</code></summary>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">785</span>
 <span class="normal">786</span>
 <span class="normal">787</span>
 <span class="normal">788</span>
@@ -3940,7 +4063,10 @@ else None is returned.</p>
 <span class="normal">807</span>
 <span class="normal">808</span>
 <span class="normal">809</span>
-<span class="normal">810</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">get_content_from_device_path</span><span class="p">(</span><span class="n">dev</span><span class="p">:</span> <span class="n">PortableDevice</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">PortableDeviceContent</span><span class="p">]:</span>
+<span class="normal">810</span>
+<span class="normal">811</span>
+<span class="normal">812</span>
+<span class="normal">813</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">get_content_from_device_path</span><span class="p">(</span><span class="n">dev</span><span class="p">:</span> <span class="n">PortableDevice</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">PortableDeviceContent</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Get the content of a path.</span>
 
 <span class="sd">    Args:</span>
@@ -3970,17 +4096,19 @@ else None is returned.</p>
         <span class="p">)</span>
     <span class="k">return</span> <span class="kc">None</span>
 </code></pre></div></td></tr></table></div>
-      </details>
+          </details>
   </div>
 
 </div>
+
 
 <div class="doc doc-object doc-function">
 
 
 
+
 <h2 id="win_mtp.access.get_portable_devices" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">get_portable_devices</span><span class="p">()</span></code>
+          <code class="highlight language-python"><span class="n">get_portable_devices</span><span class="p">()</span></code>
 
 </h2>
 
@@ -3988,6 +4116,8 @@ else None is returned.</p>
   <div class="doc doc-contents ">
   
       <p>Get all attached portable devices.</p>
+
+
 
   <p><strong>Returns:</strong></p>
   <table>
@@ -4012,6 +4142,8 @@ was found.</p>
     </tbody>
   </table>
 
+
+
   <p><strong>Raises:</strong></p>
   <table>
     <thead>
@@ -4023,7 +4155,7 @@ was found.</p>
     <tbody>
         <tr>
           <td>
-                <code><span title="comtypes.automation">comtypes</span>.<span title="comtypes.automation.COMError">COMError</span></code>
+                <code><span title="comtypes.COMError">COMError</span></code>
           </td>
           <td>
             <div class="doc-md-description">
@@ -4034,18 +4166,17 @@ was found.</p>
     </tbody>
   </table>
 
+
+
 <p><strong>Examples:</strong></p>
     <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">win_mtp.mtp_access</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">win_mtp</span><span class="o">.</span><span class="n">mtp_access</span><span class="o">.</span><span class="n">get_portable_devices</span><span class="p">()</span>
 <span class="go">[&lt;PortableDevice: (&#39;HSG1316&#39;, &#39;HSG1316&#39;)&gt;]</span>
 </code></pre></div>
 
-      <details class="quote">
-        <summary>Source code in <code>win_mtp\access.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">747</span>
-<span class="normal">748</span>
-<span class="normal">749</span>
-<span class="normal">750</span>
+          <details class="quote">
+            <summary>Source code in <code>win_mtp\access.py</code></summary>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">750</span>
 <span class="normal">751</span>
 <span class="normal">752</span>
 <span class="normal">753</span>
@@ -4074,7 +4205,10 @@ was found.</p>
 <span class="normal">776</span>
 <span class="normal">777</span>
 <span class="normal">778</span>
-<span class="normal">779</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">get_portable_devices</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">PortableDevice</span><span class="p">]:</span>
+<span class="normal">779</span>
+<span class="normal">780</span>
+<span class="normal">781</span>
+<span class="normal">782</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">get_portable_devices</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">PortableDevice</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Get all attached portable devices.</span>
 
 <span class="sd">    Returns:</span>
@@ -4108,17 +4242,19 @@ was found.</p>
     <span class="p">)</span>
     <span class="k">return</span> <span class="p">[</span><span class="n">PortableDevice</span><span class="p">(</span><span class="n">cur_id</span><span class="p">)</span> <span class="k">for</span> <span class="n">cur_id</span> <span class="ow">in</span> <span class="n">pnp_device_ids</span> <span class="k">if</span> <span class="n">cur_id</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">]</span>
 </code></pre></div></td></tr></table></div>
-      </details>
+          </details>
   </div>
 
 </div>
+
 
 <div class="doc doc-object doc-function">
 
 
 
+
 <h2 id="win_mtp.access.makedirs" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">makedirs</span><span class="p">(</span><span class="n">dev</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span></code>
+          <code class="highlight language-python"><span class="n">makedirs</span><span class="p">(</span><span class="n">dev</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span></code>
 
 </h2>
 
@@ -4126,6 +4262,8 @@ was found.</p>
   <div class="doc doc-contents ">
   
       <p>Creates the directories in path on the MTP device if they don't exist.</p>
+
+
 
   <p><strong>Parameters:</strong></p>
   <table>
@@ -4169,28 +4307,10 @@ will e created automatically.</p>
         </tr>
     </tbody>
   </table>
+      <p>Exceptions:
+    comtypes.COMError: If something went wrong</p>
 
-  <p><strong>Raises:</strong></p>
-  <table>
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-        <tr>
-          <td>
-                <code><span title="comtypes.automation">comtypes</span>.<span title="comtypes.automation.COMError">COMError</span></code>
-          </td>
-          <td>
-            <div class="doc-md-description">
-              <p>If something went wrong</p>
-            </div>
-          </td>
-        </tr>
-    </tbody>
-  </table>
+
 
 <p><strong>Examples:</strong></p>
     <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">win_mtp.mtp_access</span>
@@ -4200,12 +4320,9 @@ will e created automatically.</p>
 <span class="go">&#39;&lt;PortableDeviceContent&#39;</span>
 </code></pre></div>
 
-      <details class="quote">
-        <summary>Source code in <code>win_mtp\access.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">866</span>
-<span class="normal">867</span>
-<span class="normal">868</span>
-<span class="normal">869</span>
+          <details class="quote">
+            <summary>Source code in <code>win_mtp\access.py</code></summary>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">869</span>
 <span class="normal">870</span>
 <span class="normal">871</span>
 <span class="normal">872</span>
@@ -4232,7 +4349,10 @@ will e created automatically.</p>
 <span class="normal">893</span>
 <span class="normal">894</span>
 <span class="normal">895</span>
-<span class="normal">896</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">makedirs</span><span class="p">(</span><span class="n">dev</span><span class="p">:</span> <span class="n">PortableDevice</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">PortableDeviceContent</span><span class="p">]:</span>
+<span class="normal">896</span>
+<span class="normal">897</span>
+<span class="normal">898</span>
+<span class="normal">899</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">makedirs</span><span class="p">(</span><span class="n">dev</span><span class="p">:</span> <span class="n">PortableDevice</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">PortableDeviceContent</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Creates the directories in path on the MTP device if they don&#39;t exist.</span>
 
 <span class="sd">    Args:</span>
@@ -4264,17 +4384,19 @@ will e created automatically.</p>
         <span class="n">content</span> <span class="o">=</span> <span class="n">ziel_content</span>
     <span class="k">return</span> <span class="n">content</span>
 </code></pre></div></td></tr></table></div>
-      </details>
+          </details>
   </div>
 
 </div>
+
 
 <div class="doc doc-object doc-function">
 
 
 
+
 <h2 id="win_mtp.access.walk" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">walk</span><span class="p">(</span><span class="n">dev</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span></code>
+          <code class="highlight language-python"><span class="n">walk</span><span class="p">(</span><span class="n">dev</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span></code>
 
 </h2>
 
@@ -4282,6 +4404,8 @@ will e created automatically.</p>
   <div class="doc doc-contents ">
   
       <p>Iterates ower all files in a tree just like os.walk</p>
+
+
 
   <p><strong>Parameters:</strong></p>
   <table>
@@ -4325,6 +4449,8 @@ will e created automatically.</p>
     </tbody>
   </table>
 
+
+
   <p><strong>Returns:</strong></p>
   <table>
     <thead>
@@ -4350,6 +4476,8 @@ A list of PortableDeviceContent for the files in the directory</p>
     </tbody>
   </table>
 
+
+
   <p><strong>Raises:</strong></p>
   <table>
     <thead>
@@ -4361,7 +4489,7 @@ A list of PortableDeviceContent for the files in the directory</p>
     <tbody>
         <tr>
           <td>
-                <code><span title="comtypes.automation">comtypes</span>.<span title="comtypes.automation.COMError">COMError</span></code>
+                <code><span title="comtypes.COMError">COMError</span></code>
           </td>
           <td>
             <div class="doc-md-description">
@@ -4371,6 +4499,8 @@ A list of PortableDeviceContent for the files in the directory</p>
         </tr>
     </tbody>
   </table>
+
+
 
 <p><strong>Examples:</strong></p>
     <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">win_mtp.mtp_access</span>
@@ -4384,12 +4514,9 @@ A list of PortableDeviceContent for the files in the directory</p>
 <span class="go">hangouts_incoming_call.ogg</span>
 </code></pre></div>
 
-      <details class="quote">
-        <summary>Source code in <code>win_mtp\access.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">813</span>
-<span class="normal">814</span>
-<span class="normal">815</span>
-<span class="normal">816</span>
+          <details class="quote">
+            <summary>Source code in <code>win_mtp\access.py</code></summary>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">816</span>
 <span class="normal">817</span>
 <span class="normal">818</span>
 <span class="normal">819</span>
@@ -4436,7 +4563,10 @@ A list of PortableDeviceContent for the files in the directory</p>
 <span class="normal">860</span>
 <span class="normal">861</span>
 <span class="normal">862</span>
-<span class="normal">863</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">walk</span><span class="p">(</span>
+<span class="normal">863</span>
+<span class="normal">864</span>
+<span class="normal">865</span>
+<span class="normal">866</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">walk</span><span class="p">(</span>
     <span class="n">dev</span><span class="p">:</span> <span class="n">PortableDevice</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="nb">str</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Generator</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">list</span><span class="p">[</span><span class="n">PortableDeviceContent</span><span class="p">],</span> <span class="nb">list</span><span class="p">[</span><span class="n">PortableDeviceContent</span><span class="p">]],</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Iterates ower all files in a tree just like os.walk</span>
@@ -4488,7 +4618,7 @@ A list of PortableDeviceContent for the files in the directory</p>
         <span class="k">yield</span> <span class="n">cont</span><span class="o">.</span><span class="n">full_filename</span><span class="p">,</span> <span class="n">directories</span><span class="p">,</span> <span class="n">files</span>
         <span class="n">walk_cont</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">directories</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
-      </details>
+          </details>
   </div>
 
 </div>
@@ -4537,10 +4667,10 @@ A list of PortableDeviceContent for the files in the directory</p>
       <div class="md-dialog__inner md-typeset"></div>
     </div>
     
-    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.74e28a9f.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.dfff1995.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../assets/javascripts/bundle.220ee61c.min.js"></script>
+      <script src="../assets/javascripts/bundle.78eede0e.min.js"></script>
       
     
   </body>
