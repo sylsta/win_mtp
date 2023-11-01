@@ -25,3 +25,5 @@ Dialog.py implements a directory searcher in tkinter that shows the attached MTP
 * 1.0.1
     * Fixed crash when during walk a directory is deleted.
     * Fixed full_filename for files was not set.
+* 1.0.2
+    * Fixed a bug when an MTP device doesn't have a userfriendly name

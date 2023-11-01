@@ -1,5 +1,6 @@
 # For the python program
 comtypes
+psutil
 
 # to generate the docs
 mkdocs

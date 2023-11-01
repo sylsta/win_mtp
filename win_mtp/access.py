@@ -3,7 +3,7 @@ A module to access Mobile Devices from Windows via USB connection.
 
 Author:  Heribert Füchtenhans
 
-Version: 1.0.2
+Version: 1.0.3
 
 Implements access to basic functions of the Windows WPD API
 Yes I know, there are a lot of pylint disable and type ignors :-)
@@ -46,7 +46,6 @@ import comtypes  # pylint: disable=import-error
 import comtypes.client  # pylint: disable=import-error
 import comtypes.automation  # pylint: disable=import-error
 
-
 from win_mtp.comtypes_gen import (
     _1F001332_1A57_4934_BE31_AFFC99F4EE0A_0_1_0 as port,
 )
@@ -80,7 +79,9 @@ WPD_STORAGE_CAPACITY.contents.pid = 4
 WPD_STORAGE_FREE_SPACE_IN_BYTES = comtypes.pointer(
     port._tagpropertykey()  # pylint: disable=no-member, protected-access # type: ignore
 )
-WPD_STORAGE_FREE_SPACE_IN_BYTES.contents.fmtid = comtypes.GUID("{01A3057A-74D6-4E80-BEA7-DC4C212CE50A}")
+WPD_STORAGE_FREE_SPACE_IN_BYTES.contents.fmtid = comtypes.GUID(
+    "{01A3057A-74D6-4E80-BEA7-DC4C212CE50A}"
+)
 WPD_STORAGE_FREE_SPACE_IN_BYTES.contents.pid = 5
 
 # ---------
@@ -116,7 +117,9 @@ WPD_OBJECT_SIZE.contents.pid = 11
 WPD_OBJECT_ORIGINAL_FILE_NAME = comtypes.pointer(
     port._tagpropertykey()  # pylint: disable=no-member, protected-access # type: ignore
 )
-WPD_OBJECT_ORIGINAL_FILE_NAME.contents.fmtid = comtypes.GUID("{EF6B490D-5CD8-437A-AFFC-DA8B60EE4A3C}")
+WPD_OBJECT_ORIGINAL_FILE_NAME.contents.fmtid = comtypes.GUID(
+    "{EF6B490D-5CD8-437A-AFFC-DA8B60EE4A3C}"
+)
 WPD_OBJECT_ORIGINAL_FILE_NAME.contents.pid = 12
 
 # ---------
@@ -187,7 +190,13 @@ class PortableDeviceContent:  # pylint: disable=too-many-instance-attributes
     """
 
     # class variable
-    _properties_to_read: Optional[types.PortableDeviceKeyCollection] = None  # pylint: disable=no-member # type: ignore
+    _properties_to_read: Optional[
+        types.PortableDeviceKeyCollection
+    ] = None  # pylint: disable=no-member # type: ignore
+
+    _CoTaskMemFree = ctypes.windll.ole32.CoTaskMemFree
+    _CoTaskMemFree.restype = None
+    _CoTaskMemFree.argtypes = [ctypes.c_void_p]
 
     def __init__(
         self,
@@ -209,7 +218,7 @@ class PortableDeviceContent:  # pylint: disable=too-many-instance-attributes
         self._free_capacity = -1
         self._serialnumber = ""
         self._properties = properties or content.properties()  # type: ignore
-        if not PortableDeviceContent._properties_to_read:
+        if PortableDeviceContent._properties_to_read is None:
             # We havn't set the roperties wie will read, so do it now
             PortableDeviceContent._properties_to_read = comtypes.client.CreateObject(
                 types.PortableDeviceKeyCollection,  # pylint: disable=no-member, protected-access # type: ignore
@@ -217,13 +226,17 @@ class PortableDeviceContent:  # pylint: disable=too-many-instance-attributes
                 interface=port.IPortableDeviceKeyCollection,  # pylint: disable=no-member, protected-access # type: ignore
             )
             PortableDeviceContent._properties_to_read.Add(WPD_OBJECT_NAME)  # type: ignore
-            PortableDeviceContent._properties_to_read.Add(WPD_OBJECT_ORIGINAL_FILE_NAME)  # type: ignore
+            PortableDeviceContent._properties_to_read.Add(  # type: ignore
+                WPD_OBJECT_ORIGINAL_FILE_NAME
+            )
             PortableDeviceContent._properties_to_read.Add(WPD_OBJECT_CONTENT_TYPE)  # type: ignore
             PortableDeviceContent._properties_to_read.Add(WPD_OBJECT_SIZE)  # type: ignore
             PortableDeviceContent._properties_to_read.Add(WPD_OBJECT_DATE_MODIFIED)  # type: ignore
             PortableDeviceContent._properties_to_read.Add(WPD_OBJECT_DATE_CREATED)  # type: ignore
             PortableDeviceContent._properties_to_read.Add(WPD_STORAGE_CAPACITY)  # type: ignore
-            PortableDeviceContent._properties_to_read.Add(WPD_STORAGE_FREE_SPACE_IN_BYTES)  # type: ignore
+            PortableDeviceContent._properties_to_read.Add(  # type: ignore
+                WPD_STORAGE_FREE_SPACE_IN_BYTES
+            )
             PortableDeviceContent._properties_to_read.Add(WPD_DEVICE_SERIAL_NUMBER)  # type: ignore
         self.get_properties()
 
@@ -273,7 +286,9 @@ class PortableDeviceContent:  # pylint: disable=too-many-instance-attributes
                 self._free_capacity,
                 self._serialnumber,
             )
-        propvalues = self._properties.GetValues(self._object_id, PortableDeviceContent._properties_to_read)
+        propvalues = self._properties.GetValues(
+            self._object_id, PortableDeviceContent._properties_to_read
+        )
         self.content_type = WPD_CONTENT_TYPE_UNDEFINED
         try:
             self._plain_name = propvalues.GetStringValue(WPD_OBJECT_NAME)
@@ -295,7 +310,9 @@ class PortableDeviceContent:  # pylint: disable=too-many-instance-attributes
             except comtypes.COMError:
                 self._capacity = -1
             try:
-                self._free_capacity = int(propvalues.GetUnsignedLargeIntegerValue(WPD_STORAGE_FREE_SPACE_IN_BYTES))
+                self._free_capacity = int(
+                    propvalues.GetUnsignedLargeIntegerValue(WPD_STORAGE_FREE_SPACE_IN_BYTES)
+                )
             except comtypes.COMError:
                 self._free_capacity = -1
             with contextlib.suppress(comtypes.COMError):
@@ -309,7 +326,10 @@ class PortableDeviceContent:  # pylint: disable=too-many-instance-attributes
             self.content_type = WPD_CONTENT_TYPE_FILE
             self.size = int(propvalues.GetUnsignedLargeIntegerValue(WPD_OBJECT_SIZE))
             filetime = propvalues.GetValue(WPD_OBJECT_DATE_MODIFIED).data.date
-            days_since_1970 = int(filetime) - (datetime.datetime(1970, 1, 1) - datetime.datetime(1899, 12, 30)).days
+            days_since_1970 = (
+                int(filetime)
+                - (datetime.datetime(1970, 1, 1) - datetime.datetime(1899, 12, 30)).days
+            )
             hours = (filetime - int(filetime)) * 24
             minutes = (hours - int(hours)) * 60
             seconds = (minutes - int(minutes)) * 60
@@ -321,6 +341,7 @@ class PortableDeviceContent:  # pylint: disable=too-many-instance-attributes
                 seconds=int(seconds),
                 milliseconds=milliseconds,
             )
+        propvalues.Clear()
         return (
             self.name,
             self.content_type,
@@ -348,7 +369,9 @@ class PortableDeviceContent:  # pylint: disable=too-many-instance-attributes
         enumobject_ids = self._content.EnumObjects(  # type: ignore
             ctypes.c_ulong(0),
             self._object_id,
-            ctypes.POINTER(port.IPortableDeviceValues)(),  # pylint: disable=no-member # type: ignore
+            ctypes.POINTER(
+                port.IPortableDeviceValues
+            )(),  # pylint: disable=no-member # type: ignore
         )
         while True:
             num_objects = ctypes.c_ulong(16)  # block size, so to speak
@@ -367,6 +390,12 @@ class PortableDeviceContent:  # pylint: disable=too-many-instance-attributes
                 curobject_id = object_id_array[index]
                 value = PortableDeviceContent(curobject_id, self._content, self._properties)
                 ret_objs.append(value)
+                # Free memory
+                address = (
+                    ctypes.addressof(object_id_array) + ctypes.sizeof(ctypes.c_wchar_p) * index
+                )
+                ptr = ctypes.pointer(ctypes.c_wchar_p.from_address(address))
+                ctypes.windll.ole32.CoTaskMemFree(ptr.contents)
         ret_objs.sort(key=lambda entry: entry.date_created)
         return ret_objs
 
@@ -443,7 +472,9 @@ class PortableDeviceContent:  # pylint: disable=too-many-instance-attributes
         object_properties.SetStringValue(WPD_OBJECT_PARENT_ID, self._object_id)  # type: ignore
         object_properties.SetStringValue(WPD_OBJECT_NAME, dirname)  # type: ignore
         object_properties.SetStringValue(WPD_OBJECT_ORIGINAL_FILE_NAME, dirname)  # type: ignore
-        object_properties.SetGuidValue(WPD_OBJECT_CONTENT_TYPE, WPD_CONTENT_TYPE_FOLDER_GUID)  # type: ignore
+        object_properties.SetGuidValue(  # type: ignore
+            WPD_OBJECT_CONTENT_TYPE, WPD_CONTENT_TYPE_FOLDER_GUID
+        )
         self._content.CreateObjectWithPropertiesOnly(  # type: ignore
             object_properties, ctypes.POINTER(ctypes.c_wchar_p)()
         )
@@ -552,7 +583,9 @@ class PortableDeviceContent:  # pylint: disable=too-many-instance-attributes
             resources = self._content.Transfer()  # type: ignore
             stgm_read = ctypes.c_uint(0)
             optimal_transfer_size_bytes = ctypes.pointer(ctypes.c_ulong(0))
-            p_filestream = ctypes.POINTER(port.IStream)()  # pylint: disable=no-member # type: ignore
+            p_filestream = ctypes.POINTER(
+                port.IStream
+            )()  # pylint: disable=no-member # type: ignore
             optimal_transfer_size_bytes, q_filestream = resources.GetStream(
                 self._object_id,
                 WPD_RESOURCE_DEFAULT,
@@ -626,7 +659,9 @@ class PortableDeviceContent:  # pylint: disable=too-many-instance-attributes
             interface=port.IPortableDevicePropVariantCollection,  # pylint: disable=no-member, protected-access # type: ignore
         )
         try:
-            self._content.Delete(WPD_DELETE_WITH_RECURSION, objects_to_delete, errors)  # type: ignore
+            self._content.Delete(  # type: ignore
+                WPD_DELETE_WITH_RECURSION, objects_to_delete, errors
+            )
         except comtypes.COMError:
             return 777
         count = ctypes.c_ulong()
@@ -696,14 +731,24 @@ class PortableDevice:
             name_len,
         )
         self._desc = name.value
-        DEVICE_MANAGER.GetDeviceFriendlyName(self._p_id, ctypes.POINTER(ctypes.c_ushort)(), name_len)
-        name = ctypes.create_unicode_buffer(name_len.contents.value)
-        DEVICE_MANAGER.GetDeviceFriendlyName(
-            self._p_id,
-            ctypes.cast(name, ctypes.POINTER(ctypes.c_ushort)),
-            name_len,
-        )
-        self._name = name.value
+        try:
+            DEVICE_MANAGER.GetDeviceFriendlyName(
+                self._p_id, ctypes.POINTER(ctypes.c_ushort)(), name_len
+            )
+            name = ctypes.create_unicode_buffer(name_len.contents.value)
+            DEVICE_MANAGER.GetDeviceFriendlyName(
+                self._p_id,
+                ctypes.cast(name, ctypes.POINTER(ctypes.c_ushort)),
+                name_len,
+            )
+            self._name = name.value
+        except comtypes.COMError:
+            self._name = self._desc
+            try:
+                propvalues = self._get_device().Content().properties().GetValues("DEVICE", None)
+                self._name = propvalues.GetStringValue(WPD_OBJECT_NAME)
+            except comtypes.COMError:
+                self._name = self._desc
         # WPD_DEVICE_SERIAL_NUMBER
         return self._name, self._desc
 
@@ -764,14 +809,15 @@ def get_portable_devices() -> list[PortableDevice]:
     """
     global DEVICE_MANAGER  # pylint: disable=global-statement
 
-    comtypes.CoInitialize()
-    DEVICE_MANAGER = comtypes.client.CreateObject(
-        port.PortableDeviceManager,  # pylint: disable=no-member  # type: ignore
-        clsctx=comtypes.CLSCTX_INPROC_SERVER,
-        interface=port.IPortableDeviceManager,  # pylint: disable=no-member  # type: ignore
-    )
+    if DEVICE_MANAGER is None:
+        comtypes.CoInitialize()
+        DEVICE_MANAGER = comtypes.client.CreateObject(
+            port.PortableDeviceManager,  # pylint: disable=no-member  # type: ignore
+            clsctx=comtypes.CLSCTX_INPROC_SERVER,
+            interface=port.IPortableDeviceManager,  # pylint: disable=no-member  # type: ignore
+        )
     pnp_device_id_count = ctypes.pointer(ctypes.c_ulong(0))
-    DEVICE_MANAGER.GetDevices(ctypes.POINTER(ctypes.c_wchar_p)(), pnp_device_id_count)  # type: ignore
+    DEVICE_MANAGER.GetDevices(ctypes.POINTER(ctypes.c_wchar_p)(), pnp_device_id_count)
     if pnp_device_id_count.contents.value == 0:
         return []
     pnp_device_ids = (ctypes.c_wchar_p * pnp_device_id_count.contents.value)()
@@ -808,7 +854,9 @@ def get_content_from_device_path(dev: PortableDevice, path: str) -> Optional[Por
     path_parts = path.split(os.path.sep)
     if path_parts[0] == dev.get_description()[0]:
         return (
-            dev.get_content().get_path(os.path.sep.join(path_parts[1:])) if len(path_parts) > 1 else dev.get_content()
+            dev.get_content().get_path(os.path.sep.join(path_parts[1:]))
+            if len(path_parts) > 1
+            else dev.get_content()
         )
     return None
 

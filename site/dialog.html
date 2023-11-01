@@ -12,8 +12,9 @@
         <link rel="prev" href="access.html">
       
       
+      
       <link rel="icon" href="assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.18">
+      <meta name="generator" content="mkdocs-1.5.2, mkdocs-material-9.2.6">
     
     
       
@@ -21,11 +22,14 @@
       
     
     
-      <link rel="stylesheet" href="assets/stylesheets/main.26e3688c.min.css">
+      <link rel="stylesheet" href="assets/stylesheets/main.0e669242.min.css">
       
       
 
+
     
+    
+      
     
     
       
@@ -84,6 +88,7 @@
 
     </a>
     <label class="md-header__button md-icon" for="__drawer">
+      
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
     </label>
     <div class="md-header__title" data-md-component="header-title">
@@ -128,6 +133,7 @@
                     
 
 
+
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
     <a href="index.html" title="win_mtp" class="md-nav__button md-logo" aria-label="win_mtp" data-md-component="logo">
@@ -143,14 +149,18 @@
     
       
       
-      
-
   
   
   
     <li class="md-nav__item">
       <a href="index.html" class="md-nav__link">
-        Documentation
+        
+  
+  <span class="md-ellipsis">
+    Documentation
+  </span>
+  
+
       </a>
     </li>
   
@@ -158,14 +168,18 @@
     
       
       
-      
-
   
   
   
     <li class="md-nav__item">
       <a href="access.html" class="md-nav__link">
-        access
+        
+  
+  <span class="md-ellipsis">
+    access
+  </span>
+  
+
       </a>
     </li>
   
@@ -173,8 +187,6 @@
     
       
       
-      
-
   
   
     
@@ -187,12 +199,24 @@
       
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
-          dialog
+          
+  
+  <span class="md-ellipsis">
+    dialog
+  </span>
+  
+
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <a href="dialog.html" class="md-nav__link md-nav__link--active">
-        dialog
+        
+  
+  <span class="md-ellipsis">
+    dialog
+  </span>
+  
+
       </a>
       
         
@@ -217,7 +241,7 @@
       
         <li class="md-nav__item">
   <a href="#win_mtp.dialog" class="md-nav__link">
-    win_mtp.dialog
+    dialog
   </a>
   
 </li>
@@ -297,7 +321,7 @@
       
         <li class="md-nav__item">
   <a href="#win_mtp.dialog" class="md-nav__link">
-    win_mtp.dialog
+    dialog
   </a>
   
 </li>
@@ -359,6 +383,7 @@
 <div class="doc doc-object doc-module">
 
 
+
 <a id="win_mtp.dialog"></a>
   <div class="doc doc-contents first">
   
@@ -367,16 +392,16 @@
 <p>Version: 1.0.1</p>
 <p>OS:      Windows</p>
 <p>Requirements:
-OS: Windows 10</p>
-
-<details class="python" open>
-  <summary>Python</summary>
-  <p>tkinter
-mtp_access</p>
-</details>      <p>The module contains the following classes:</p>
+OS: Windows 10
+Python: 
+    tkinter
+    mtp_access</p>
+<p>The module contains the following classes:</p>
 <ul>
 <li>'AskDirectory' - Class to select a directory on an MTP device</li>
 </ul>
+
+
 
 <p><strong>Examples:</strong></p>
     <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">win_mtp</span> <span class="kn">import</span> <span class="n">mtp_dialog</span>
@@ -400,16 +425,17 @@ mtp_access</p>
 
 
 
+
 <h2 id="win_mtp.dialog.AskDirectory" class="doc doc-heading">
-        <code>AskDirectory</code>
+          <code>AskDirectory</code>
 
 
 </h2>
 
 
   <div class="doc doc-contents ">
-      <p class="doc doc-class-bases">
-        Bases: <code><span title="tkinter.simpledialog">tkinter</span>.<span title="tkinter.simpledialog.simpledialog">simpledialog</span>.<span title="tkinter.simpledialog.simpledialog.Dialog">Dialog</span></code></p>
+          <p class="doc doc-class-bases">
+            Bases: <code><span title="tkinter.simpledialog.Dialog">Dialog</span></code></p>
 
   
       <p>Select a wpd device and directory.</p>
@@ -420,6 +446,8 @@ mtp_access</p>
   <p>answer: The MTP path to the selected directory
 wpd_device: The PortableDevice that was selected</p>
 </details>
+
+
   <p><strong>Raises:</strong></p>
   <table>
     <thead>
@@ -431,7 +459,7 @@ wpd_device: The PortableDevice that was selected</p>
     <tbody>
         <tr>
           <td>
-                <code>comtypes.<span title="comtypes.COMError">COMError</span></code>
+                <code><span title="comtypes.COMError">COMError</span></code>
           </td>
           <td>
             <div class="doc-md-description">
@@ -442,10 +470,9 @@ wpd_device: The PortableDevice that was selected</p>
     </tbody>
   </table>
 
-
-        <details class="quote">
-          <summary>Source code in <code>win_mtp\dialog.py</code></summary>
-          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 60</span>
+            <details class="quote">
+              <summary>Source code in <code>win_mtp\dialog.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 60</span>
 <span class="normal"> 61</span>
 <span class="normal"> 62</span>
 <span class="normal"> 63</span>
@@ -731,7 +758,7 @@ wpd_device: The PortableDevice that was selected</p>
             <span class="k">finally</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">cancel</span><span class="p">()</span>
 </code></pre></div></td></tr></table></div>
-        </details>
+            </details>
 
   
 
@@ -745,12 +772,14 @@ wpd_device: The PortableDevice that was selected</p>
 
 
 
+
 <div class="doc doc-object doc-function">
 
 
 
+
 <h3 id="win_mtp.dialog.AskDirectory.__init__" class="doc doc-heading">
-<code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">buttons</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;OK&#39;</span><span class="p">,</span> <span class="s1">&#39;Cancel&#39;</span><span class="p">))</span></code>
+          <code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">buttons</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;OK&#39;</span><span class="p">,</span> <span class="s1">&#39;Cancel&#39;</span><span class="p">))</span></code>
 
 </h3>
 
@@ -758,6 +787,8 @@ wpd_device: The PortableDevice that was selected</p>
   <div class="doc doc-contents ">
   
       <p>Initializes the class and shows the directory dialog.</p>
+
+
 
   <p><strong>Parameters:</strong></p>
   <table>
@@ -773,7 +804,7 @@ wpd_device: The PortableDevice that was selected</p>
         <tr>
           <td><code>parent</code></td>
           <td>
-                <code><span title="tkinter.simpledialog">tkinter</span>.<span title="tkinter.simpledialog.Tk">Tk</span></code>
+                <code><span title="tkinter.Tk">Tk</span></code>
           </td>
           <td>
             <div class="doc-md-description">
@@ -816,9 +847,9 @@ wpd_device: The PortableDevice that was selected</p>
     </tbody>
   </table>
 
-      <details class="quote">
-        <summary>Source code in <code>win_mtp\dialog.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">75</span>
+          <details class="quote">
+            <summary>Source code in <code>win_mtp\dialog.py</code></summary>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">75</span>
 <span class="normal">76</span>
 <span class="normal">77</span>
 <span class="normal">78</span>
@@ -866,17 +897,19 @@ wpd_device: The PortableDevice that was selected</p>
     <span class="bp">self</span><span class="o">.</span><span class="n">wpd_device</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">access</span><span class="o">.</span><span class="n">PortableDevice</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="n">tkinter</span><span class="o">.</span><span class="n">simpledialog</span><span class="o">.</span><span class="n">Dialog</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
-      </details>
+          </details>
   </div>
 
 </div>
+
 
 <div class="doc doc-object doc-function">
 
 
 
+
 <h3 id="win_mtp.dialog.AskDirectory.body" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">body</span><span class="p">(</span><span class="n">_</span><span class="p">)</span></code>
+          <code class="highlight language-python"><span class="n">body</span><span class="p">(</span><span class="n">_</span><span class="p">)</span></code>
 
 </h3>
 
@@ -885,9 +918,9 @@ wpd_device: The PortableDevice that was selected</p>
   
       <p>Create body</p>
 
-      <details class="quote">
-        <summary>Source code in <code>win_mtp\dialog.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">113</span>
+          <details class="quote">
+            <summary>Source code in <code>win_mtp\dialog.py</code></summary>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">113</span>
 <span class="normal">114</span>
 <span class="normal">115</span>
 <span class="normal">116</span>
@@ -935,17 +968,19 @@ wpd_device: The PortableDevice that was selected</p>
     <span class="c1"># place the Treeview widget on the root window</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_tree</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">side</span><span class="o">=</span><span class="n">tkinter</span><span class="o">.</span><span class="n">TOP</span><span class="p">,</span> <span class="n">fill</span><span class="o">=</span><span class="n">tkinter</span><span class="o">.</span><span class="n">BOTH</span><span class="p">,</span> <span class="n">expand</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
-      </details>
+          </details>
   </div>
 
 </div>
+
 
 <div class="doc doc-object doc-function">
 
 
 
+
 <h3 id="win_mtp.dialog.AskDirectory.buttonbox" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">buttonbox</span><span class="p">()</span></code>
+          <code class="highlight language-python"><span class="n">buttonbox</span><span class="p">()</span></code>
 
 </h3>
 
@@ -954,9 +989,9 @@ wpd_device: The PortableDevice that was selected</p>
   
       <p>Create own buttons</p>
 
-      <details class="quote">
-        <summary>Source code in <code>win_mtp\dialog.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">100</span>
+          <details class="quote">
+            <summary>Source code in <code>win_mtp\dialog.py</code></summary>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">100</span>
 <span class="normal">101</span>
 <span class="normal">102</span>
 <span class="normal">103</span>
@@ -980,7 +1015,7 @@ wpd_device: The PortableDevice that was selected</p>
     <span class="n">but</span><span class="o">.</span><span class="n">focus_set</span><span class="p">()</span>
     <span class="n">but</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="s2">&quot;&lt;Return&gt;&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ok</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
-      </details>
+          </details>
   </div>
 
 </div>
@@ -1038,10 +1073,10 @@ wpd_device: The PortableDevice that was selected</p>
       <div class="md-dialog__inner md-typeset"></div>
     </div>
     
-    <script id="__config" type="application/json">{"base": ".", "features": [], "search": "assets/javascripts/workers/search.74e28a9f.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": ".", "features": [], "search": "assets/javascripts/workers/search.dfff1995.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="assets/javascripts/bundle.220ee61c.min.js"></script>
+      <script src="assets/javascripts/bundle.78eede0e.min.js"></script>
       
     
   </body>

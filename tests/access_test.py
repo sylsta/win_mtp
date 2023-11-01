@@ -5,6 +5,7 @@ Test program
 import locale
 import os
 import time
+import psutil
 
 from context import win_mtp  # pylint: disable=import-error
 
@@ -53,20 +54,29 @@ if __name__ == "__main__":
         else:
             print(f"{root} not found")
 
+    def memory() -> int:
+        """get used memory"""
+        process = psutil.Process(os.getpid())
+        return process.memory_info().rss
+
     def main() -> None:
         """Hauptprogramm"""
         locale.setlocale(locale.LC_ALL, "")
         starttime = time.time()
         print("Devices:")
-        for dev in win_mtp.access.get_portable_devices():
-            device_name, device_desc = dev.get_description()
-            print(f"  {device_name}: {device_desc}")
-            cont = dev.get_content()
-            values = cont.get_properties()
-            print(f"  Serial-No.: {values[6]}")
-            print("Content:")
-            display_childs_with_walk(dev, device_name)
-            # display_child(dev, device_name)
+        devicelist = win_mtp.access.get_portable_devices()
+        for _ in range(1000000):
+            # print(memory())
+            time.sleep(0.01)
+            for dev in devicelist:
+                device_name, device_desc = dev.get_description()
+                print(f"  {device_name}: {device_desc}")
+                cont = dev.get_content()
+                values = cont.get_properties()
+                print(f"  Serial-No.: {values[6]}")
+                print("Content:")
+                display_childs_with_walk(dev, device_name)
+                display_child(dev, device_name)
         print(f"Runtime: {time.time() - starttime}")
 
     main()

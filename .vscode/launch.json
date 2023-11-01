@@ -1,0 +1,12 @@
+{
+    "configurations": [
+      {
+        "name": "Python: access_test.py",
+        "type": "python",
+        "request": "launch",
+        "program": "${workspaceFolder}/tests/access_test.py",
+        "console": "integratedTerminal",
+        "justMyCode": false
+      },
+    ]
+  }

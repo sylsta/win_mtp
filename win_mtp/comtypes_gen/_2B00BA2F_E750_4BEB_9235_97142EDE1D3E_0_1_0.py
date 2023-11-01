@@ -1,6 +1,15 @@
 # -*- coding: mbcs -*-
 
 from ctypes import *
+import win_mtp.comtypes_gen._00020430_0000_0000_C000_000000000046_0_2_0
+from comtypes import _check_version, BSTR, CoClass, COMMETHOD, GUID, IUnknown
+from ctypes import HRESULT
+from ctypes.wintypes import (
+    _FILETIME, _LARGE_INTEGER, _ULARGE_INTEGER, DWORD, VARIANT_BOOL
+)
+from comtypes.automation import (
+    DECIMAL, IDispatch, SCODE, tagINVOKEKIND, VARIANT
+)
 from comtypes.typeinfo import (
     IRecordInfo, ITypeComp, ITypeInfo, ITypeLib, tagARRAYDESC,
     tagCALLCONV, tagDESCKIND, tagELEMDESC, tagFUNCDESC, tagFUNCKIND,
@@ -8,311 +17,62 @@ from comtypes.typeinfo import (
     tagSYSKIND, tagTLIBATTR, tagTYPEATTR, tagTYPEDESC, tagTYPEKIND,
     tagVARDESC, tagVARKIND, ULONG_PTR
 )
-from ctypes.wintypes import (
-    _FILETIME, _LARGE_INTEGER, _ULARGE_INTEGER, DWORD, VARIANT_BOOL
-)
-from comtypes.automation import (
-    DECIMAL, IDispatch, SCODE, tagINVOKEKIND, VARIANT
-)
-from comtypes import _check_version, BSTR, CoClass, COMMETHOD, GUID, IUnknown
-import win_mtp.comtypes_gen._00020430_0000_0000_C000_000000000046_0_2_0
-from ctypes import HRESULT
 
 _lcid = 0  # change this if required
 typelib_path = 'C:\\Windows\\System32\\PortableDeviceTypes.dll'
-STRING = c_char_p
 WSTRING = c_wchar_p
+STRING = c_char_p
 
 
 
-class __MIDL_IOleAutomationTypes_0005(Union):
-    pass
-
-
-__MIDL_IOleAutomationTypes_0005._fields_ = [
-    ('lptdesc', POINTER(tagTYPEDESC)),
-    ('lpadesc', POINTER(tagARRAYDESC)),
-    ('hreftype', c_ulong),
-]
-
-assert sizeof(__MIDL_IOleAutomationTypes_0005) == 8, sizeof(__MIDL_IOleAutomationTypes_0005)
-assert alignment(__MIDL_IOleAutomationTypes_0005) == 8, alignment(__MIDL_IOleAutomationTypes_0005)
-
-
-class __MIDL_IOleAutomationTypes_0004(Union):
-    pass
-
-
-class _FLAGGED_WORD_BLOB(Structure):
-    pass
-
-
-class _wireSAFEARRAY(Structure):
-    pass
-
-
-class _wireBRECORD(Structure):
-    pass
-
-
-class _wireVARIANT(Structure):
-    pass
-
-
-__MIDL_IOleAutomationTypes_0004._fields_ = [
-    ('llVal', c_longlong),
-    ('lVal', c_int),
-    ('bVal', c_ubyte),
-    ('iVal', c_short),
-    ('fltVal', c_float),
-    ('dblVal', c_double),
-    ('boolVal', VARIANT_BOOL),
-    ('scode', SCODE),
-    ('cyVal', c_longlong),
-    ('date', c_double),
-    ('bstrVal', POINTER(_FLAGGED_WORD_BLOB)),
-    ('punkVal', POINTER(IUnknown)),
-    ('pdispVal', POINTER(IDispatch)),
-    ('parray', POINTER(POINTER(_wireSAFEARRAY))),
-    ('brecVal', POINTER(_wireBRECORD)),
-    ('pbVal', POINTER(c_ubyte)),
-    ('piVal', POINTER(c_short)),
-    ('plVal', POINTER(c_int)),
-    ('pllVal', POINTER(c_longlong)),
-    ('pfltVal', POINTER(c_float)),
-    ('pdblVal', POINTER(c_double)),
-    ('pboolVal', POINTER(VARIANT_BOOL)),
-    ('pscode', POINTER(SCODE)),
-    ('pcyVal', POINTER(c_longlong)),
-    ('pdate', POINTER(c_double)),
-    ('pbstrVal', POINTER(POINTER(_FLAGGED_WORD_BLOB))),
-    ('ppunkVal', POINTER(POINTER(IUnknown))),
-    ('ppdispVal', POINTER(POINTER(IDispatch))),
-    ('pparray', POINTER(POINTER(POINTER(_wireSAFEARRAY)))),
-    ('pvarVal', POINTER(POINTER(_wireVARIANT))),
-    ('cVal', c_char),
-    ('uiVal', c_ushort),
-    ('ulVal', c_ulong),
-    ('ullVal', c_ulonglong),
-    ('intVal', c_int),
-    ('uintVal', c_uint),
-    ('decVal', DECIMAL),
-    ('pdecVal', POINTER(DECIMAL)),
-    ('pcVal', STRING),
-    ('puiVal', POINTER(c_ushort)),
-    ('pulVal', POINTER(c_ulong)),
-    ('pullVal', POINTER(c_ulonglong)),
-    ('pintVal', POINTER(c_int)),
-    ('puintVal', POINTER(c_uint)),
-]
-
-assert sizeof(__MIDL_IOleAutomationTypes_0004) == 16, sizeof(__MIDL_IOleAutomationTypes_0004)
-assert alignment(__MIDL_IOleAutomationTypes_0004) == 8, alignment(__MIDL_IOleAutomationTypes_0004)
-
-
-class _HYPER_SIZEDARR(Structure):
-    pass
-
-
-_HYPER_SIZEDARR._fields_ = [
-    ('clSize', c_ulong),
-    ('pData', POINTER(c_longlong)),
-]
-
-assert sizeof(_HYPER_SIZEDARR) == 16, sizeof(_HYPER_SIZEDARR)
-assert alignment(_HYPER_SIZEDARR) == 8, alignment(_HYPER_SIZEDARR)
-
-
-class tagCALPSTR(Structure):
-    pass
-
-
-tagCALPSTR._fields_ = [
-    ('cElems', c_ulong),
-    ('pElems', POINTER(STRING)),
-]
-
-assert sizeof(tagCALPSTR) == 16, sizeof(tagCALPSTR)
-assert alignment(tagCALPSTR) == 8, alignment(tagCALPSTR)
-
-
-class IPortableDevicePropVariantCollection(win_mtp.comtypes_gen._00020430_0000_0000_C000_000000000046_0_2_0.IUnknown):
-    """IPortableDevicePropVariantCollection Interface"""
+class ISequentialStream(win_mtp.comtypes_gen._00020430_0000_0000_C000_000000000046_0_2_0.IUnknown):
     _case_insensitive_ = True
-    _iid_ = GUID('{89B2E422-4F1B-4316-BCEF-A44AFEA83EB3}')
+    _iid_ = GUID('{0C733A30-2A1C-11CE-ADE5-00AA0044773D}')
     _idlflags_ = []
+
+
+ISequentialStream._methods_ = [
+    COMMETHOD(
+        [],
+        HRESULT,
+        'RemoteRead',
+        (['out'], POINTER(c_ubyte), 'pv'),
+        (['in'], c_ulong, 'cb'),
+        (['out'], POINTER(c_ulong), 'pcbRead')
+    ),
+    COMMETHOD(
+        [],
+        HRESULT,
+        'RemoteWrite',
+        (['in'], POINTER(c_ubyte), 'pv'),
+        (['in'], c_ulong, 'cb'),
+        (['out'], POINTER(c_ulong), 'pcbWritten')
+    ),
+]
+
+################################################################
+# code template for ISequentialStream implementation
+# class ISequentialStream_Impl(object):
+#     def RemoteRead(self, cb):
+#         '-no docstring-'
+#         #return pv, pcbRead
+#
+#     def RemoteWrite(self, pv, cb):
+#         '-no docstring-'
+#         #return pcbWritten
+#
 
 
 class tag_inner_PROPVARIANT(Structure):
     pass
 
 
-IPortableDevicePropVariantCollection._methods_ = [
-    COMMETHOD(
-        [],
-        HRESULT,
-        'GetCount',
-        (['in'], POINTER(c_ulong), 'pcElems')
-    ),
-    COMMETHOD(
-        [],
-        HRESULT,
-        'GetAt',
-        (['in'], c_ulong, 'dwIndex'),
-        (['in'], POINTER(tag_inner_PROPVARIANT), 'pValue')
-    ),
-    COMMETHOD(
-        [],
-        HRESULT,
-        'Add',
-        (['in'], POINTER(tag_inner_PROPVARIANT), 'pValue')
-    ),
-    COMMETHOD(
-        [],
-        HRESULT,
-        'GetType',
-        (['out'], POINTER(c_ushort), 'pvt')
-    ),
-    COMMETHOD(
-        [],
-        HRESULT,
-        'ChangeType',
-        (['in'], c_ushort, 'vt')
-    ),
-    COMMETHOD([], HRESULT, 'Clear'),
-    COMMETHOD(
-        [],
-        HRESULT,
-        'RemoveAt',
-        (['in'], c_ulong, 'dwIndex')
-    ),
-]
-
-################################################################
-# code template for IPortableDevicePropVariantCollection implementation
-# class IPortableDevicePropVariantCollection_Impl(object):
-#     def GetCount(self, pcElems):
-#         '-no docstring-'
-#         #return 
-#
-#     def GetAt(self, dwIndex, pValue):
-#         '-no docstring-'
-#         #return 
-#
-#     def Add(self, pValue):
-#         '-no docstring-'
-#         #return 
-#
-#     def GetType(self):
-#         '-no docstring-'
-#         #return pvt
-#
-#     def ChangeType(self, vt):
-#         '-no docstring-'
-#         #return 
-#
-#     def Clear(self):
-#         '-no docstring-'
-#         #return 
-#
-#     def RemoveAt(self, dwIndex):
-#         '-no docstring-'
-#         #return 
-#
-
-
-class IPortableDeviceValuesCollection(win_mtp.comtypes_gen._00020430_0000_0000_C000_000000000046_0_2_0.IUnknown):
-    """IPortableDeviceValuesCollection Interface"""
-    _case_insensitive_ = True
-    _iid_ = GUID('{6E3F2D79-4E07-48C4-8208-D8C2E5AF4A99}')
-    _idlflags_ = []
-
-
-class IPortableDeviceValues(win_mtp.comtypes_gen._00020430_0000_0000_C000_000000000046_0_2_0.IUnknown):
-    """IPortableDeviceValues Interface"""
-    _case_insensitive_ = True
-    _iid_ = GUID('{6848F6F2-3155-4F86-B6F5-263EEEAB3143}')
-    _idlflags_ = []
-
-
-IPortableDeviceValuesCollection._methods_ = [
-    COMMETHOD(
-        [],
-        HRESULT,
-        'GetCount',
-        (['in'], POINTER(c_ulong), 'pcElems')
-    ),
-    COMMETHOD(
-        [],
-        HRESULT,
-        'GetAt',
-        (['in'], c_ulong, 'dwIndex'),
-        (['out'], POINTER(POINTER(IPortableDeviceValues)), 'ppValues')
-    ),
-    COMMETHOD(
-        [],
-        HRESULT,
-        'Add',
-        (['in'], POINTER(IPortableDeviceValues), 'pValues')
-    ),
-    COMMETHOD([], HRESULT, 'Clear'),
-    COMMETHOD(
-        [],
-        HRESULT,
-        'RemoveAt',
-        (['in'], c_ulong, 'dwIndex')
-    ),
-]
-
-################################################################
-# code template for IPortableDeviceValuesCollection implementation
-# class IPortableDeviceValuesCollection_Impl(object):
-#     def GetCount(self, pcElems):
-#         '-no docstring-'
-#         #return 
-#
-#     def GetAt(self, dwIndex):
-#         '-no docstring-'
-#         #return ppValues
-#
-#     def Add(self, pValues):
-#         '-no docstring-'
-#         #return 
-#
-#     def Clear(self):
-#         '-no docstring-'
-#         #return 
-#
-#     def RemoveAt(self, dwIndex):
-#         '-no docstring-'
-#         #return 
-#
-
-
-class tagCAC(Structure):
+class __MIDL___MIDL_itf_PortableDeviceTypes_0003_0017_0001(Union):
     pass
 
 
-tagCAC._fields_ = [
-    ('cElems', c_ulong),
-    ('pElems', STRING),
-]
-
-assert sizeof(tagCAC) == 16, sizeof(tagCAC)
-assert alignment(tagCAC) == 8, alignment(tagCAC)
-
-
-class tagCABOOL(Structure):
+class tagCLIPDATA(Structure):
     pass
-
-
-tagCABOOL._fields_ = [
-    ('cElems', c_ulong),
-    ('pElems', POINTER(VARIANT_BOOL)),
-]
-
-assert sizeof(tagCABOOL) == 16, sizeof(tagCABOOL)
-assert alignment(tagCABOOL) == 8, alignment(tagCABOOL)
 
 
 class tagBSTRBLOB(Structure):
@@ -328,37 +88,17 @@ assert sizeof(tagBSTRBLOB) == 16, sizeof(tagBSTRBLOB)
 assert alignment(tagBSTRBLOB) == 8, alignment(tagBSTRBLOB)
 
 
-class _wireSAFEARR_BSTR(Structure):
+class tagBLOB(Structure):
     pass
 
 
-_wireSAFEARR_BSTR._fields_ = [
-    ('Size', c_ulong),
-    ('aBstr', POINTER(POINTER(_FLAGGED_WORD_BLOB))),
+tagBLOB._fields_ = [
+    ('cbSize', c_ulong),
+    ('pBlobData', POINTER(c_ubyte)),
 ]
 
-assert sizeof(_wireSAFEARR_BSTR) == 16, sizeof(_wireSAFEARR_BSTR)
-assert alignment(_wireSAFEARR_BSTR) == 8, alignment(_wireSAFEARR_BSTR)
-
-_wireBRECORD._fields_ = [
-    ('fFlags', c_ulong),
-    ('clSize', c_ulong),
-    ('pRecInfo', POINTER(IRecordInfo)),
-    ('pRecord', POINTER(c_ubyte)),
-]
-
-assert sizeof(_wireBRECORD) == 24, sizeof(_wireBRECORD)
-assert alignment(_wireBRECORD) == 8, alignment(_wireBRECORD)
-
-
-class tagVersionedStream(Structure):
-    pass
-
-
-class ISequentialStream(win_mtp.comtypes_gen._00020430_0000_0000_C000_000000000046_0_2_0.IUnknown):
-    _case_insensitive_ = True
-    _iid_ = GUID('{0C733A30-2A1C-11CE-ADE5-00AA0044773D}')
-    _idlflags_ = []
+assert sizeof(tagBLOB) == 16, sizeof(tagBLOB)
+assert alignment(tagBLOB) == 8, alignment(tagBLOB)
 
 
 class IStream(ISequentialStream):
@@ -367,175 +107,34 @@ class IStream(ISequentialStream):
     _idlflags_ = []
 
 
-tagVersionedStream._fields_ = [
-    ('guidVersion', win_mtp.comtypes_gen._00020430_0000_0000_C000_000000000046_0_2_0.GUID),
-    ('pStream', POINTER(IStream)),
-]
-
-assert sizeof(tagVersionedStream) == 24, sizeof(tagVersionedStream)
-assert alignment(tagVersionedStream) == 8, alignment(tagVersionedStream)
+class IStorage(win_mtp.comtypes_gen._00020430_0000_0000_C000_000000000046_0_2_0.IUnknown):
+    _case_insensitive_ = True
+    _iid_ = GUID('{0000000B-0000-0000-C000-000000000046}')
+    _idlflags_ = []
 
 
-class _wireSAFEARRAY_UNION(Structure):
+class tagVersionedStream(Structure):
     pass
 
 
-class __MIDL_IOleAutomationTypes_0001(Union):
+class _wireSAFEARRAY(Structure):
     pass
 
 
-class _wireSAFEARR_UNKNOWN(Structure):
+wirePSAFEARRAY = POINTER(POINTER(_wireSAFEARRAY))
+
+
+class tagCAC(Structure):
     pass
 
 
-_wireSAFEARR_UNKNOWN._fields_ = [
-    ('Size', c_ulong),
-    ('apUnknown', POINTER(POINTER(IUnknown))),
-]
-
-assert sizeof(_wireSAFEARR_UNKNOWN) == 16, sizeof(_wireSAFEARR_UNKNOWN)
-assert alignment(_wireSAFEARR_UNKNOWN) == 8, alignment(_wireSAFEARR_UNKNOWN)
-
-
-class _wireSAFEARR_DISPATCH(Structure):
-    pass
-
-
-_wireSAFEARR_DISPATCH._fields_ = [
-    ('Size', c_ulong),
-    ('apDispatch', POINTER(POINTER(IDispatch))),
-]
-
-assert sizeof(_wireSAFEARR_DISPATCH) == 16, sizeof(_wireSAFEARR_DISPATCH)
-assert alignment(_wireSAFEARR_DISPATCH) == 8, alignment(_wireSAFEARR_DISPATCH)
-
-
-class _wireSAFEARR_VARIANT(Structure):
-    pass
-
-
-_wireSAFEARR_VARIANT._fields_ = [
-    ('Size', c_ulong),
-    ('aVariant', POINTER(POINTER(_wireVARIANT))),
-]
-
-assert sizeof(_wireSAFEARR_VARIANT) == 16, sizeof(_wireSAFEARR_VARIANT)
-assert alignment(_wireSAFEARR_VARIANT) == 8, alignment(_wireSAFEARR_VARIANT)
-
-
-class _wireSAFEARR_BRECORD(Structure):
-    pass
-
-
-_wireSAFEARR_BRECORD._fields_ = [
-    ('Size', c_ulong),
-    ('aRecord', POINTER(POINTER(_wireBRECORD))),
-]
-
-assert sizeof(_wireSAFEARR_BRECORD) == 16, sizeof(_wireSAFEARR_BRECORD)
-assert alignment(_wireSAFEARR_BRECORD) == 8, alignment(_wireSAFEARR_BRECORD)
-
-
-class _wireSAFEARR_HAVEIID(Structure):
-    pass
-
-
-_wireSAFEARR_HAVEIID._fields_ = [
-    ('Size', c_ulong),
-    ('apUnknown', POINTER(POINTER(IUnknown))),
-    ('iid', win_mtp.comtypes_gen._00020430_0000_0000_C000_000000000046_0_2_0.GUID),
-]
-
-assert sizeof(_wireSAFEARR_HAVEIID) == 32, sizeof(_wireSAFEARR_HAVEIID)
-assert alignment(_wireSAFEARR_HAVEIID) == 8, alignment(_wireSAFEARR_HAVEIID)
-
-
-class _BYTE_SIZEDARR(Structure):
-    pass
-
-
-_BYTE_SIZEDARR._fields_ = [
-    ('clSize', c_ulong),
-    ('pData', POINTER(c_ubyte)),
-]
-
-assert sizeof(_BYTE_SIZEDARR) == 16, sizeof(_BYTE_SIZEDARR)
-assert alignment(_BYTE_SIZEDARR) == 8, alignment(_BYTE_SIZEDARR)
-
-
-class _SHORT_SIZEDARR(Structure):
-    pass
-
-
-_SHORT_SIZEDARR._fields_ = [
-    ('clSize', c_ulong),
-    ('pData', POINTER(c_ushort)),
-]
-
-assert sizeof(_SHORT_SIZEDARR) == 16, sizeof(_SHORT_SIZEDARR)
-assert alignment(_SHORT_SIZEDARR) == 8, alignment(_SHORT_SIZEDARR)
-
-
-class _LONG_SIZEDARR(Structure):
-    pass
-
-
-_LONG_SIZEDARR._fields_ = [
-    ('clSize', c_ulong),
-    ('pData', POINTER(c_ulong)),
-]
-
-assert sizeof(_LONG_SIZEDARR) == 16, sizeof(_LONG_SIZEDARR)
-assert alignment(_LONG_SIZEDARR) == 8, alignment(_LONG_SIZEDARR)
-
-__MIDL_IOleAutomationTypes_0001._fields_ = [
-    ('BstrStr', _wireSAFEARR_BSTR),
-    ('UnknownStr', _wireSAFEARR_UNKNOWN),
-    ('DispatchStr', _wireSAFEARR_DISPATCH),
-    ('VariantStr', _wireSAFEARR_VARIANT),
-    ('RecordStr', _wireSAFEARR_BRECORD),
-    ('HaveIidStr', _wireSAFEARR_HAVEIID),
-    ('ByteStr', _BYTE_SIZEDARR),
-    ('WordStr', _SHORT_SIZEDARR),
-    ('LongStr', _LONG_SIZEDARR),
-    ('HyperStr', _HYPER_SIZEDARR),
-]
-
-assert sizeof(__MIDL_IOleAutomationTypes_0001) == 32, sizeof(__MIDL_IOleAutomationTypes_0001)
-assert alignment(__MIDL_IOleAutomationTypes_0001) == 8, alignment(__MIDL_IOleAutomationTypes_0001)
-
-_wireSAFEARRAY_UNION._fields_ = [
-    ('sfType', c_ulong),
-    ('u', __MIDL_IOleAutomationTypes_0001),
-]
-
-assert sizeof(_wireSAFEARRAY_UNION) == 40, sizeof(_wireSAFEARRAY_UNION)
-assert alignment(_wireSAFEARRAY_UNION) == 8, alignment(_wireSAFEARRAY_UNION)
-
-_wireSAFEARRAY._fields_ = [
-    ('cDims', c_ushort),
-    ('fFeatures', c_ushort),
-    ('cbElements', c_ulong),
-    ('cLocks', c_ulong),
-    ('uArrayStructs', _wireSAFEARRAY_UNION),
-    ('rgsabound', POINTER(tagSAFEARRAYBOUND)),
-]
-
-assert sizeof(_wireSAFEARRAY) == 64, sizeof(_wireSAFEARRAY)
-assert alignment(_wireSAFEARRAY) == 8, alignment(_wireSAFEARRAY)
-
-
-class tagCALPWSTR(Structure):
-    pass
-
-
-tagCALPWSTR._fields_ = [
+tagCAC._fields_ = [
     ('cElems', c_ulong),
-    ('pElems', POINTER(WSTRING)),
+    ('pElems', STRING),
 ]
 
-assert sizeof(tagCALPWSTR) == 16, sizeof(tagCALPWSTR)
-assert alignment(tagCALPWSTR) == 8, alignment(tagCALPWSTR)
+assert sizeof(tagCAC) == 16, sizeof(tagCAC)
+assert alignment(tagCAC) == 8, alignment(tagCAC)
 
 
 class tagCAUB(Structure):
@@ -551,10 +150,121 @@ assert sizeof(tagCAUB) == 16, sizeof(tagCAUB)
 assert alignment(tagCAUB) == 8, alignment(tagCAUB)
 
 
-class Library(object):
-    """PortableDeviceTypes 1.0 Type Library"""
-    name = 'PortableDeviceTypesLib'
-    _reg_typelib_ = ('{2B00BA2F-E750-4BEB-9235-97142EDE1D3E}', 1, 0)
+class tagCAI(Structure):
+    pass
+
+
+tagCAI._fields_ = [
+    ('cElems', c_ulong),
+    ('pElems', POINTER(c_short)),
+]
+
+assert sizeof(tagCAI) == 16, sizeof(tagCAI)
+assert alignment(tagCAI) == 8, alignment(tagCAI)
+
+
+class tagCAUI(Structure):
+    pass
+
+
+tagCAUI._fields_ = [
+    ('cElems', c_ulong),
+    ('pElems', POINTER(c_ushort)),
+]
+
+assert sizeof(tagCAUI) == 16, sizeof(tagCAUI)
+assert alignment(tagCAUI) == 8, alignment(tagCAUI)
+
+
+class tagCAL(Structure):
+    pass
+
+
+tagCAL._fields_ = [
+    ('cElems', c_ulong),
+    ('pElems', POINTER(c_int)),
+]
+
+assert sizeof(tagCAL) == 16, sizeof(tagCAL)
+assert alignment(tagCAL) == 8, alignment(tagCAL)
+
+
+class tagCAUL(Structure):
+    pass
+
+
+tagCAUL._fields_ = [
+    ('cElems', c_ulong),
+    ('pElems', POINTER(c_ulong)),
+]
+
+assert sizeof(tagCAUL) == 16, sizeof(tagCAUL)
+assert alignment(tagCAUL) == 8, alignment(tagCAUL)
+
+
+class tagCAH(Structure):
+    pass
+
+
+tagCAH._fields_ = [
+    ('cElems', c_ulong),
+    ('pElems', POINTER(_LARGE_INTEGER)),
+]
+
+assert sizeof(tagCAH) == 16, sizeof(tagCAH)
+assert alignment(tagCAH) == 8, alignment(tagCAH)
+
+
+class tagCAUH(Structure):
+    pass
+
+
+tagCAUH._fields_ = [
+    ('cElems', c_ulong),
+    ('pElems', POINTER(_ULARGE_INTEGER)),
+]
+
+assert sizeof(tagCAUH) == 16, sizeof(tagCAUH)
+assert alignment(tagCAUH) == 8, alignment(tagCAUH)
+
+
+class tagCAFLT(Structure):
+    pass
+
+
+tagCAFLT._fields_ = [
+    ('cElems', c_ulong),
+    ('pElems', POINTER(c_float)),
+]
+
+assert sizeof(tagCAFLT) == 16, sizeof(tagCAFLT)
+assert alignment(tagCAFLT) == 8, alignment(tagCAFLT)
+
+
+class tagCADBL(Structure):
+    pass
+
+
+tagCADBL._fields_ = [
+    ('cElems', c_ulong),
+    ('pElems', POINTER(c_double)),
+]
+
+assert sizeof(tagCADBL) == 16, sizeof(tagCADBL)
+assert alignment(tagCADBL) == 8, alignment(tagCADBL)
+
+
+class tagCABOOL(Structure):
+    pass
+
+
+tagCABOOL._fields_ = [
+    ('cElems', c_ulong),
+    ('pElems', POINTER(VARIANT_BOOL)),
+]
+
+assert sizeof(tagCABOOL) == 16, sizeof(tagCABOOL)
+assert alignment(tagCABOOL) == 8, alignment(tagCABOOL)
 
 
 class tagCASCODE(Structure):
@@ -570,18 +280,121 @@ assert sizeof(tagCASCODE) == 16, sizeof(tagCASCODE)
 assert alignment(tagCASCODE) == 8, alignment(tagCASCODE)
 
 
-class tagCLIPDATA(Structure):
+class tagCACY(Structure):
     pass
 
 
-tagCLIPDATA._fields_ = [
-    ('cbSize', c_ulong),
-    ('ulClipFmt', c_int),
-    ('pClipData', POINTER(c_ubyte)),
+tagCACY._fields_ = [
+    ('cElems', c_ulong),
+    ('pElems', POINTER(c_longlong)),
 ]
 
-assert sizeof(tagCLIPDATA) == 16, sizeof(tagCLIPDATA)
-assert alignment(tagCLIPDATA) == 8, alignment(tagCLIPDATA)
+assert sizeof(tagCACY) == 16, sizeof(tagCACY)
+assert alignment(tagCACY) == 8, alignment(tagCACY)
+
+
+class tagCADATE(Structure):
+    pass
+
+
+tagCADATE._fields_ = [
+    ('cElems', c_ulong),
+    ('pElems', POINTER(c_double)),
+]
+
+assert sizeof(tagCADATE) == 16, sizeof(tagCADATE)
+assert alignment(tagCADATE) == 8, alignment(tagCADATE)
+
+
+class tagCAFILETIME(Structure):
+    pass
+
+
+tagCAFILETIME._fields_ = [
+    ('cElems', c_ulong),
+    ('pElems', POINTER(_FILETIME)),
+]
+
+assert sizeof(tagCAFILETIME) == 16, sizeof(tagCAFILETIME)
+assert alignment(tagCAFILETIME) == 8, alignment(tagCAFILETIME)
+
+
+class tagCACLSID(Structure):
+    pass
+
+
+tagCACLSID._fields_ = [
+    ('cElems', c_ulong),
+    ('pElems', POINTER(win_mtp.comtypes_gen._00020430_0000_0000_C000_000000000046_0_2_0.GUID)),
+]
+
+assert sizeof(tagCACLSID) == 16, sizeof(tagCACLSID)
+assert alignment(tagCACLSID) == 8, alignment(tagCACLSID)
+
+
+class tagCACLIPDATA(Structure):
+    pass
+
+
+tagCACLIPDATA._fields_ = [
+    ('cElems', c_ulong),
+    ('pElems', POINTER(tagCLIPDATA)),
+]
+
+assert sizeof(tagCACLIPDATA) == 16, sizeof(tagCACLIPDATA)
+assert alignment(tagCACLIPDATA) == 8, alignment(tagCACLIPDATA)
+
+
+class tagCABSTR(Structure):
+    pass
+
+
+tagCABSTR._fields_ = [
+    ('cElems', c_ulong),
+    ('pElems', POINTER(BSTR)),
+]
+
+assert sizeof(tagCABSTR) == 16, sizeof(tagCABSTR)
+assert alignment(tagCABSTR) == 8, alignment(tagCABSTR)
+
+
+class tagCABSTRBLOB(Structure):
+    pass
+
+
+tagCABSTRBLOB._fields_ = [
+    ('cElems', c_ulong),
+    ('pElems', POINTER(tagBSTRBLOB)),
+]
+
+assert sizeof(tagCABSTRBLOB) == 16, sizeof(tagCABSTRBLOB)
+assert alignment(tagCABSTRBLOB) == 8, alignment(tagCABSTRBLOB)
+
+
+class tagCALPSTR(Structure):
+    pass
+
+
+tagCALPSTR._fields_ = [
+    ('cElems', c_ulong),
+    ('pElems', POINTER(STRING)),
+]
+
+assert sizeof(tagCALPSTR) == 16, sizeof(tagCALPSTR)
+assert alignment(tagCALPSTR) == 8, alignment(tagCALPSTR)
+
+
+class tagCALPWSTR(Structure):
+    pass
+
+
+tagCALPWSTR._fields_ = [
+    ('cElems', c_ulong),
+    ('pElems', POINTER(WSTRING)),
+]
+
+assert sizeof(tagCALPWSTR) == 16, sizeof(tagCALPWSTR)
+assert alignment(tagCALPWSTR) == 8, alignment(tagCALPWSTR)
 
 
 class tagCAPROPVARIANT(Structure):
@@ -596,15 +409,181 @@ tagCAPROPVARIANT._fields_ = [
 assert sizeof(tagCAPROPVARIANT) == 16, sizeof(tagCAPROPVARIANT)
 assert alignment(tagCAPROPVARIANT) == 8, alignment(tagCAPROPVARIANT)
 
+__MIDL___MIDL_itf_PortableDeviceTypes_0003_0017_0001._fields_ = [
+    ('cVal', c_char),
+    ('bVal', c_ubyte),
+    ('iVal', c_short),
+    ('uiVal', c_ushort),
+    ('lVal', c_int),
+    ('ulVal', c_ulong),
+    ('intVal', c_int),
+    ('uintVal', c_uint),
+    ('hVal', _LARGE_INTEGER),
+    ('uhVal', _ULARGE_INTEGER),
+    ('fltVal', c_float),
+    ('dblVal', c_double),
+    ('boolVal', VARIANT_BOOL),
+    ('__OBSOLETE__VARIANT_BOOL', VARIANT_BOOL),
+    ('scode', SCODE),
+    ('cyVal', c_longlong),
+    ('date', c_double),
+    ('filetime', _FILETIME),
+    ('puuid', POINTER(win_mtp.comtypes_gen._00020430_0000_0000_C000_000000000046_0_2_0.GUID)),
+    ('pClipData', POINTER(tagCLIPDATA)),
+    ('bstrVal', BSTR),
+    ('bstrblobVal', tagBSTRBLOB),
+    ('blob', tagBLOB),
+    ('pszVal', STRING),
+    ('pwszVal', WSTRING),
+    ('punkVal', POINTER(IUnknown)),
+    ('pdispVal', POINTER(IDispatch)),
+    ('pStream', POINTER(IStream)),
+    ('pStorage', POINTER(IStorage)),
+    ('pVersionedStream', POINTER(tagVersionedStream)),
+    ('parray', wirePSAFEARRAY),
+    ('cac', tagCAC),
+    ('caub', tagCAUB),
+    ('cai', tagCAI),
+    ('caui', tagCAUI),
+    ('cal', tagCAL),
+    ('caul', tagCAUL),
+    ('cah', tagCAH),
+    ('cauh', tagCAUH),
+    ('caflt', tagCAFLT),
+    ('cadbl', tagCADBL),
+    ('cabool', tagCABOOL),
+    ('cascode', tagCASCODE),
+    ('cacy', tagCACY),
+    ('cadate', tagCADATE),
+    ('cafiletime', tagCAFILETIME),
+    ('cauuid', tagCACLSID),
+    ('caclipdata', tagCACLIPDATA),
+    ('cabstr', tagCABSTR),
+    ('cabstrblob', tagCABSTRBLOB),
+    ('calpstr', tagCALPSTR),
+    ('calpwstr', tagCALPWSTR),
+    ('capropvar', tagCAPROPVARIANT),
+    ('pcVal', STRING),
+    ('pbVal', POINTER(c_ubyte)),
+    ('piVal', POINTER(c_short)),
+    ('puiVal', POINTER(c_ushort)),
+    ('plVal', POINTER(c_int)),
+    ('pulVal', POINTER(c_ulong)),
+    ('pintVal', POINTER(c_int)),
+    ('puintVal', POINTER(c_uint)),
+    ('pfltVal', POINTER(c_float)),
+    ('pdblVal', POINTER(c_double)),
+    ('pboolVal', POINTER(VARIANT_BOOL)),
+    ('pdecVal', POINTER(DECIMAL)),
+    ('pscode', POINTER(SCODE)),
+    ('pcyVal', POINTER(c_longlong)),
+    ('pdate', POINTER(c_double)),
+    ('pbstrVal', POINTER(BSTR)),
+    ('ppunkVal', POINTER(POINTER(IUnknown))),
+    ('ppdispVal', POINTER(POINTER(IDispatch))),
+    ('pparray', POINTER(wirePSAFEARRAY)),
+    ('pvarVal', POINTER(tag_inner_PROPVARIANT)),
+]
+
+assert sizeof(__MIDL___MIDL_itf_PortableDeviceTypes_0003_0017_0001) == 16, sizeof(__MIDL___MIDL_itf_PortableDeviceTypes_0003_0017_0001)
+assert alignment(__MIDL___MIDL_itf_PortableDeviceTypes_0003_0017_0001) == 8, alignment(__MIDL___MIDL_itf_PortableDeviceTypes_0003_0017_0001)
+
+tag_inner_PROPVARIANT._fields_ = [
+    ('vt', c_ushort),
+    ('wReserved1', c_ubyte),
+    ('wReserved2', c_ubyte),
+    ('wReserved3', c_ulong),
+    ('__MIDL____MIDL_itf_PortableDeviceTypes_0003_00170001', __MIDL___MIDL_itf_PortableDeviceTypes_0003_0017_0001),
+]
+
+assert sizeof(tag_inner_PROPVARIANT) == 24, sizeof(tag_inner_PROPVARIANT)
+assert alignment(tag_inner_PROPVARIANT) == 8, alignment(tag_inner_PROPVARIANT)
+
 
 class _tagpropertykey(Structure):
     pass
+
+
+_tagpropertykey._fields_ = [
+    ('fmtid', win_mtp.comtypes_gen._00020430_0000_0000_C000_000000000046_0_2_0.GUID),
+    ('pid', c_ulong),
+]
+
+assert sizeof(_tagpropertykey) == 20, sizeof(_tagpropertykey)
+assert alignment(_tagpropertykey) == 4, alignment(_tagpropertykey)
+
+
+class _wireSAFEARR_VARIANT(Structure):
+    pass
+
+
+class _wireVARIANT(Structure):
+    pass
+
+
+_wireSAFEARR_VARIANT._fields_ = [
+    ('Size', c_ulong),
+    ('aVariant', POINTER(POINTER(_wireVARIANT))),
+]
+
+assert sizeof(_wireSAFEARR_VARIANT) == 16, sizeof(_wireSAFEARR_VARIANT)
+assert alignment(_wireSAFEARR_VARIANT) == 8, alignment(_wireSAFEARR_VARIANT)
+
+
+class _BYTE_SIZEDARR(Structure):
+    pass
+
+
+_BYTE_SIZEDARR._fields_ = [
+    ('clSize', c_ulong),
+    ('pData', POINTER(c_ubyte)),
+]
+
+assert sizeof(_BYTE_SIZEDARR) == 16, sizeof(_BYTE_SIZEDARR)
+assert alignment(_BYTE_SIZEDARR) == 8, alignment(_BYTE_SIZEDARR)
+
+
+class tagRemSNB(Structure):
+    pass
+
+
+tagRemSNB._pack_ = 4
+
+tagRemSNB._fields_ = [
+    ('ulCntStr', c_ulong),
+    ('ulCntChar', c_ulong),
+    ('rgString', POINTER(c_ushort)),
+]
+
+assert sizeof(tagRemSNB) == 16, sizeof(tagRemSNB)
+assert alignment(tagRemSNB) == 4, alignment(tagRemSNB)
+
+
+class IPortableDeviceValues(win_mtp.comtypes_gen._00020430_0000_0000_C000_000000000046_0_2_0.IUnknown):
+    """IPortableDeviceValues Interface"""
+    _case_insensitive_ = True
+    _iid_ = GUID('{6848F6F2-3155-4F86-B6F5-263EEEAB3143}')
+    _idlflags_ = []
+
+
+class IPortableDevicePropVariantCollection(win_mtp.comtypes_gen._00020430_0000_0000_C000_000000000046_0_2_0.IUnknown):
+    """IPortableDevicePropVariantCollection Interface"""
+    _case_insensitive_ = True
+    _iid_ = GUID('{89B2E422-4F1B-4316-BCEF-A44AFEA83EB3}')
+    _idlflags_ = []
 
 
 class IPortableDeviceKeyCollection(win_mtp.comtypes_gen._00020430_0000_0000_C000_000000000046_0_2_0.IUnknown):
     """IPortableDeviceKeyCollection Interface"""
     _case_insensitive_ = True
     _iid_ = GUID('{DADA2357-E0AD-492E-98DB-DD61C53BA353}')
+    _idlflags_ = []
+
+
+class IPortableDeviceValuesCollection(win_mtp.comtypes_gen._00020430_0000_0000_C000_000000000046_0_2_0.IUnknown):
+    """IPortableDeviceValuesCollection Interface"""
+    _case_insensitive_ = True
+    _iid_ = GUID('{6E3F2D79-4E07-48C4-8208-D8C2E5AF4A99}')
     _idlflags_ = []
 
 
@@ -1066,190 +1045,13 @@ IPortableDeviceValues._methods_ = [
 #         '-no docstring-'
 #         #return 
 #
+wireSNB = POINTER(tagRemSNB)
 
 
-class tagCAI(Structure):
+class _FLAGGED_WORD_BLOB(Structure):
     pass
 
 
-tagCAI._fields_ = [
-    ('cElems', c_ulong),
-    ('pElems', POINTER(c_short)),
-]
-
-assert sizeof(tagCAI) == 16, sizeof(tagCAI)
-assert alignment(tagCAI) == 8, alignment(tagCAI)
-
-
-class tagCACY(Structure):
-    pass
-
-
-tagCACY._fields_ = [
-    ('cElems', c_ulong),
-    ('pElems', POINTER(c_longlong)),
-]
-
-assert sizeof(tagCACY) == 16, sizeof(tagCACY)
-assert alignment(tagCACY) == 8, alignment(tagCACY)
-
-
-class tagSTATSTG(Structure):
-    pass
-
-
-tagSTATSTG._fields_ = [
-    ('pwcsName', WSTRING),
-    ('type', c_ulong),
-    ('cbSize', _ULARGE_INTEGER),
-    ('mtime', _FILETIME),
-    ('ctime', _FILETIME),
-    ('atime', _FILETIME),
-    ('grfMode', c_ulong),
-    ('grfLocksSupported', c_ulong),
-    ('clsid', win_mtp.comtypes_gen._00020430_0000_0000_C000_000000000046_0_2_0.GUID),
-    ('grfStateBits', c_ulong),
-    ('reserved', c_ulong),
-]
-
-assert sizeof(tagSTATSTG) == 80, sizeof(tagSTATSTG)
-assert alignment(tagSTATSTG) == 8, alignment(tagSTATSTG)
-
-
-class IEnumSTATSTG(win_mtp.comtypes_gen._00020430_0000_0000_C000_000000000046_0_2_0.IUnknown):
-    _case_insensitive_ = True
-    _iid_ = GUID('{0000000D-0000-0000-C000-000000000046}')
-    _idlflags_ = []
-
-
-IEnumSTATSTG._methods_ = [
-    COMMETHOD(
-        [],
-        HRESULT,
-        'RemoteNext',
-        (['in'], c_ulong, 'celt'),
-        (['out'], POINTER(tagSTATSTG), 'rgelt'),
-        (['out'], POINTER(c_ulong), 'pceltFetched')
-    ),
-    COMMETHOD(
-        [],
-        HRESULT,
-        'Skip',
-        (['in'], c_ulong, 'celt')
-    ),
-    COMMETHOD([], HRESULT, 'Reset'),
-    COMMETHOD(
-        [],
-        HRESULT,
-        'Clone',
-        (['out'], POINTER(POINTER(IEnumSTATSTG)), 'ppenum')
-    ),
-]
-
-################################################################
-# code template for IEnumSTATSTG implementation
-# class IEnumSTATSTG_Impl(object):
-#     def RemoteNext(self, celt):
-#         '-no docstring-'
-#         #return rgelt, pceltFetched
-#
-#     def Skip(self, celt):
-#         '-no docstring-'
-#         #return 
-#
-#     def Reset(self):
-#         '-no docstring-'
-#         #return 
-#
-#     def Clone(self):
-#         '-no docstring-'
-#         #return ppenum
-#
-
-
-class tagCAUI(Structure):
-    pass
-
-
-tagCAUI._fields_ = [
-    ('cElems', c_ulong),
-    ('pElems', POINTER(c_ushort)),
-]
-
-assert sizeof(tagCAUI) == 16, sizeof(tagCAUI)
-assert alignment(tagCAUI) == 8, alignment(tagCAUI)
-
-
-class tagCADATE(Structure):
-    pass
-
-
-tagCADATE._fields_ = [
-    ('cElems', c_ulong),
-    ('pElems', POINTER(c_double)),
-]
-
-assert sizeof(tagCADATE) == 16, sizeof(tagCADATE)
-assert alignment(tagCADATE) == 8, alignment(tagCADATE)
-
-
-class PortableDeviceKeyCollection(CoClass):
-    """Portable Device PROPERTYKEY collection"""
-    _reg_clsid_ = GUID('{DE2D022D-2480-43BE-97F0-D1FA2CF98F4F}')
-    _idlflags_ = []
-    _typelib_path_ = typelib_path
-    _reg_typelib_ = ('{2B00BA2F-E750-4BEB-9235-97142EDE1D3E}', 1, 0)
-
-
-PortableDeviceKeyCollection._com_interfaces_ = [IPortableDeviceKeyCollection]
-
-
-class PortableDevicePropVariantCollection(CoClass):
-    """Portable Device PROPVARIANT collection"""
-    _reg_clsid_ = GUID('{08A99E2F-6D6D-4B80-AF5A-BAF2BCBE4CB9}')
-    _idlflags_ = []
-    _typelib_path_ = typelib_path
-    _reg_typelib_ = ('{2B00BA2F-E750-4BEB-9235-97142EDE1D3E}', 1, 0)
-
-
-PortableDevicePropVariantCollection._com_interfaces_ = [IPortableDevicePropVariantCollection]
-
-
-class PortableDeviceValuesCollection(CoClass):
-    """Portable Device Values collection"""
-    _reg_clsid_ = GUID('{3882134D-14CF-4220-9CB4-435F86D83F60}')
-    _idlflags_ = []
-    _typelib_path_ = typelib_path
-    _reg_typelib_ = ('{2B00BA2F-E750-4BEB-9235-97142EDE1D3E}', 1, 0)
-
-
-PortableDeviceValuesCollection._com_interfaces_ = [IPortableDeviceValuesCollection]
-
-
-class tagCAL(Structure):
-    pass
-
-
-tagCAL._fields_ = [
-    ('cElems', c_ulong),
-    ('pElems', POINTER(c_int)),
-]
-
-assert sizeof(tagCAL) == 16, sizeof(tagCAL)
-assert alignment(tagCAL) == 8, alignment(tagCAL)
-
-
-class tagCAFILETIME(Structure):
-    pass
-
-
-tagCAFILETIME._fields_ = [
-    ('cElems', c_ulong),
-    ('pElems', POINTER(_FILETIME)),
-]
-
-assert sizeof(tagCAFILETIME) == 16, sizeof(tagCAFILETIME)
-assert alignment(tagCAFILETIME) == 8, alignment(tagCAFILETIME)
 _FLAGGED_WORD_BLOB._pack_ = 4
 
 _FLAGGED_WORD_BLOB._fields_ = [
@@ -1262,182 +1064,22 @@ assert sizeof(_FLAGGED_WORD_BLOB) == 16, sizeof(_FLAGGED_WORD_BLOB)
 assert alignment(_FLAGGED_WORD_BLOB) == 4, alignment(_FLAGGED_WORD_BLOB)
 
 
-class tagBLOB(Structure):
+class _SHORT_SIZEDARR(Structure):
     pass
 
 
-tagBLOB._fields_ = [
-    ('cbSize', c_ulong),
-    ('pBlobData', POINTER(c_ubyte)),
+_SHORT_SIZEDARR._fields_ = [
+    ('clSize', c_ulong),
+    ('pData', POINTER(c_ushort)),
 ]
 
-assert sizeof(tagBLOB) == 16, sizeof(tagBLOB)
-assert alignment(tagBLOB) == 8, alignment(tagBLOB)
-
-IPortableDeviceKeyCollection._methods_ = [
-    COMMETHOD(
-        [],
-        HRESULT,
-        'GetCount',
-        (['in'], POINTER(c_ulong), 'pcElems')
-    ),
-    COMMETHOD(
-        [],
-        HRESULT,
-        'GetAt',
-        (['in'], c_ulong, 'dwIndex'),
-        (['in'], POINTER(_tagpropertykey), 'pKey')
-    ),
-    COMMETHOD(
-        [],
-        HRESULT,
-        'Add',
-        (['in'], POINTER(_tagpropertykey), 'key')
-    ),
-    COMMETHOD([], HRESULT, 'Clear'),
-    COMMETHOD(
-        [],
-        HRESULT,
-        'RemoveAt',
-        (['in'], c_ulong, 'dwIndex')
-    ),
-]
-
-################################################################
-# code template for IPortableDeviceKeyCollection implementation
-# class IPortableDeviceKeyCollection_Impl(object):
-#     def GetCount(self, pcElems):
-#         '-no docstring-'
-#         #return 
-#
-#     def GetAt(self, dwIndex, pKey):
-#         '-no docstring-'
-#         #return 
-#
-#     def Add(self, key):
-#         '-no docstring-'
-#         #return 
-#
-#     def Clear(self):
-#         '-no docstring-'
-#         #return 
-#
-#     def RemoveAt(self, dwIndex):
-#         '-no docstring-'
-#         #return 
-#
+assert sizeof(_SHORT_SIZEDARR) == 16, sizeof(_SHORT_SIZEDARR)
+assert alignment(_SHORT_SIZEDARR) == 8, alignment(_SHORT_SIZEDARR)
 
 
-class tagCAUL(Structure):
+class tagSTATSTG(Structure):
     pass
 
-
-tagCAUL._fields_ = [
-    ('cElems', c_ulong),
-    ('pElems', POINTER(c_ulong)),
-]
-
-assert sizeof(tagCAUL) == 16, sizeof(tagCAUL)
-assert alignment(tagCAUL) == 8, alignment(tagCAUL)
-
-
-class tagCACLSID(Structure):
-    pass
-
-
-tagCACLSID._fields_ = [
-    ('cElems', c_ulong),
-    ('pElems', POINTER(win_mtp.comtypes_gen._00020430_0000_0000_C000_000000000046_0_2_0.GUID)),
-]
-
-assert sizeof(tagCACLSID) == 16, sizeof(tagCACLSID)
-assert alignment(tagCACLSID) == 8, alignment(tagCACLSID)
-
-IPropertyStore._methods_ = [
-    COMMETHOD(
-        [],
-        HRESULT,
-        'GetCount',
-        (['out'], POINTER(c_ulong), 'cProps')
-    ),
-    COMMETHOD(
-        [],
-        HRESULT,
-        'GetAt',
-        (['in'], c_ulong, 'iProp'),
-        (['out'], POINTER(_tagpropertykey), 'pKey')
-    ),
-    COMMETHOD(
-        [],
-        HRESULT,
-        'GetValue',
-        (['in'], POINTER(_tagpropertykey), 'key'),
-        (['out'], POINTER(tag_inner_PROPVARIANT), 'pv')
-    ),
-    COMMETHOD(
-        [],
-        HRESULT,
-        'SetValue',
-        (['in'], POINTER(_tagpropertykey), 'key'),
-        (['in'], POINTER(tag_inner_PROPVARIANT), 'propvar')
-    ),
-    COMMETHOD([], HRESULT, 'Commit'),
-]
-
-################################################################
-# code template for IPropertyStore implementation
-# class IPropertyStore_Impl(object):
-#     def GetCount(self):
-#         '-no docstring-'
-#         #return cProps
-#
-#     def GetAt(self, iProp):
-#         '-no docstring-'
-#         #return pKey
-#
-#     def GetValue(self, key):
-#         '-no docstring-'
-#         #return pv
-#
-#     def SetValue(self, key, propvar):
-#         '-no docstring-'
-#         #return 
-#
-#     def Commit(self):
-#         '-no docstring-'
-#         #return 
-#
-
-ISequentialStream._methods_ = [
-    COMMETHOD(
-        [],
-        HRESULT,
-        'RemoteRead',
-        (['out'], POINTER(c_ubyte), 'pv'),
-        (['in'], c_ulong, 'cb'),
-        (['out'], POINTER(c_ulong), 'pcbRead')
-    ),
-    COMMETHOD(
-        [],
-        HRESULT,
-        'RemoteWrite',
-        (['in'], POINTER(c_ubyte), 'pv'),
-        (['in'], c_ulong, 'cb'),
-        (['out'], POINTER(c_ulong), 'pcbWritten')
-    ),
-]
-
-################################################################
-# code template for ISequentialStream implementation
-# class ISequentialStream_Impl(object):
-#     def RemoteRead(self, cb):
-#         '-no docstring-'
-#         #return pv, pcbRead
-#
-#     def RemoteWrite(self, pv, cb):
-#         '-no docstring-'
-#         #return pcbWritten
-#
 
 IStream._methods_ = [
     COMMETHOD(
@@ -1542,198 +1184,12 @@ IStream._methods_ = [
 #
 
 
-class __MIDL___MIDL_itf_PortableDeviceTypes_0003_0017_0001(Union):
-    pass
-
-
-class IStorage(win_mtp.comtypes_gen._00020430_0000_0000_C000_000000000046_0_2_0.IUnknown):
-    _case_insensitive_ = True
-    _iid_ = GUID('{0000000B-0000-0000-C000-000000000046}')
+class WpdSerializer(CoClass):
+    """WpdSerializer Class"""
+    _reg_clsid_ = GUID('{0B91A74B-AD7C-4A9D-B563-29EEF9167172}')
     _idlflags_ = []
-
-
-wirePSAFEARRAY = POINTER(POINTER(_wireSAFEARRAY))
-
-
-class tagCAH(Structure):
-    pass
-
-
-tagCAH._fields_ = [
-    ('cElems', c_ulong),
-    ('pElems', POINTER(_LARGE_INTEGER)),
-]
-
-assert sizeof(tagCAH) == 16, sizeof(tagCAH)
-assert alignment(tagCAH) == 8, alignment(tagCAH)
-
-
-class tagCAUH(Structure):
-    pass
-
-
-tagCAUH._fields_ = [
-    ('cElems', c_ulong),
-    ('pElems', POINTER(_ULARGE_INTEGER)),
-]
-
-assert sizeof(tagCAUH) == 16, sizeof(tagCAUH)
-assert alignment(tagCAUH) == 8, alignment(tagCAUH)
-
-
-class tagCAFLT(Structure):
-    pass
-
-
-tagCAFLT._fields_ = [
-    ('cElems', c_ulong),
-    ('pElems', POINTER(c_float)),
-]
-
-assert sizeof(tagCAFLT) == 16, sizeof(tagCAFLT)
-assert alignment(tagCAFLT) == 8, alignment(tagCAFLT)
-
-
-class tagCADBL(Structure):
-    pass
-
-
-tagCADBL._fields_ = [
-    ('cElems', c_ulong),
-    ('pElems', POINTER(c_double)),
-]
-
-assert sizeof(tagCADBL) == 16, sizeof(tagCADBL)
-assert alignment(tagCADBL) == 8, alignment(tagCADBL)
-
-
-class tagCACLIPDATA(Structure):
-    pass
-
-
-tagCACLIPDATA._fields_ = [
-    ('cElems', c_ulong),
-    ('pElems', POINTER(tagCLIPDATA)),
-]
-
-assert sizeof(tagCACLIPDATA) == 16, sizeof(tagCACLIPDATA)
-assert alignment(tagCACLIPDATA) == 8, alignment(tagCACLIPDATA)
-
-
-class tagCABSTR(Structure):
-    pass
-
-
-tagCABSTR._fields_ = [
-    ('cElems', c_ulong),
-    ('pElems', POINTER(BSTR)),
-]
-
-assert sizeof(tagCABSTR) == 16, sizeof(tagCABSTR)
-assert alignment(tagCABSTR) == 8, alignment(tagCABSTR)
-
-
-class tagCABSTRBLOB(Structure):
-    pass
-
-
-tagCABSTRBLOB._fields_ = [
-    ('cElems', c_ulong),
-    ('pElems', POINTER(tagBSTRBLOB)),
-]
-
-assert sizeof(tagCABSTRBLOB) == 16, sizeof(tagCABSTRBLOB)
-assert alignment(tagCABSTRBLOB) == 8, alignment(tagCABSTRBLOB)
-
-__MIDL___MIDL_itf_PortableDeviceTypes_0003_0017_0001._fields_ = [
-    ('cVal', c_char),
-    ('bVal', c_ubyte),
-    ('iVal', c_short),
-    ('uiVal', c_ushort),
-    ('lVal', c_int),
-    ('ulVal', c_ulong),
-    ('intVal', c_int),
-    ('uintVal', c_uint),
-    ('hVal', _LARGE_INTEGER),
-    ('uhVal', _ULARGE_INTEGER),
-    ('fltVal', c_float),
-    ('dblVal', c_double),
-    ('boolVal', VARIANT_BOOL),
-    ('__OBSOLETE__VARIANT_BOOL', VARIANT_BOOL),
-    ('scode', SCODE),
-    ('cyVal', c_longlong),
-    ('date', c_double),
-    ('filetime', _FILETIME),
-    ('puuid', POINTER(win_mtp.comtypes_gen._00020430_0000_0000_C000_000000000046_0_2_0.GUID)),
-    ('pClipData', POINTER(tagCLIPDATA)),
-    ('bstrVal', BSTR),
-    ('bstrblobVal', tagBSTRBLOB),
-    ('blob', tagBLOB),
-    ('pszVal', STRING),
-    ('pwszVal', WSTRING),
-    ('punkVal', POINTER(IUnknown)),
-    ('pdispVal', POINTER(IDispatch)),
-    ('pStream', POINTER(IStream)),
-    ('pStorage', POINTER(IStorage)),
-    ('pVersionedStream', POINTER(tagVersionedStream)),
-    ('parray', wirePSAFEARRAY),
-    ('cac', tagCAC),
-    ('caub', tagCAUB),
-    ('cai', tagCAI),
-    ('caui', tagCAUI),
-    ('cal', tagCAL),
-    ('caul', tagCAUL),
-    ('cah', tagCAH),
-    ('cauh', tagCAUH),
-    ('caflt', tagCAFLT),
-    ('cadbl', tagCADBL),
-    ('cabool', tagCABOOL),
-    ('cascode', tagCASCODE),
-    ('cacy', tagCACY),
-    ('cadate', tagCADATE),
-    ('cafiletime', tagCAFILETIME),
-    ('cauuid', tagCACLSID),
-    ('caclipdata', tagCACLIPDATA),
-    ('cabstr', tagCABSTR),
-    ('cabstrblob', tagCABSTRBLOB),
-    ('calpstr', tagCALPSTR),
-    ('calpwstr', tagCALPWSTR),
-    ('capropvar', tagCAPROPVARIANT),
-    ('pcVal', STRING),
-    ('pbVal', POINTER(c_ubyte)),
-    ('piVal', POINTER(c_short)),
-    ('puiVal', POINTER(c_ushort)),
-    ('plVal', POINTER(c_int)),
-    ('pulVal', POINTER(c_ulong)),
-    ('pintVal', POINTER(c_int)),
-    ('puintVal', POINTER(c_uint)),
-    ('pfltVal', POINTER(c_float)),
-    ('pdblVal', POINTER(c_double)),
-    ('pboolVal', POINTER(VARIANT_BOOL)),
-    ('pdecVal', POINTER(DECIMAL)),
-    ('pscode', POINTER(SCODE)),
-    ('pcyVal', POINTER(c_longlong)),
-    ('pdate', POINTER(c_double)),
-    ('pbstrVal', POINTER(BSTR)),
-    ('ppunkVal', POINTER(POINTER(IUnknown))),
-    ('ppdispVal', POINTER(POINTER(IDispatch))),
-    ('pparray', POINTER(wirePSAFEARRAY)),
-    ('pvarVal', POINTER(tag_inner_PROPVARIANT)),
-]
-
-assert sizeof(__MIDL___MIDL_itf_PortableDeviceTypes_0003_0017_0001) == 16, sizeof(__MIDL___MIDL_itf_PortableDeviceTypes_0003_0017_0001)
-assert alignment(__MIDL___MIDL_itf_PortableDeviceTypes_0003_0017_0001) == 8, alignment(__MIDL___MIDL_itf_PortableDeviceTypes_0003_0017_0001)
-
-tag_inner_PROPVARIANT._fields_ = [
-    ('vt', c_ushort),
-    ('wReserved1', c_ubyte),
-    ('wReserved2', c_ubyte),
-    ('wReserved3', c_ulong),
-    ('__MIDL____MIDL_itf_PortableDeviceTypes_0003_00170001', __MIDL___MIDL_itf_PortableDeviceTypes_0003_0017_0001),
-]
-
-assert sizeof(tag_inner_PROPVARIANT) == 24, sizeof(tag_inner_PROPVARIANT)
-assert alignment(tag_inner_PROPVARIANT) == 8, alignment(tag_inner_PROPVARIANT)
+    _typelib_path_ = typelib_path
+    _reg_typelib_ = ('{2B00BA2F-E750-4BEB-9235-97142EDE1D3E}', 1, 0)
 
 
 class IWpdSerializer(win_mtp.comtypes_gen._00020430_0000_0000_C000_000000000046_0_2_0.IUnknown):
@@ -1743,96 +1199,125 @@ class IWpdSerializer(win_mtp.comtypes_gen._00020430_0000_0000_C000_000000000046_
     _idlflags_ = []
 
 
-IWpdSerializer._methods_ = [
-    COMMETHOD(
-        [],
-        HRESULT,
-        'GetIPortableDeviceValuesFromBuffer',
-        (['in'], POINTER(c_ubyte), 'pBuffer'),
-        (['in'], c_ulong, 'dwInputBufferLength'),
-        (['out'], POINTER(POINTER(IPortableDeviceValues)), 'ppParams')
-    ),
-    COMMETHOD(
-        [],
-        HRESULT,
-        'WriteIPortableDeviceValuesToBuffer',
-        (['in'], c_ulong, 'dwOutputBufferLength'),
-        (['in'], POINTER(IPortableDeviceValues), 'pResults'),
-        (['out'], POINTER(c_ubyte), 'pBuffer'),
-        (['out'], POINTER(c_ulong), 'pdwBytesWritten')
-    ),
-    COMMETHOD(
-        [],
-        HRESULT,
-        'GetBufferFromIPortableDeviceValues',
-        (['in'], POINTER(IPortableDeviceValues), 'pSource'),
-        (['out'], POINTER(POINTER(c_ubyte)), 'ppBuffer'),
-        (['out'], POINTER(c_ulong), 'pdwBufferSize')
-    ),
-    COMMETHOD(
-        [],
-        HRESULT,
-        'GetSerializedSize',
-        (['in'], POINTER(IPortableDeviceValues), 'pSource'),
-        (['out'], POINTER(c_ulong), 'pdwSize')
-    ),
-]
-
-################################################################
-# code template for IWpdSerializer implementation
-# class IWpdSerializer_Impl(object):
-#     def GetIPortableDeviceValuesFromBuffer(self, pBuffer, dwInputBufferLength):
-#         '-no docstring-'
-#         #return ppParams
-#
-#     def WriteIPortableDeviceValuesToBuffer(self, dwOutputBufferLength, pResults):
-#         '-no docstring-'
-#         #return pBuffer, pdwBytesWritten
-#
-#     def GetBufferFromIPortableDeviceValues(self, pSource):
-#         '-no docstring-'
-#         #return ppBuffer, pdwBufferSize
-#
-#     def GetSerializedSize(self, pSource):
-#         '-no docstring-'
-#         #return pdwSize
-#
-
-_tagpropertykey._fields_ = [
-    ('fmtid', win_mtp.comtypes_gen._00020430_0000_0000_C000_000000000046_0_2_0.GUID),
-    ('pid', c_ulong),
-]
-
-assert sizeof(_tagpropertykey) == 20, sizeof(_tagpropertykey)
-assert alignment(_tagpropertykey) == 4, alignment(_tagpropertykey)
+WpdSerializer._com_interfaces_ = [IWpdSerializer]
 
 
-class tagRemSNB(Structure):
+class __MIDL_IOleAutomationTypes_0004(Union):
     pass
 
 
-tagRemSNB._pack_ = 4
+class _wireBRECORD(Structure):
+    pass
 
-tagRemSNB._fields_ = [
-    ('ulCntStr', c_ulong),
-    ('ulCntChar', c_ulong),
-    ('rgString', POINTER(c_ushort)),
+
+__MIDL_IOleAutomationTypes_0004._fields_ = [
+    ('llVal', c_longlong),
+    ('lVal', c_int),
+    ('bVal', c_ubyte),
+    ('iVal', c_short),
+    ('fltVal', c_float),
+    ('dblVal', c_double),
+    ('boolVal', VARIANT_BOOL),
+    ('scode', SCODE),
+    ('cyVal', c_longlong),
+    ('date', c_double),
+    ('bstrVal', POINTER(_FLAGGED_WORD_BLOB)),
+    ('punkVal', POINTER(IUnknown)),
+    ('pdispVal', POINTER(IDispatch)),
+    ('parray', POINTER(POINTER(_wireSAFEARRAY))),
+    ('brecVal', POINTER(_wireBRECORD)),
+    ('pbVal', POINTER(c_ubyte)),
+    ('piVal', POINTER(c_short)),
+    ('plVal', POINTER(c_int)),
+    ('pllVal', POINTER(c_longlong)),
+    ('pfltVal', POINTER(c_float)),
+    ('pdblVal', POINTER(c_double)),
+    ('pboolVal', POINTER(VARIANT_BOOL)),
+    ('pscode', POINTER(SCODE)),
+    ('pcyVal', POINTER(c_longlong)),
+    ('pdate', POINTER(c_double)),
+    ('pbstrVal', POINTER(POINTER(_FLAGGED_WORD_BLOB))),
+    ('ppunkVal', POINTER(POINTER(IUnknown))),
+    ('ppdispVal', POINTER(POINTER(IDispatch))),
+    ('pparray', POINTER(POINTER(POINTER(_wireSAFEARRAY)))),
+    ('pvarVal', POINTER(POINTER(_wireVARIANT))),
+    ('cVal', c_char),
+    ('uiVal', c_ushort),
+    ('ulVal', c_ulong),
+    ('ullVal', c_ulonglong),
+    ('intVal', c_int),
+    ('uintVal', c_uint),
+    ('decVal', DECIMAL),
+    ('pdecVal', POINTER(DECIMAL)),
+    ('pcVal', STRING),
+    ('puiVal', POINTER(c_ushort)),
+    ('pulVal', POINTER(c_ulong)),
+    ('pullVal', POINTER(c_ulonglong)),
+    ('pintVal', POINTER(c_int)),
+    ('puintVal', POINTER(c_uint)),
 ]
 
-assert sizeof(tagRemSNB) == 16, sizeof(tagRemSNB)
-assert alignment(tagRemSNB) == 4, alignment(tagRemSNB)
+assert sizeof(__MIDL_IOleAutomationTypes_0004) == 16, sizeof(__MIDL_IOleAutomationTypes_0004)
+assert alignment(__MIDL_IOleAutomationTypes_0004) == 8, alignment(__MIDL_IOleAutomationTypes_0004)
+
+_wireVARIANT._fields_ = [
+    ('clSize', c_ulong),
+    ('rpcReserved', c_ulong),
+    ('vt', c_ushort),
+    ('wReserved1', c_ushort),
+    ('wReserved2', c_ushort),
+    ('wReserved3', c_ushort),
+    ('DUMMYUNIONNAME', __MIDL_IOleAutomationTypes_0004),
+]
+
+assert sizeof(_wireVARIANT) == 32, sizeof(_wireVARIANT)
+assert alignment(_wireVARIANT) == 8, alignment(_wireVARIANT)
 
 
-class WpdSerializer(CoClass):
-    """WpdSerializer Class"""
-    _reg_clsid_ = GUID('{0B91A74B-AD7C-4A9D-B563-29EEF9167172}')
+class _LONG_SIZEDARR(Structure):
+    pass
+
+
+_LONG_SIZEDARR._fields_ = [
+    ('clSize', c_ulong),
+    ('pData', POINTER(c_ulong)),
+]
+
+assert sizeof(_LONG_SIZEDARR) == 16, sizeof(_LONG_SIZEDARR)
+assert alignment(_LONG_SIZEDARR) == 8, alignment(_LONG_SIZEDARR)
+
+
+class _wireSAFEARR_BRECORD(Structure):
+    pass
+
+
+_wireSAFEARR_BRECORD._fields_ = [
+    ('Size', c_ulong),
+    ('aRecord', POINTER(POINTER(_wireBRECORD))),
+]
+
+assert sizeof(_wireSAFEARR_BRECORD) == 16, sizeof(_wireSAFEARR_BRECORD)
+assert alignment(_wireSAFEARR_BRECORD) == 8, alignment(_wireSAFEARR_BRECORD)
+
+
+class __MIDL_IOleAutomationTypes_0006(Union):
+    pass
+
+
+__MIDL_IOleAutomationTypes_0006._fields_ = [
+    ('oInst', c_ulong),
+    ('lpvarValue', POINTER(VARIANT)),
+]
+
+assert sizeof(__MIDL_IOleAutomationTypes_0006) == 8, sizeof(__MIDL_IOleAutomationTypes_0006)
+assert alignment(__MIDL_IOleAutomationTypes_0006) == 8, alignment(__MIDL_IOleAutomationTypes_0006)
+
+
+class IEnumSTATSTG(win_mtp.comtypes_gen._00020430_0000_0000_C000_000000000046_0_2_0.IUnknown):
+    _case_insensitive_ = True
+    _iid_ = GUID('{0000000D-0000-0000-C000-000000000046}')
     _idlflags_ = []
-    _typelib_path_ = typelib_path
-    _reg_typelib_ = ('{2B00BA2F-E750-4BEB-9235-97142EDE1D3E}', 1, 0)
 
-
-WpdSerializer._com_interfaces_ = [IWpdSerializer]
-wireSNB = POINTER(tagRemSNB)
 
 IStorage._methods_ = [
     COMMETHOD(
@@ -2028,18 +1513,24 @@ IStorage._methods_ = [
 #         #return pstatstg
 #
 
-_wireVARIANT._fields_ = [
+
+class _HYPER_SIZEDARR(Structure):
+    pass
+
+
+_HYPER_SIZEDARR._fields_ = [
     ('clSize', c_ulong),
-    ('rpcReserved', c_ulong),
-    ('vt', c_ushort),
-    ('wReserved1', c_ushort),
-    ('wReserved2', c_ushort),
-    ('wReserved3', c_ushort),
-    ('DUMMYUNIONNAME', __MIDL_IOleAutomationTypes_0004),
+    ('pData', POINTER(c_longlong)),
 ]
 
-assert sizeof(_wireVARIANT) == 32, sizeof(_wireVARIANT)
-assert alignment(_wireVARIANT) == 8, alignment(_wireVARIANT)
+assert sizeof(_HYPER_SIZEDARR) == 16, sizeof(_HYPER_SIZEDARR)
+assert alignment(_HYPER_SIZEDARR) == 8, alignment(_HYPER_SIZEDARR)
+
+
+class Library(object):
+    """PortableDeviceTypes 1.0 Type Library"""
+    name = 'PortableDeviceTypesLib'
+    _reg_typelib_ = ('{2B00BA2F-E750-4BEB-9235-97142EDE1D3E}', 1, 0)
 
 
 class PortableDeviceValues(CoClass):
@@ -2053,44 +1544,553 @@ class PortableDeviceValues(CoClass):
 PortableDeviceValues._com_interfaces_ = [IPortableDeviceValues]
 
 
-class __MIDL_IOleAutomationTypes_0006(Union):
+class __MIDL_IOleAutomationTypes_0005(Union):
     pass
 
 
-__MIDL_IOleAutomationTypes_0006._fields_ = [
-    ('oInst', c_ulong),
-    ('lpvarValue', POINTER(VARIANT)),
+__MIDL_IOleAutomationTypes_0005._fields_ = [
+    ('lptdesc', POINTER(tagTYPEDESC)),
+    ('lpadesc', POINTER(tagARRAYDESC)),
+    ('hreftype', c_ulong),
 ]
 
-assert sizeof(__MIDL_IOleAutomationTypes_0006) == 8, sizeof(__MIDL_IOleAutomationTypes_0006)
-assert alignment(__MIDL_IOleAutomationTypes_0006) == 8, alignment(__MIDL_IOleAutomationTypes_0006)
+assert sizeof(__MIDL_IOleAutomationTypes_0005) == 8, sizeof(__MIDL_IOleAutomationTypes_0005)
+assert alignment(__MIDL_IOleAutomationTypes_0005) == 8, alignment(__MIDL_IOleAutomationTypes_0005)
+
+IPortableDevicePropVariantCollection._methods_ = [
+    COMMETHOD(
+        [],
+        HRESULT,
+        'GetCount',
+        (['in'], POINTER(c_ulong), 'pcElems')
+    ),
+    COMMETHOD(
+        [],
+        HRESULT,
+        'GetAt',
+        (['in'], c_ulong, 'dwIndex'),
+        (['in'], POINTER(tag_inner_PROPVARIANT), 'pValue')
+    ),
+    COMMETHOD(
+        [],
+        HRESULT,
+        'Add',
+        (['in'], POINTER(tag_inner_PROPVARIANT), 'pValue')
+    ),
+    COMMETHOD(
+        [],
+        HRESULT,
+        'GetType',
+        (['out'], POINTER(c_ushort), 'pvt')
+    ),
+    COMMETHOD(
+        [],
+        HRESULT,
+        'ChangeType',
+        (['in'], c_ushort, 'vt')
+    ),
+    COMMETHOD([], HRESULT, 'Clear'),
+    COMMETHOD(
+        [],
+        HRESULT,
+        'RemoveAt',
+        (['in'], c_ulong, 'dwIndex')
+    ),
+]
+
+################################################################
+# code template for IPortableDevicePropVariantCollection implementation
+# class IPortableDevicePropVariantCollection_Impl(object):
+#     def GetCount(self, pcElems):
+#         '-no docstring-'
+#         #return 
+#
+#     def GetAt(self, dwIndex, pValue):
+#         '-no docstring-'
+#         #return 
+#
+#     def Add(self, pValue):
+#         '-no docstring-'
+#         #return 
+#
+#     def GetType(self):
+#         '-no docstring-'
+#         #return pvt
+#
+#     def ChangeType(self, vt):
+#         '-no docstring-'
+#         #return 
+#
+#     def Clear(self):
+#         '-no docstring-'
+#         #return 
+#
+#     def RemoveAt(self, dwIndex):
+#         '-no docstring-'
+#         #return 
+#
+
+IPortableDeviceValuesCollection._methods_ = [
+    COMMETHOD(
+        [],
+        HRESULT,
+        'GetCount',
+        (['in'], POINTER(c_ulong), 'pcElems')
+    ),
+    COMMETHOD(
+        [],
+        HRESULT,
+        'GetAt',
+        (['in'], c_ulong, 'dwIndex'),
+        (['out'], POINTER(POINTER(IPortableDeviceValues)), 'ppValues')
+    ),
+    COMMETHOD(
+        [],
+        HRESULT,
+        'Add',
+        (['in'], POINTER(IPortableDeviceValues), 'pValues')
+    ),
+    COMMETHOD([], HRESULT, 'Clear'),
+    COMMETHOD(
+        [],
+        HRESULT,
+        'RemoveAt',
+        (['in'], c_ulong, 'dwIndex')
+    ),
+]
+
+################################################################
+# code template for IPortableDeviceValuesCollection implementation
+# class IPortableDeviceValuesCollection_Impl(object):
+#     def GetCount(self, pcElems):
+#         '-no docstring-'
+#         #return 
+#
+#     def GetAt(self, dwIndex):
+#         '-no docstring-'
+#         #return ppValues
+#
+#     def Add(self, pValues):
+#         '-no docstring-'
+#         #return 
+#
+#     def Clear(self):
+#         '-no docstring-'
+#         #return 
+#
+#     def RemoveAt(self, dwIndex):
+#         '-no docstring-'
+#         #return 
+#
+
+
+class _wireSAFEARR_BSTR(Structure):
+    pass
+
+
+_wireSAFEARR_BSTR._fields_ = [
+    ('Size', c_ulong),
+    ('aBstr', POINTER(POINTER(_FLAGGED_WORD_BLOB))),
+]
+
+assert sizeof(_wireSAFEARR_BSTR) == 16, sizeof(_wireSAFEARR_BSTR)
+assert alignment(_wireSAFEARR_BSTR) == 8, alignment(_wireSAFEARR_BSTR)
+
+_wireBRECORD._fields_ = [
+    ('fFlags', c_ulong),
+    ('clSize', c_ulong),
+    ('pRecInfo', POINTER(IRecordInfo)),
+    ('pRecord', POINTER(c_ubyte)),
+]
+
+assert sizeof(_wireBRECORD) == 24, sizeof(_wireBRECORD)
+assert alignment(_wireBRECORD) == 8, alignment(_wireBRECORD)
+
+tagVersionedStream._fields_ = [
+    ('guidVersion', win_mtp.comtypes_gen._00020430_0000_0000_C000_000000000046_0_2_0.GUID),
+    ('pStream', POINTER(IStream)),
+]
+
+assert sizeof(tagVersionedStream) == 24, sizeof(tagVersionedStream)
+assert alignment(tagVersionedStream) == 8, alignment(tagVersionedStream)
+
+
+class _wireSAFEARRAY_UNION(Structure):
+    pass
+
+
+class __MIDL_IOleAutomationTypes_0001(Union):
+    pass
+
+
+class _wireSAFEARR_UNKNOWN(Structure):
+    pass
+
+
+_wireSAFEARR_UNKNOWN._fields_ = [
+    ('Size', c_ulong),
+    ('apUnknown', POINTER(POINTER(IUnknown))),
+]
+
+assert sizeof(_wireSAFEARR_UNKNOWN) == 16, sizeof(_wireSAFEARR_UNKNOWN)
+assert alignment(_wireSAFEARR_UNKNOWN) == 8, alignment(_wireSAFEARR_UNKNOWN)
+
+
+class _wireSAFEARR_DISPATCH(Structure):
+    pass
+
+
+_wireSAFEARR_DISPATCH._fields_ = [
+    ('Size', c_ulong),
+    ('apDispatch', POINTER(POINTER(IDispatch))),
+]
+
+assert sizeof(_wireSAFEARR_DISPATCH) == 16, sizeof(_wireSAFEARR_DISPATCH)
+assert alignment(_wireSAFEARR_DISPATCH) == 8, alignment(_wireSAFEARR_DISPATCH)
+
+
+class _wireSAFEARR_HAVEIID(Structure):
+    pass
+
+
+_wireSAFEARR_HAVEIID._fields_ = [
+    ('Size', c_ulong),
+    ('apUnknown', POINTER(POINTER(IUnknown))),
+    ('iid', win_mtp.comtypes_gen._00020430_0000_0000_C000_000000000046_0_2_0.GUID),
+]
+
+assert sizeof(_wireSAFEARR_HAVEIID) == 32, sizeof(_wireSAFEARR_HAVEIID)
+assert alignment(_wireSAFEARR_HAVEIID) == 8, alignment(_wireSAFEARR_HAVEIID)
+
+__MIDL_IOleAutomationTypes_0001._fields_ = [
+    ('BstrStr', _wireSAFEARR_BSTR),
+    ('UnknownStr', _wireSAFEARR_UNKNOWN),
+    ('DispatchStr', _wireSAFEARR_DISPATCH),
+    ('VariantStr', _wireSAFEARR_VARIANT),
+    ('RecordStr', _wireSAFEARR_BRECORD),
+    ('HaveIidStr', _wireSAFEARR_HAVEIID),
+    ('ByteStr', _BYTE_SIZEDARR),
+    ('WordStr', _SHORT_SIZEDARR),
+    ('LongStr', _LONG_SIZEDARR),
+    ('HyperStr', _HYPER_SIZEDARR),
+]
+
+assert sizeof(__MIDL_IOleAutomationTypes_0001) == 32, sizeof(__MIDL_IOleAutomationTypes_0001)
+assert alignment(__MIDL_IOleAutomationTypes_0001) == 8, alignment(__MIDL_IOleAutomationTypes_0001)
+
+_wireSAFEARRAY_UNION._fields_ = [
+    ('sfType', c_ulong),
+    ('u', __MIDL_IOleAutomationTypes_0001),
+]
+
+assert sizeof(_wireSAFEARRAY_UNION) == 40, sizeof(_wireSAFEARRAY_UNION)
+assert alignment(_wireSAFEARRAY_UNION) == 8, alignment(_wireSAFEARRAY_UNION)
+
+_wireSAFEARRAY._fields_ = [
+    ('cDims', c_ushort),
+    ('fFeatures', c_ushort),
+    ('cbElements', c_ulong),
+    ('cLocks', c_ulong),
+    ('uArrayStructs', _wireSAFEARRAY_UNION),
+    ('rgsabound', POINTER(tagSAFEARRAYBOUND)),
+]
+
+assert sizeof(_wireSAFEARRAY) == 64, sizeof(_wireSAFEARRAY)
+assert alignment(_wireSAFEARRAY) == 8, alignment(_wireSAFEARRAY)
+
+tagCLIPDATA._fields_ = [
+    ('cbSize', c_ulong),
+    ('ulClipFmt', c_int),
+    ('pClipData', POINTER(c_ubyte)),
+]
+
+assert sizeof(tagCLIPDATA) == 16, sizeof(tagCLIPDATA)
+assert alignment(tagCLIPDATA) == 8, alignment(tagCLIPDATA)
+
+IEnumSTATSTG._methods_ = [
+    COMMETHOD(
+        [],
+        HRESULT,
+        'RemoteNext',
+        (['in'], c_ulong, 'celt'),
+        (['out'], POINTER(tagSTATSTG), 'rgelt'),
+        (['out'], POINTER(c_ulong), 'pceltFetched')
+    ),
+    COMMETHOD(
+        [],
+        HRESULT,
+        'Skip',
+        (['in'], c_ulong, 'celt')
+    ),
+    COMMETHOD([], HRESULT, 'Reset'),
+    COMMETHOD(
+        [],
+        HRESULT,
+        'Clone',
+        (['out'], POINTER(POINTER(IEnumSTATSTG)), 'ppenum')
+    ),
+]
+
+################################################################
+# code template for IEnumSTATSTG implementation
+# class IEnumSTATSTG_Impl(object):
+#     def RemoteNext(self, celt):
+#         '-no docstring-'
+#         #return rgelt, pceltFetched
+#
+#     def Skip(self, celt):
+#         '-no docstring-'
+#         #return 
+#
+#     def Reset(self):
+#         '-no docstring-'
+#         #return 
+#
+#     def Clone(self):
+#         '-no docstring-'
+#         #return ppenum
+#
+
+IWpdSerializer._methods_ = [
+    COMMETHOD(
+        [],
+        HRESULT,
+        'GetIPortableDeviceValuesFromBuffer',
+        (['in'], POINTER(c_ubyte), 'pBuffer'),
+        (['in'], c_ulong, 'dwInputBufferLength'),
+        (['out'], POINTER(POINTER(IPortableDeviceValues)), 'ppParams')
+    ),
+    COMMETHOD(
+        [],
+        HRESULT,
+        'WriteIPortableDeviceValuesToBuffer',
+        (['in'], c_ulong, 'dwOutputBufferLength'),
+        (['in'], POINTER(IPortableDeviceValues), 'pResults'),
+        (['out'], POINTER(c_ubyte), 'pBuffer'),
+        (['out'], POINTER(c_ulong), 'pdwBytesWritten')
+    ),
+    COMMETHOD(
+        [],
+        HRESULT,
+        'GetBufferFromIPortableDeviceValues',
+        (['in'], POINTER(IPortableDeviceValues), 'pSource'),
+        (['out'], POINTER(POINTER(c_ubyte)), 'ppBuffer'),
+        (['out'], POINTER(c_ulong), 'pdwBufferSize')
+    ),
+    COMMETHOD(
+        [],
+        HRESULT,
+        'GetSerializedSize',
+        (['in'], POINTER(IPortableDeviceValues), 'pSource'),
+        (['out'], POINTER(c_ulong), 'pdwSize')
+    ),
+]
+
+################################################################
+# code template for IWpdSerializer implementation
+# class IWpdSerializer_Impl(object):
+#     def GetIPortableDeviceValuesFromBuffer(self, pBuffer, dwInputBufferLength):
+#         '-no docstring-'
+#         #return ppParams
+#
+#     def WriteIPortableDeviceValuesToBuffer(self, dwOutputBufferLength, pResults):
+#         '-no docstring-'
+#         #return pBuffer, pdwBytesWritten
+#
+#     def GetBufferFromIPortableDeviceValues(self, pSource):
+#         '-no docstring-'
+#         #return ppBuffer, pdwBufferSize
+#
+#     def GetSerializedSize(self, pSource):
+#         '-no docstring-'
+#         #return pdwSize
+#
+
+tagSTATSTG._fields_ = [
+    ('pwcsName', WSTRING),
+    ('type', c_ulong),
+    ('cbSize', _ULARGE_INTEGER),
+    ('mtime', _FILETIME),
+    ('ctime', _FILETIME),
+    ('atime', _FILETIME),
+    ('grfMode', c_ulong),
+    ('grfLocksSupported', c_ulong),
+    ('clsid', win_mtp.comtypes_gen._00020430_0000_0000_C000_000000000046_0_2_0.GUID),
+    ('grfStateBits', c_ulong),
+    ('reserved', c_ulong),
+]
+
+assert sizeof(tagSTATSTG) == 80, sizeof(tagSTATSTG)
+assert alignment(tagSTATSTG) == 8, alignment(tagSTATSTG)
+
+
+class PortableDeviceKeyCollection(CoClass):
+    """Portable Device PROPERTYKEY collection"""
+    _reg_clsid_ = GUID('{DE2D022D-2480-43BE-97F0-D1FA2CF98F4F}')
+    _idlflags_ = []
+    _typelib_path_ = typelib_path
+    _reg_typelib_ = ('{2B00BA2F-E750-4BEB-9235-97142EDE1D3E}', 1, 0)
+
+
+PortableDeviceKeyCollection._com_interfaces_ = [IPortableDeviceKeyCollection]
+
+
+class PortableDevicePropVariantCollection(CoClass):
+    """Portable Device PROPVARIANT collection"""
+    _reg_clsid_ = GUID('{08A99E2F-6D6D-4B80-AF5A-BAF2BCBE4CB9}')
+    _idlflags_ = []
+    _typelib_path_ = typelib_path
+    _reg_typelib_ = ('{2B00BA2F-E750-4BEB-9235-97142EDE1D3E}', 1, 0)
+
+
+PortableDevicePropVariantCollection._com_interfaces_ = [IPortableDevicePropVariantCollection]
+
+
+class PortableDeviceValuesCollection(CoClass):
+    """Portable Device Values collection"""
+    _reg_clsid_ = GUID('{3882134D-14CF-4220-9CB4-435F86D83F60}')
+    _idlflags_ = []
+    _typelib_path_ = typelib_path
+    _reg_typelib_ = ('{2B00BA2F-E750-4BEB-9235-97142EDE1D3E}', 1, 0)
+
+
+PortableDeviceValuesCollection._com_interfaces_ = [IPortableDeviceValuesCollection]
+
+IPortableDeviceKeyCollection._methods_ = [
+    COMMETHOD(
+        [],
+        HRESULT,
+        'GetCount',
+        (['in'], POINTER(c_ulong), 'pcElems')
+    ),
+    COMMETHOD(
+        [],
+        HRESULT,
+        'GetAt',
+        (['in'], c_ulong, 'dwIndex'),
+        (['in'], POINTER(_tagpropertykey), 'pKey')
+    ),
+    COMMETHOD(
+        [],
+        HRESULT,
+        'Add',
+        (['in'], POINTER(_tagpropertykey), 'key')
+    ),
+    COMMETHOD([], HRESULT, 'Clear'),
+    COMMETHOD(
+        [],
+        HRESULT,
+        'RemoveAt',
+        (['in'], c_ulong, 'dwIndex')
+    ),
+]
+
+################################################################
+# code template for IPortableDeviceKeyCollection implementation
+# class IPortableDeviceKeyCollection_Impl(object):
+#     def GetCount(self, pcElems):
+#         '-no docstring-'
+#         #return 
+#
+#     def GetAt(self, dwIndex, pKey):
+#         '-no docstring-'
+#         #return 
+#
+#     def Add(self, key):
+#         '-no docstring-'
+#         #return 
+#
+#     def Clear(self):
+#         '-no docstring-'
+#         #return 
+#
+#     def RemoveAt(self, dwIndex):
+#         '-no docstring-'
+#         #return 
+#
+
+IPropertyStore._methods_ = [
+    COMMETHOD(
+        [],
+        HRESULT,
+        'GetCount',
+        (['out'], POINTER(c_ulong), 'cProps')
+    ),
+    COMMETHOD(
+        [],
+        HRESULT,
+        'GetAt',
+        (['in'], c_ulong, 'iProp'),
+        (['out'], POINTER(_tagpropertykey), 'pKey')
+    ),
+    COMMETHOD(
+        [],
+        HRESULT,
+        'GetValue',
+        (['in'], POINTER(_tagpropertykey), 'key'),
+        (['out'], POINTER(tag_inner_PROPVARIANT), 'pv')
+    ),
+    COMMETHOD(
+        [],
+        HRESULT,
+        'SetValue',
+        (['in'], POINTER(_tagpropertykey), 'key'),
+        (['in'], POINTER(tag_inner_PROPVARIANT), 'propvar')
+    ),
+    COMMETHOD([], HRESULT, 'Commit'),
+]
+
+################################################################
+# code template for IPropertyStore implementation
+# class IPropertyStore_Impl(object):
+#     def GetCount(self):
+#         '-no docstring-'
+#         #return cProps
+#
+#     def GetAt(self, iProp):
+#         '-no docstring-'
+#         #return pKey
+#
+#     def GetValue(self, key):
+#         '-no docstring-'
+#         #return pv
+#
+#     def SetValue(self, key, propvar):
+#         '-no docstring-'
+#         #return 
+#
+#     def Commit(self):
+#         '-no docstring-'
+#         #return 
+#
 
 __all__ = [
-    '_FLAGGED_WORD_BLOB', 'tagCLIPDATA',
-    'IPortableDeviceKeyCollection', 'IStorage', 'wireSNB',
-    'IEnumSTATSTG', '_SHORT_SIZEDARR', 'tagCAUL', 'IStream',
-    'tagSTATSTG', 'tagCAUB', 'tagCAL', 'tagCAFILETIME',
-    'ISequentialStream', 'tagCALPSTR',
-    'IPortableDeviceValuesCollection', 'tagCAC', 'tagCACLIPDATA',
-    '_wireSAFEARR_DISPATCH', 'PortableDeviceValuesCollection',
-    'tagCADBL', 'tagCADATE', '__MIDL_IOleAutomationTypes_0004',
-    '__MIDL_IOleAutomationTypes_0001', 'IWpdSerializer',
-    '_wireSAFEARRAY_UNION', '_wireSAFEARR_VARIANT',
-    '_wireSAFEARR_UNKNOWN', 'tagBSTRBLOB', '_wireSAFEARR_BRECORD',
-    'IPortableDeviceValues', 'PortableDevicePropVariantCollection',
-    '__MIDL_IOleAutomationTypes_0005', '_BYTE_SIZEDARR',
-    'IPropertyStore', 'PortableDeviceValues',
-    '__MIDL_IOleAutomationTypes_0006', 'tagCALPWSTR', 'WpdSerializer',
-    '_wireBRECORD', '_wireSAFEARR_BSTR', 'tagCAI', 'tagCABSTR',
-    'tagCAPROPVARIANT', 'IPortableDevicePropVariantCollection',
-    'tagCAH', 'tagCAUI', 'tagCASCODE', 'tagCACLSID',
-    '_wireSAFEARR_HAVEIID', 'tagCABSTRBLOB', '_HYPER_SIZEDARR',
-    'tag_inner_PROPVARIANT', 'tagCABOOL', '_tagpropertykey',
-    'tagBLOB', 'tagCAFLT', 'tagCACY', '_wireSAFEARRAY',
-    '__MIDL___MIDL_itf_PortableDeviceTypes_0003_0017_0001', 'tagCAUH',
-    'tagRemSNB', 'PortableDeviceKeyCollection', 'tagVersionedStream',
-    '_LONG_SIZEDARR', '_wireVARIANT', 'wirePSAFEARRAY'
+    '_wireVARIANT', 'WpdSerializer', 'tagCAI', 'tagCADATE',
+    '_wireSAFEARRAY', 'tagCAUH', 'PortableDeviceValuesCollection',
+    '_wireBRECORD', 'tagCALPWSTR', 'IEnumSTATSTG', 'tagCALPSTR',
+    '_wireSAFEARRAY_UNION', '__MIDL_IOleAutomationTypes_0004',
+    '_BYTE_SIZEDARR', '_HYPER_SIZEDARR',
+    'PortableDeviceKeyCollection', 'wireSNB', 'tagBSTRBLOB',
+    'IStream', 'tagCABSTRBLOB', 'tagVersionedStream',
+    'IPortableDevicePropVariantCollection', 'tagCAC',
+    '__MIDL_IOleAutomationTypes_0005', 'IStorage', 'tagCAL', 'tagCAH',
+    'tagBLOB', 'tagCACLIPDATA', '_wireSAFEARR_BRECORD',
+    'tagCAPROPVARIANT', 'tag_inner_PROPVARIANT',
+    '__MIDL___MIDL_itf_PortableDeviceTypes_0003_0017_0001', 'tagCACY',
+    '_tagpropertykey', 'tagCAUB', '_FLAGGED_WORD_BLOB',
+    'ISequentialStream', '_LONG_SIZEDARR',
+    '__MIDL_IOleAutomationTypes_0006', '_wireSAFEARR_DISPATCH',
+    'PortableDeviceValues', 'tagCLIPDATA', 'tagSTATSTG',
+    '_wireSAFEARR_HAVEIID', 'tagCABOOL', '_wireSAFEARR_BSTR',
+    'tagCASCODE', 'IWpdSerializer', 'tagCAUI', '_SHORT_SIZEDARR',
+    'tagCAUL', 'IPortableDeviceValuesCollection', 'tagCADBL',
+    '_wireSAFEARR_VARIANT', 'tagCABSTR', 'tagCAFILETIME',
+    'wirePSAFEARRAY', '__MIDL_IOleAutomationTypes_0001',
+    '_wireSAFEARR_UNKNOWN', 'tagCACLSID', 'IPropertyStore',
+    'IPortableDeviceKeyCollection', 'tagCAFLT',
+    'IPortableDeviceValues', 'tagRemSNB',
+    'PortableDevicePropVariantCollection'
 ]
 
-# _check_version('1.2.0', 1683289418.680990)
+# _check_version('1.2.0', 1698078858.775992)
 
