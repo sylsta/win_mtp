@@ -3,14 +3,11 @@ A module to access Mobile Devices from Windows via USB connection.
 
 Author:  Heribert Füchtenhans
 
-Version: 1.0.3
+Version: 1.1.0
 
 Implements access to basic functions of the Windows WPD API
 Yes I know, there are a lot of pylint disable and type ignors :-)
 For examples please look into the tests directory.
-
-If you install a new version of comptypes you must run the win_mtp_gen_comtypes.py
-programm in the utilities directory to generate the new comtypes_gen files!
 
 Requirements:
 OS:
@@ -40,18 +37,22 @@ Examples:
 import ctypes
 import datetime
 import os
+import sys
 from typing import Any, Generator, Optional, Tuple
 import contextlib
 import comtypes  # pylint: disable=import-error
 import comtypes.client  # pylint: disable=import-error
 import comtypes.automation  # pylint: disable=import-error
 
-from win_mtp.comtypes_gen import (
-    _1F001332_1A57_4934_BE31_AFFC99F4EE0A_0_1_0 as port,
-)
-from win_mtp.comtypes_gen import (
-    _2B00BA2F_E750_4BEB_9235_97142EDE1D3E_0_1_0 as types,
-)
+if not hasattr(sys, "frozen"):
+    comtypes.client.GetModule("portabledeviceapi.dll")
+    comtypes.client.GetModule("portabledevicetypes.dll")
+    from . import modify_comtypes
+
+    modify_comtypes.modify_generated_files(comtypes.client.gen_dir)
+
+import comtypes.gen.PortableDeviceApiLib as port  # pylint: disable=all # type: ignore
+import comtypes.gen.PortableDeviceTypesLib as types  # pylint: disable=all # type: ignore
 
 
 # ComType Verweise anlegen
@@ -191,8 +192,8 @@ class PortableDeviceContent:  # pylint: disable=too-many-instance-attributes
 
     # class variable
     _properties_to_read: Optional[
-        types.PortableDeviceKeyCollection
-    ] = None  # pylint: disable=no-member # type: ignore
+        types.PortableDeviceKeyCollection  # pylint: disable=no-member # type: ignore
+    ] = None
 
     _CoTaskMemFree = ctypes.windll.ole32.CoTaskMemFree
     _CoTaskMemFree.restype = None
@@ -370,8 +371,8 @@ class PortableDeviceContent:  # pylint: disable=too-many-instance-attributes
             ctypes.c_ulong(0),
             self._object_id,
             ctypes.POINTER(
-                port.IPortableDeviceValues
-            )(),  # pylint: disable=no-member # type: ignore
+                port.IPortableDeviceValues  # pylint: disable=no-member # type: ignore
+            )(),
         )
         while True:
             num_objects = ctypes.c_ulong(16)  # block size, so to speak
@@ -584,8 +585,8 @@ class PortableDeviceContent:  # pylint: disable=too-many-instance-attributes
             stgm_read = ctypes.c_uint(0)
             optimal_transfer_size_bytes = ctypes.pointer(ctypes.c_ulong(0))
             p_filestream = ctypes.POINTER(
-                port.IStream
-            )()  # pylint: disable=no-member # type: ignore
+                port.IStream  # pylint: disable=no-member # type: ignore
+            )()
             optimal_transfer_size_bytes, q_filestream = resources.GetStream(
                 self._object_id,
                 WPD_RESOURCE_DEFAULT,

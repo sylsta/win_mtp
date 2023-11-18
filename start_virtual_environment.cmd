@@ -11,7 +11,7 @@ rem ----------------------------------------------------------------------------
 if not exist venv (
 	echo venv doesn't exist so I create the virtual environment
 	@REM python -m venv --system-site-packages .venv
-	python -m venv venv --system-site-packages
+	python -m venv venv
 )
-call .\venv\Scripts\activate.bat
+call venv\Scripts\activate.bat
 cmd /K

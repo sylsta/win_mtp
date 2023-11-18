@@ -65,7 +65,7 @@ if __name__ == "__main__":
         starttime = time.time()
         print("Devices:")
         devicelist = win_mtp.access.get_portable_devices()
-        for _ in range(1000000):
+        for _ in range(2):
             # print(memory())
             time.sleep(0.01)
             for dev in devicelist:
