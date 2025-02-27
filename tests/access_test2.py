@@ -60,8 +60,9 @@ devicelist = win_mtp.access.get_portable_devices()
 for dev in devicelist:
     device_name, device_desc = dev.get_description()
     print(f"  {device_name}: {device_desc}")
-    net_osm_path = display_childs_with_walk(dev, device_name, True)
+    net_osm_path = display_childs_with_walk(dev, device_name)
     if net_osm_path is not None:
-        display_child(dev, net_osm_path)
+        display_child(dev, f'{net_osm_path}\\files\\tracks\\rec')
+
 print(f"Runtime: {time.time() - starttime}")
 
