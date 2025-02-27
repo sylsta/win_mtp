@@ -76,7 +76,7 @@ if __name__ == "__main__":
                 print(f"  Serial-No.: {values[6]}")
                 print("Content:")
                 display_childs_with_walk(dev, device_name)
-                display_child(dev, device_name)
+                # display_child(dev, device_name)
         print(f"Runtime: {time.time() - starttime}")
 
     main()
