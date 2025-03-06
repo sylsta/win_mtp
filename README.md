@@ -7,7 +7,7 @@ In the win_mtp directory there are three modules.
 - linux_access
 - dialog.py
 
-For detailed description see (https://heribert17.github.io/mtp/)
+For detailed description see site directory
 
 Tested with:
 * Python 3.12 and above
