@@ -1,13 +1,13 @@
 # mtp
 
-Accessing the filesystem of MTP devices (Smartphones, MP3-Player, etc.) on Windows with python.
+Accessing the filesystem of MTP devices (Smartphones, MP3-Player, etc.) on Windows or Linux with python.
 
 In the win_mtp directory there are three modules.
 - win_access.py
 - linux_access
 - dialog.py
 
-For detailed description see (https://heribert17.github.io/win_mtp/)
+For detailed description see (https://heribert17.github.io/mtp/)
 
 Tested with:
 * Python 3.12 and above
