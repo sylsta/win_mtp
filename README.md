@@ -1,4 +1,4 @@
-# win_mtp
+# mtp
 
 Accessing the filesystem of MTP devices (Smartphones, MP3-Player, etc.) on Windows with python.
 
@@ -16,10 +16,10 @@ Tested with:
 * Linux Mint, Zorin
 
 
-## win_ access.py
+## win_access.py
 This modules implements the access to the Windows WPD functions to read and write MTP devices like smartphones, tablets. etc.
 
-## linux_ access.py
+## linux_access.py
 This modules implements the access to read and write MTP devices like smartphones, tablets. etc. from Linux
 
 ## dialog.py
