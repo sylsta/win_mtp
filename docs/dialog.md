@@ -1,3 +1,3 @@
-## mtp_dialog Documentation
+## dialog Documentation
 
-::: win_mtp.dialog
+::: mtp.dialog

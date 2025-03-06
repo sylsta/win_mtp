@@ -3,7 +3,7 @@ A module to access Mobile Devices from Windows via USB connection.
 
 Author:  Heribert Füchtenhans
 
-Version: 1.1.0
+Version: 2025.3.1
 
 Implements access to basic functions of the Windows WPD API
 Yes I know, there are a lot of pylint disable and type ignors :-)
@@ -12,6 +12,7 @@ For examples please look into the tests directory.
 Requirements:
 OS:
     Windows 10
+    Windows 11
 Python: 
     comtypes
 
@@ -27,29 +28,31 @@ The module contains the following classes:
 - 'PortableDeviceContent' - Class for one file, directory or storage
 - 'PortableDevice' - Class for one portable device found connected
 
+All functions through IOError when a communication fails.
+
 Examples:
     >>> import win_mtp.mtp_access
     >>> win_mtp.mtp_access.get_portable_devices()
     [<PortableDevice: ('HSG1316', 'HSG1316')>]
 """
 
-
 import ctypes
 import datetime
+import io
 import os
 import sys
-from typing import Any, Generator, Optional, Tuple
+from typing import Any, IO, Callable, Generator, List, Optional, Tuple
 import contextlib
-import comtypes  # pylint: disable=import-error
-import comtypes.client  # pylint: disable=import-error
-import comtypes.automation  # pylint: disable=import-error
+import comtypes  # type: ignore # pylint: disable=import-error
+import comtypes.client  # type: ignore # pylint: disable=import-error
+import comtypes.automation  # type: ignore # pylint: disable=import-error
 
 if not hasattr(sys, "frozen"):
     comtypes.client.GetModule("portabledeviceapi.dll")
     comtypes.client.GetModule("portabledevicetypes.dll")
     from . import modify_comtypes
 
-    modify_comtypes.modify_generated_files(comtypes.client.gen_dir)
+    modify_comtypes.modify_generated_files(comtypes.client.gen_dir)  # type: ignore
 
 import comtypes.gen.PortableDeviceApiLib as port  # pylint: disable=all # type: ignore
 import comtypes.gen.PortableDeviceTypesLib as types  # pylint: disable=all # type: ignore
@@ -63,9 +66,7 @@ WPD_RESOURCE_DEFAULT.contents.fmtid = comtypes.GUID("{E81E79BE-34F0-41BF-B53F-F1
 WPD_RESOURCE_DEFAULT.contents.pid = 0
 
 # ---------
-WPD_OBJECT_NAME = comtypes.pointer(
-    port._tagpropertykey()  # pylint: disable=no-member, protected-access # type: ignore
-)
+WPD_OBJECT_NAME = comtypes.pointer(port._tagpropertykey())  # pylint: disable=no-member, protected-access # type: ignore
 WPD_OBJECT_NAME.contents.fmtid = comtypes.GUID("{EF6B490D-5CD8-437A-AFFC-DA8B60EE4A3C}")
 WPD_OBJECT_NAME.contents.pid = 4
 
@@ -80,9 +81,7 @@ WPD_STORAGE_CAPACITY.contents.pid = 4
 WPD_STORAGE_FREE_SPACE_IN_BYTES = comtypes.pointer(
     port._tagpropertykey()  # pylint: disable=no-member, protected-access # type: ignore
 )
-WPD_STORAGE_FREE_SPACE_IN_BYTES.contents.fmtid = comtypes.GUID(
-    "{01A3057A-74D6-4E80-BEA7-DC4C212CE50A}"
-)
+WPD_STORAGE_FREE_SPACE_IN_BYTES.contents.fmtid = comtypes.GUID("{01A3057A-74D6-4E80-BEA7-DC4C212CE50A}")
 WPD_STORAGE_FREE_SPACE_IN_BYTES.contents.pid = 5
 
 # ---------
@@ -107,10 +106,9 @@ WPD_OBJECT_CONTENT_TYPE = comtypes.pointer(
 WPD_OBJECT_CONTENT_TYPE.contents.fmtid = comtypes.GUID("{EF6B490D-5CD8-437A-AFFC-DA8B60EE4A3C}")
 WPD_OBJECT_CONTENT_TYPE.contents.pid = 7
 
+
 # ---------
-WPD_OBJECT_SIZE = comtypes.pointer(
-    port._tagpropertykey()  # pylint: disable=no-member, protected-access # type: ignore
-)
+WPD_OBJECT_SIZE = comtypes.pointer(port._tagpropertykey())  # pylint: disable=no-member, protected-access # type: ignore
 WPD_OBJECT_SIZE.contents.fmtid = comtypes.GUID("{EF6B490D-5CD8-437A-AFFC-DA8B60EE4A3C}")
 WPD_OBJECT_SIZE.contents.pid = 11
 
@@ -118,9 +116,7 @@ WPD_OBJECT_SIZE.contents.pid = 11
 WPD_OBJECT_ORIGINAL_FILE_NAME = comtypes.pointer(
     port._tagpropertykey()  # pylint: disable=no-member, protected-access # type: ignore
 )
-WPD_OBJECT_ORIGINAL_FILE_NAME.contents.fmtid = comtypes.GUID(
-    "{EF6B490D-5CD8-437A-AFFC-DA8B60EE4A3C}"
-)
+WPD_OBJECT_ORIGINAL_FILE_NAME.contents.fmtid = comtypes.GUID("{EF6B490D-5CD8-437A-AFFC-DA8B60EE4A3C}")
 WPD_OBJECT_ORIGINAL_FILE_NAME.contents.pid = 12
 
 # ---------
@@ -173,27 +169,23 @@ class PortableDeviceContent:  # pylint: disable=too-many-instance-attributes
         get_child
         get_path
         create_content
-        upload_stream
         upload_file
-        download_stream
         download_file
         remove
 
     Public attributes:
-        name: Name on the MTP device
+        name: Name of the MTP device
         fullname: The full path name
         date_created: The file date
         size: The size of the file in bytes
         content_type: Type of the entry. One of the WPD_CONTENT_TYPE_ constants
 
     Exceptions:
-        comtypes.COMError: If something went wrong
+        IOError: If something went wrong
     """
 
     # class variable
-    _properties_to_read: Optional[
-        types.PortableDeviceKeyCollection  # pylint: disable=no-member # type: ignore
-    ] = None
+    _properties_to_read: Optional[types.PortableDeviceKeyCollection] = None  # pylint: disable=no-member # type: ignore
 
     _CoTaskMemFree = ctypes.windll.ole32.CoTaskMemFree
     _CoTaskMemFree.restype = None
@@ -204,20 +196,22 @@ class PortableDeviceContent:  # pylint: disable=too-many-instance-attributes
         object_id: Any,
         content: "PortableDeviceContent",
         properties: Optional[Any] = None,
+        parent_path: str = "",
     ) -> None:
         """ """
 
         self._object_id = object_id
-        self._content = content
-        self.name = ""
-        self._plain_name = ""
-        self.content_type = WPD_CONTENT_TYPE_UNDEFINED
-        self.full_filename = ""
-        self.size = -1
-        self.date_created = datetime.datetime(1970, 1, 1)
-        self._capacity = -1
-        self._free_capacity = -1
-        self._serialnumber = ""
+        self._content: "PortableDeviceContent" = content
+        self._parent_path = parent_path
+        self.name: str = ""
+        self._plain_name: str = ""
+        self.content_type: int = WPD_CONTENT_TYPE_UNDEFINED
+        self.full_filename: str = ""
+        self.size: int = -1
+        self.date_created: datetime.datetime = datetime.datetime(1970, 1, 1)
+        self._capacity: int = -1
+        self._free_capacity: int = -1
+        self._serialnumber: str = ""
         self._properties = properties or content.properties()  # type: ignore
         if PortableDeviceContent._properties_to_read is None:
             # We havn't set the roperties wie will read, so do it now
@@ -227,17 +221,13 @@ class PortableDeviceContent:  # pylint: disable=too-many-instance-attributes
                 interface=port.IPortableDeviceKeyCollection,  # pylint: disable=no-member, protected-access # type: ignore
             )
             PortableDeviceContent._properties_to_read.Add(WPD_OBJECT_NAME)  # type: ignore
-            PortableDeviceContent._properties_to_read.Add(  # type: ignore
-                WPD_OBJECT_ORIGINAL_FILE_NAME
-            )
+            PortableDeviceContent._properties_to_read.Add(WPD_OBJECT_ORIGINAL_FILE_NAME)  # type: ignore
             PortableDeviceContent._properties_to_read.Add(WPD_OBJECT_CONTENT_TYPE)  # type: ignore
             PortableDeviceContent._properties_to_read.Add(WPD_OBJECT_SIZE)  # type: ignore
             PortableDeviceContent._properties_to_read.Add(WPD_OBJECT_DATE_MODIFIED)  # type: ignore
             PortableDeviceContent._properties_to_read.Add(WPD_OBJECT_DATE_CREATED)  # type: ignore
             PortableDeviceContent._properties_to_read.Add(WPD_STORAGE_CAPACITY)  # type: ignore
-            PortableDeviceContent._properties_to_read.Add(  # type: ignore
-                WPD_STORAGE_FREE_SPACE_IN_BYTES
-            )
+            PortableDeviceContent._properties_to_read.Add(WPD_STORAGE_FREE_SPACE_IN_BYTES)  # type: ignore
             PortableDeviceContent._properties_to_read.Add(WPD_DEVICE_SERIAL_NUMBER)  # type: ignore
         self.get_properties()
 
@@ -287,37 +277,37 @@ class PortableDeviceContent:  # pylint: disable=too-many-instance-attributes
                 self._free_capacity,
                 self._serialnumber,
             )
-        propvalues = self._properties.GetValues(
+        propvalues = self._properties.GetValues(  # type: ignore
             self._object_id, PortableDeviceContent._properties_to_read
         )
         self.content_type = WPD_CONTENT_TYPE_UNDEFINED
         try:
-            self._plain_name = propvalues.GetStringValue(WPD_OBJECT_NAME)
+            self._plain_name = str(propvalues.GetStringValue(WPD_OBJECT_NAME))  # type: ignore
         except comtypes.COMError:
             self.content_type = WPD_CONTENT_TYPE_DIRECTORY
             self.name = self._plain_name = ""
         try:
-            self.name = self._plain_name = propvalues.GetStringValue(WPD_OBJECT_ORIGINAL_FILE_NAME)
+            self.name = self._plain_name = str(propvalues.GetStringValue(WPD_OBJECT_ORIGINAL_FILE_NAME))  # type: ignore
         except comtypes.COMError:
             self.name = self._plain_name
-        content_id = str(propvalues.GetGuidValue(WPD_OBJECT_CONTENT_TYPE))
+        content_id = str(propvalues.GetGuidValue(WPD_OBJECT_CONTENT_TYPE))  # type: ignore
         if content_id in {
             "{23F05BBC-15DE-4C2A-A55B-A9AF5CE412EF}",
             "{99ED0160-17FF-4C44-9D98-1D7A6F941921}",
         }:
             # It's a storage
             try:
-                self._capacity = int(propvalues.GetUnsignedLargeIntegerValue(WPD_STORAGE_CAPACITY))
+                self._capacity = int(propvalues.GetUnsignedLargeIntegerValue(WPD_STORAGE_CAPACITY))  # type: ignore
             except comtypes.COMError:
                 self._capacity = -1
             try:
                 self._free_capacity = int(
-                    propvalues.GetUnsignedLargeIntegerValue(WPD_STORAGE_FREE_SPACE_IN_BYTES)
+                    propvalues.GetUnsignedLargeIntegerValue(WPD_STORAGE_FREE_SPACE_IN_BYTES)  # type: ignore
                 )
             except comtypes.COMError:
                 self._free_capacity = -1
             with contextlib.suppress(comtypes.COMError):
-                self._serialnumber = propvalues.GetStringValue(WPD_DEVICE_SERIAL_NUMBER)
+                self._serialnumber = str(propvalues.GetStringValue(WPD_DEVICE_SERIAL_NUMBER))  # type: ignore
             self.content_type = WPD_CONTENT_TYPE_STORAGE
         elif content_id == "{27E2E392-A111-48E0-AB0C-E17705A05F85}":
             # It's a directory
@@ -325,12 +315,9 @@ class PortableDeviceContent:  # pylint: disable=too-many-instance-attributes
         else:
             # it's not a folder or storage
             self.content_type = WPD_CONTENT_TYPE_FILE
-            self.size = int(propvalues.GetUnsignedLargeIntegerValue(WPD_OBJECT_SIZE))
-            filetime = propvalues.GetValue(WPD_OBJECT_DATE_MODIFIED).data.date
-            days_since_1970 = (
-                int(filetime)
-                - (datetime.datetime(1970, 1, 1) - datetime.datetime(1899, 12, 30)).days
-            )
+            self.size = int(propvalues.GetUnsignedLargeIntegerValue(WPD_OBJECT_SIZE))  # type: ignore
+            filetime = int(propvalues.GetValue(WPD_OBJECT_DATE_MODIFIED).data.date)  # type: ignore
+            days_since_1970 = filetime - (datetime.datetime(1970, 1, 1) - datetime.datetime(1899, 12, 30)).days
             hours = (filetime - int(filetime)) * 24
             minutes = (hours - int(hours)) * 60
             seconds = (minutes - int(minutes)) * 60
@@ -342,7 +329,8 @@ class PortableDeviceContent:  # pylint: disable=too-many-instance-attributes
                 seconds=int(seconds),
                 milliseconds=milliseconds,
             )
-        propvalues.Clear()
+        propvalues.Clear()  # type: ignore
+        self.full_filename = os.path.join(self._parent_path, self._plain_name)
         return (
             self.name,
             self.content_type,
@@ -353,11 +341,11 @@ class PortableDeviceContent:  # pylint: disable=too-many-instance-attributes
             self._serialnumber,
         )
 
-    def get_children(self) -> list["PortableDeviceContent"]:
+    def get_children(self) -> Generator["PortableDeviceContent", None, None]:
         """Get the child items of a folder.
 
         Returns:
-            A list of PortableDeviceContent instances each representing a child entry.
+            A Generator of PortableDeviceContent instances each representing a child entry.
 
         Examples:
             >>> import win_mtp.mtp_access
@@ -366,39 +354,35 @@ class PortableDeviceContent:  # pylint: disable=too-many-instance-attributes
             >>> str(cont.get_children()[0])[:58]
             "<PortableDeviceContent s10001: ('Interner Speicher', 0, -1"
         """
-        ret_objs = []
-        enumobject_ids = self._content.EnumObjects(  # type: ignore
-            ctypes.c_ulong(0),
-            self._object_id,
-            ctypes.POINTER(
-                port.IPortableDeviceValues  # pylint: disable=no-member # type: ignore
-            )(),
-        )
-        while True:
-            num_objects = ctypes.c_ulong(16)  # block size, so to speak
-            object_id_array = (ctypes.c_wchar_p * num_objects.value)()
-            num_fetched = ctypes.pointer(ctypes.c_ulong(0))
-            # be sure to change the IEnumPortableDeviceobject_ids 'Next'
-            # function in the generated code to have object_ids as inout
-            enumobject_ids.Next(
-                num_objects,
-                ctypes.cast(object_id_array, ctypes.POINTER(ctypes.c_wchar_p)),
-                num_fetched,
+        try:
+            enumobject_ids = self._content.EnumObjects(  # type: ignore
+                ctypes.c_ulong(0),
+                self._object_id,
+                ctypes.POINTER(port.IPortableDeviceValues)(),  # pylint: disable=no-member # type: ignore
             )
-            if num_fetched.contents.value == 0:
-                break
-            for index in range(num_fetched.contents.value):
-                curobject_id = object_id_array[index]
-                value = PortableDeviceContent(curobject_id, self._content, self._properties)
-                ret_objs.append(value)
-                # Free memory
-                address = (
-                    ctypes.addressof(object_id_array) + ctypes.sizeof(ctypes.c_wchar_p) * index
+            while True:
+                num_objects = ctypes.c_ulong(16)  # block size, so to speak
+                object_id_array = (ctypes.c_wchar_p * num_objects.value)()
+                num_fetched = ctypes.pointer(ctypes.c_ulong(0))
+                # be sure to change the IEnumPortableDeviceobject_ids 'Next'
+                # function in the generated code to have object_ids as inout
+                enumobject_ids.Next(  # type: ignore
+                    num_objects,
+                    ctypes.cast(object_id_array, ctypes.POINTER(ctypes.c_wchar_p)),
+                    num_fetched,
                 )
-                ptr = ctypes.pointer(ctypes.c_wchar_p.from_address(address))
-                ctypes.windll.ole32.CoTaskMemFree(ptr.contents)
-        ret_objs.sort(key=lambda entry: entry.date_created)
-        return ret_objs
+                if num_fetched.contents.value == 0:
+                    break
+                for index in range(num_fetched.contents.value):
+                    curobject_id = object_id_array[index]
+                    value = PortableDeviceContent(curobject_id, self._content, self._properties, self.full_filename)  # type: ignore
+                    # Free memory
+                    address = ctypes.addressof(object_id_array) + ctypes.sizeof(ctypes.c_wchar_p) * index
+                    ptr = ctypes.pointer(ctypes.c_wchar_p.from_address(address))
+                    ctypes.windll.ole32.CoTaskMemFree(ptr.contents)
+                    yield value
+        except comtypes.COMError as err:
+            raise IOError(f"Error getting child item from '{self.full_filename}': {err.args[1]}")
 
     def get_child(self, name: str) -> Optional["PortableDeviceContent"]:
         """Returns a PortableDeviceContent for one child whos name is known.
@@ -465,22 +449,23 @@ class PortableDeviceContent:  # pylint: disable=too-many-instance-attributes
             >>> cont = cont.get_path("Interner Speicher\\Music")
             >>> cont.create_content("MyMusic")
         """
-        object_properties = comtypes.client.CreateObject(
-            types.PortableDeviceValues,  # pylint: disable=no-member # type: ignore
-            clsctx=comtypes.CLSCTX_INPROC_SERVER,
-            interface=port.IPortableDeviceValues,  # pylint: disable=no-member # type: ignore
-        )
-        object_properties.SetStringValue(WPD_OBJECT_PARENT_ID, self._object_id)  # type: ignore
-        object_properties.SetStringValue(WPD_OBJECT_NAME, dirname)  # type: ignore
-        object_properties.SetStringValue(WPD_OBJECT_ORIGINAL_FILE_NAME, dirname)  # type: ignore
-        object_properties.SetGuidValue(  # type: ignore
-            WPD_OBJECT_CONTENT_TYPE, WPD_CONTENT_TYPE_FOLDER_GUID
-        )
-        self._content.CreateObjectWithPropertiesOnly(  # type: ignore
-            object_properties, ctypes.POINTER(ctypes.c_wchar_p)()
-        )
+        try:
+            object_properties = comtypes.client.CreateObject(
+                types.PortableDeviceValues,  # pylint: disable=no-member # type: ignore
+                clsctx=comtypes.CLSCTX_INPROC_SERVER,
+                interface=port.IPortableDeviceValues,  # pylint: disable=no-member # type: ignore
+            )
+            object_properties.SetStringValue(WPD_OBJECT_PARENT_ID, self._object_id)  # type: ignore
+            object_properties.SetStringValue(WPD_OBJECT_NAME, dirname)  # type: ignore
+            object_properties.SetStringValue(WPD_OBJECT_ORIGINAL_FILE_NAME, dirname)  # type: ignore
+            object_properties.SetGuidValue(WPD_OBJECT_CONTENT_TYPE, WPD_CONTENT_TYPE_FOLDER_GUID)  # type: ignore
+            self._content.CreateObjectWithPropertiesOnly(  # type: ignore
+                object_properties, ctypes.POINTER(ctypes.c_wchar_p)()
+            )
+        except comtypes.COMError as err:
+            raise IOError(f"Error creating directory '{dirname}': {err.args[1]}")
 
-    def upload_stream(self, filename: str, inputstream: Any, stream_len: int) -> None:
+    def upload_stream(self, filename: str, inputstream: io.FileIO, stream_len: int) -> None:
         """Upload a steam to a file on the MTP device.
         For an easier usage use upload_file
 
@@ -502,44 +487,56 @@ class PortableDeviceContent:  # pylint: disable=too-many-instance-attributes
             >>> cont.upload_stream("Test.mp3", inp, size)
             >>> inp.close()
         """
-        object_properties = comtypes.client.CreateObject(
-            types.PortableDeviceValues,  # pylint: disable=no-member # type: ignore
-            clsctx=comtypes.CLSCTX_INPROC_SERVER,
-            interface=port.IPortableDeviceValues,  # pylint: disable=no-member # type: ignore
-        )
-        object_properties.SetStringValue(WPD_OBJECT_PARENT_ID, self._object_id)  # type: ignore
-        object_properties.SetUnsignedLargeIntegerValue(WPD_OBJECT_SIZE, stream_len)  # type: ignore
-        object_properties.SetStringValue(WPD_OBJECT_ORIGINAL_FILE_NAME, filename)  # type: ignore
-        object_properties.SetStringValue(WPD_OBJECT_NAME, filename)  # type: ignore
-        optimal_transfer_size_bytes = ctypes.pointer(ctypes.c_ulong(0))
-        p_filestream = ctypes.POINTER(port.IStream)()  # pylint: disable=no-member # type: ignore
-        # be sure to change the IPortableDeviceContent
-        # 'CreateObjectWithPropertiesAndData' function in the generated code to
-        # have IStream ppData as 'in','out'
-        filestream, _, _ = self._content.CreateObjectWithPropertiesAndData(  # type: ignore
-            object_properties,
-            p_filestream,
-            optimal_transfer_size_bytes,
-            ctypes.POINTER(ctypes.c_wchar_p)(),
-        )
-        # filestream = filestream.value
-        blocksize = optimal_transfer_size_bytes.contents.value
-        cur_written = 0
-        while True:
-            to_read = stream_len - cur_written
-            block = inputstream.read(to_read if to_read < blocksize else blocksize)
-            if len(block) <= 0:
-                break
-            string_buf = ctypes.create_string_buffer(block)
-            written = filestream.RemoteWrite(
-                ctypes.cast(string_buf, ctypes.POINTER(ctypes.c_ubyte)),
-                len(block),
+        try:
+            object_properties = comtypes.client.CreateObject(
+                types.PortableDeviceValues,  # pylint: disable=no-member # type: ignore
+                clsctx=comtypes.CLSCTX_INPROC_SERVER,
+                interface=port.IPortableDeviceValues,  # pylint: disable=no-member # type: ignore
             )
-            cur_written += written
-            if cur_written >= stream_len:
-                break
-        stgc_default = 0
-        filestream.Commit(stgc_default)
+            object_properties.SetStringValue(WPD_OBJECT_PARENT_ID, self._object_id)  # type: ignore
+            object_properties.SetUnsignedLargeIntegerValue(WPD_OBJECT_SIZE, stream_len)  # type: ignore
+            object_properties.SetStringValue(WPD_OBJECT_ORIGINAL_FILE_NAME, filename)  # type: ignore
+            object_properties.SetStringValue(WPD_OBJECT_NAME, filename)  # type: ignore
+            optimal_transfer_size_bytes = ctypes.pointer(ctypes.c_ulong(0))
+            p_filestream = ctypes.POINTER(port.IStream)()  # pylint: disable=no-member # type: ignore
+            # be sure to change the IPortableDeviceContent
+            # 'CreateObjectWithPropertiesAndData' function in the generated code to
+            # have IStream ppData as 'in','out'
+            filestream, _, _ = self._content.CreateObjectWithPropertiesAndData(  # type: ignore
+                object_properties,
+                p_filestream,
+                optimal_transfer_size_bytes,
+                ctypes.POINTER(ctypes.c_wchar_p)(),
+            )
+            # filestream = filestream.value
+            blocksize = optimal_transfer_size_bytes.contents.value
+            # cur_written = 0
+            # while True:
+            #     to_read = stream_len - cur_written
+            #     block = inputstream.read(to_read if to_read < blocksize else blocksize)
+            #     if len(block) <= 0:
+            #         break
+            #     string_buf = ctypes.create_string_buffer(block)
+            #     written = filestream.RemoteWrite(
+            #         ctypes.cast(string_buf, ctypes.POINTER(ctypes.c_ubyte)),
+            #         len(block),
+            #     )
+            #     cur_written += written
+            #     if cur_written >= stream_len:
+            #         break
+            while True:
+                block = inputstream.read(blocksize)
+                if len(block) <= 0:
+                    break
+                string_buf = ctypes.create_string_buffer(block)
+                filestream.RemoteWrite(  # type: ignore
+                    ctypes.cast(string_buf, ctypes.POINTER(ctypes.c_ubyte)),
+                    len(block),
+                )
+            stgc_default = 0
+            filestream.Commit(stgc_default)  # type: ignore
+        except comtypes.COMError as err:
+            raise IOError(f"Error storing stream '{filename}': {err.args[1]}")
 
     def upload_file(self, filename: str, inputfilename: str) -> None:
         """Upload of a file to MTP device.
@@ -558,11 +555,15 @@ class PortableDeviceContent:  # pylint: disable=too-many-instance-attributes
             >>> name = '..\\..\\Tests\\OnFire.mp3'
             >>> cont.upload_file("Test.mp3", name)
         """
-        length = os.path.getsize(inputfilename)
-        with open(inputfilename, "rb") as input_stream:
-            self.upload_stream(filename, input_stream, length)
+        try:
+            length = os.path.getsize(inputfilename)
+            # with open(inputfilename, "rb") as input_stream:
+            with io.FileIO(inputfilename, "r") as input_stream:
+                self.upload_stream(filename, input_stream, length)
+        except comtypes.COMError as err:
+            raise IOError(f"Error storing file '{filename}': {err.args[1]}")
 
-    def download_stream(self, outputstream: Any) -> None:
+    def download_stream(self, outputstream: IO[bytes]) -> None:
         """Download a file from MTP device.
         The used ProtableDeviceContent instance must be a file!
         For easier usage use download_file
@@ -584,27 +585,25 @@ class PortableDeviceContent:  # pylint: disable=too-many-instance-attributes
             resources = self._content.Transfer()  # type: ignore
             stgm_read = ctypes.c_uint(0)
             optimal_transfer_size_bytes = ctypes.pointer(ctypes.c_ulong(0))
-            p_filestream = ctypes.POINTER(
-                port.IStream  # pylint: disable=no-member # type: ignore
-            )()
-            optimal_transfer_size_bytes, q_filestream = resources.GetStream(
+            p_filestream = ctypes.POINTER(port.IStream)()  # pylint: disable=no-member # type: ignore
+            optimal_transfer_size_bytes, q_filestream = resources.GetStream(  # type: ignore
                 self._object_id,
                 WPD_RESOURCE_DEFAULT,
                 stgm_read,
                 optimal_transfer_size_bytes,
                 p_filestream,
             )
-            blocksize = optimal_transfer_size_bytes.contents.value
-            filestream = q_filestream.value
-            buf = (ctypes.c_ubyte * blocksize)()
+            blocksize = int(optimal_transfer_size_bytes.contents.value)  # type: ignore
+            filestream = q_filestream.value  # type: ignore
+            #            buf = (ctypes.c_ubyte * blocksize)()
             # make sure all RemoteRead parameters are in
             while True:
-                buf, length = filestream.RemoteRead(buf, ctypes.c_ulong(blocksize))
+                buf, length = filestream.RemoteRead(blocksize)  # type: ignore
                 if length == 0:
                     break
-                outputstream.write(bytearray(buf[:length]))
+                outputstream.write(bytearray(buf[:length]))  # type: ignore
         except comtypes.COMError as err:
-            raise IOError from err
+            raise IOError(f"Error getting file': {err.args[1]}")
 
     def download_file(self, outputfilename: str) -> None:
         """Download of a file from MTP device
@@ -622,10 +621,14 @@ class PortableDeviceContent:  # pylint: disable=too-many-instance-attributes
             >>> name = '..\\..\\Tests\\hangouts_incoming_call.ogg'
             >>> cont.download_file(name)
         """
-        with open(outputfilename, "wb") as output_stream:
-            self.download_stream(output_stream)
+        try:
+            # with open(outputfilename, "wb") as output_stream:
+            with io.FileIO(outputfilename, "w") as output_stream:
+                self.download_stream(output_stream)
+        except comtypes.COMError as err:
+            raise IOError(f"Error getting file '{outputfilename}': {err.args[1]}")
 
-    def remove(self) -> int:
+    def remove(self) -> None:
         """Deletes the current directory or file.
 
         Return:
@@ -645,39 +648,35 @@ class PortableDeviceContent:  # pylint: disable=too-many-instance-attributes
             >>> mycont.remove()
             0
         """
-        objects_to_delete = comtypes.client.CreateObject(
-            types.PortableDevicePropVariantCollection,  # pylint: disable=no-member, protected-access # type: ignore
-            clsctx=comtypes.CLSCTX_INPROC_SERVER,  # pylint: disable=no-member, protected-access
-            interface=port.IPortableDevicePropVariantCollection,  # pylint: disable=no-member, protected-access # type: ignore
-        )
-        pvar = port.tag_inner_PROPVARIANT()  # pylint: disable=no-member # type: ignore
-        pvar.vt = comtypes.automation.VT_LPWSTR
-        pvar.data.pwszVal = ctypes.c_wchar_p(self._object_id)
-        objects_to_delete.Add(pvar)  # type: ignore
-        errors = comtypes.client.CreateObject(
-            types.PortableDevicePropVariantCollection,  # pylint: disable=no-member, protected-access # type: ignore
-            clsctx=comtypes.CLSCTX_INPROC_SERVER,  # pylint: disable=no-member, protected-access
-            interface=port.IPortableDevicePropVariantCollection,  # pylint: disable=no-member, protected-access # type: ignore
-        )
         try:
-            self._content.Delete(  # type: ignore
-                WPD_DELETE_WITH_RECURSION, objects_to_delete, errors
+            objects_to_delete = comtypes.client.CreateObject(
+                types.PortableDevicePropVariantCollection,  # pylint: disable=no-member, protected-access # type: ignore
+                clsctx=comtypes.CLSCTX_INPROC_SERVER,  # pylint: disable=no-member, protected-access
+                interface=port.IPortableDevicePropVariantCollection,  # pylint: disable=no-member, protected-access # type: ignore
             )
-        except comtypes.COMError:
-            return 777
-        count = ctypes.c_ulong()
-        errors.GetCount(ctypes.pointer(count))  # type: ignore
-        for i in range(count.value):
-            index = ctypes.c_ulong(i)
             pvar = port.tag_inner_PROPVARIANT()  # pylint: disable=no-member # type: ignore
-            errors.GetAt(index, ctypes.pointer(pvar))  # type: ignore
-            if pvar.data.uintVal != 0:
-                return pvar.data.uintVal
-        return 0
+            pvar.vt = comtypes.automation.VT_LPWSTR
+            pvar.data.pwszVal = ctypes.c_wchar_p(self._object_id)
+            objects_to_delete.Add(pvar)  # type: ignore
+            errors = comtypes.client.CreateObject(
+                types.PortableDevicePropVariantCollection,  # pylint: disable=no-member, protected-access # type: ignore
+                clsctx=comtypes.CLSCTX_INPROC_SERVER,  # pylint: disable=no-member, protected-access
+                interface=port.IPortableDevicePropVariantCollection,  # pylint: disable=no-member, protected-access # type: ignore
+            )
+            self._content.Delete(WPD_DELETE_WITH_RECURSION, objects_to_delete, errors)  # type: ignore
+            count = ctypes.c_ulong()
+            errors.GetCount(ctypes.pointer(count))  # type: ignore
+            for i in range(count.value):
+                index = ctypes.c_ulong(i)
+                pvar = port.tag_inner_PROPVARIANT()  # pylint: disable=no-member # type: ignore
+                errors.GetAt(index, ctypes.pointer(pvar))  # type: ignore
+                # if pvar.data.uintVal != 0:
+                #     return pvar.data.uintVal
+        except comtypes.COMError as err:
+            raise IOError(f"Error deleting file '{self.full_filename}': {err.args[1]}")
 
 
 # -------------------------------------------------------------------------------------------------
-# ToDos: finish documentation, Examples
 
 
 class PortableDevice:
@@ -692,7 +691,7 @@ class PortableDevice:
     Public attributes:
 
     Exceptions:
-        comtypes.COMError: If something went wrong
+        IOError: If something went wrong
     """
 
     def __init__(self, p_id: str) -> None:
@@ -733,9 +732,7 @@ class PortableDevice:
         )
         self._desc = name.value
         try:
-            DEVICE_MANAGER.GetDeviceFriendlyName(
-                self._p_id, ctypes.POINTER(ctypes.c_ushort)(), name_len
-            )
+            DEVICE_MANAGER.GetDeviceFriendlyName(self._p_id, ctypes.POINTER(ctypes.c_ushort)(), name_len)
             name = ctypes.create_unicode_buffer(name_len.contents.value)
             DEVICE_MANAGER.GetDeviceFriendlyName(
                 self._p_id,
@@ -767,11 +764,15 @@ class PortableDevice:
             clsctx=comtypes.CLSCTX_INPROC_SERVER,
             interface=port.IPortableDevice,  # pylint: disable=no-member  # type: ignore
         )
-        if self._device is not None:
+        if self._device is not None:  # type: ignore
             self._device.Open(self._p_id, client_information)  # type: ignore
         return self._device
 
-    def get_content(self) -> PortableDeviceContent:
+    def get_device_path(self) -> str:
+        """Returns the full path to the directory"""
+        return self._name
+
+    def get_content(self) -> List[PortableDeviceContent]:
         """Get the content of a device.
 
         Returns:
@@ -783,7 +784,9 @@ class PortableDevice:
             >>> str(dev[0].get_content())[:33]
             '<PortableDeviceContent c_wchar_p('
         """
-        return PortableDeviceContent(ctypes.c_wchar_p("DEVICE"), self._get_device().Content(), None)
+        return [
+            PortableDeviceContent(ctypes.c_wchar_p("DEVICE"), self._get_device().Content(), None),
+        ]
 
     def __repr__(self) -> str:
         return f"<PortableDevice: {self.get_description()}>"
@@ -801,7 +804,7 @@ def get_portable_devices() -> list[PortableDevice]:
             was found.
 
     Exceptions:
-        comtypes.COMError: If something went wrong
+        IOError: If something went wrong
 
     Examples:
         >>> import win_mtp.mtp_access
@@ -810,23 +813,26 @@ def get_portable_devices() -> list[PortableDevice]:
     """
     global DEVICE_MANAGER  # pylint: disable=global-statement
 
-    if DEVICE_MANAGER is None:
-        comtypes.CoInitialize()
-        DEVICE_MANAGER = comtypes.client.CreateObject(
-            port.PortableDeviceManager,  # pylint: disable=no-member  # type: ignore
-            clsctx=comtypes.CLSCTX_INPROC_SERVER,
-            interface=port.IPortableDeviceManager,  # pylint: disable=no-member  # type: ignore
+    try:
+        if DEVICE_MANAGER is None:
+            comtypes.CoInitialize()
+            DEVICE_MANAGER = comtypes.client.CreateObject(  # type: ignore
+                port.PortableDeviceManager,  # pylint: disable=no-member  # type: ignore
+                clsctx=comtypes.CLSCTX_INPROC_SERVER,
+                interface=port.IPortableDeviceManager,  # pylint: disable=no-member  # type: ignore
+            )
+        pnp_device_id_count = ctypes.pointer(ctypes.c_ulong(0))
+        DEVICE_MANAGER.GetDevices(ctypes.POINTER(ctypes.c_wchar_p)(), pnp_device_id_count)
+        if pnp_device_id_count.contents.value == 0:
+            return []
+        pnp_device_ids = (ctypes.c_wchar_p * pnp_device_id_count.contents.value)()
+        DEVICE_MANAGER.GetDevices(  # pylint: disable=no-member  # type: ignore
+            ctypes.cast(pnp_device_ids, ctypes.POINTER(ctypes.c_wchar_p)),
+            pnp_device_id_count,
         )
-    pnp_device_id_count = ctypes.pointer(ctypes.c_ulong(0))
-    DEVICE_MANAGER.GetDevices(ctypes.POINTER(ctypes.c_wchar_p)(), pnp_device_id_count)
-    if pnp_device_id_count.contents.value == 0:
-        return []
-    pnp_device_ids = (ctypes.c_wchar_p * pnp_device_id_count.contents.value)()
-    DEVICE_MANAGER.GetDevices(  # pylint: disable=no-member  # type: ignore
-        ctypes.cast(pnp_device_ids, ctypes.POINTER(ctypes.c_wchar_p)),
-        pnp_device_id_count,
-    )
-    return [PortableDevice(cur_id) for cur_id in pnp_device_ids if cur_id is not None]
+        return [PortableDevice(cur_id) for cur_id in pnp_device_ids if cur_id is not None]
+    except comtypes.COMError as err:
+        raise IOError(f"Error getting list of devices: {err.args[1]}")
 
 
 def get_content_from_device_path(dev: PortableDevice, path: str) -> Optional[PortableDeviceContent]:
@@ -841,7 +847,7 @@ def get_content_from_device_path(dev: PortableDevice, path: str) -> Optional[Por
             else None is returned.
 
     Exceptions:
-        comtypes.COMError: If something went wrong
+        IOError: If something went wrong
 
     Examples:
         >>> import win_mtp.mtp_access
@@ -851,25 +857,43 @@ def get_content_from_device_path(dev: PortableDevice, path: str) -> Optional[Por
         >>> str(w)[:46]
         "<PortableDeviceContent o3: ('Ringtones', 1, -1"
     """
-    path = path.replace("\\", os.path.sep).replace("/", os.path.sep)
-    path_parts = path.split(os.path.sep)
-    if path_parts[0] == dev.get_description()[0]:
-        return (
-            dev.get_content().get_path(os.path.sep.join(path_parts[1:]))
-            if len(path_parts) > 1
-            else dev.get_content()
-        )
-    return None
+    try:
+        path = path.replace("\\", os.path.sep).replace("/", os.path.sep)
+        path_parts = path.split(os.path.sep)
+        if path_parts[0] == dev.get_description()[0]:
+            return (
+                dev.get_content()[0].get_path(os.path.sep.join(path_parts[1:]))
+                if len(path_parts) > 1
+                else dev.get_content()[0]
+            )
+        return None
+    except comtypes.COMError as err:
+        raise IOError(f"Error reading directory '{path}': {err.args[1]}")
 
 
 def walk(
-    dev: PortableDevice, path: str
-) -> Generator[tuple[str, list[PortableDeviceContent], list[PortableDeviceContent]], None, None,]:
+    dev: PortableDevice,
+    path: str,
+    callback: Optional[Callable[[str], bool]] = None,
+    error_callback: Optional[Callable[[str], bool]] = None,
+) -> Generator[
+    tuple[str, list[PortableDeviceContent], list[PortableDeviceContent]],
+    None,
+    None,
+]:
     """Iterates ower all files in a tree just like os.walk
 
     Args:
         dev: Portable device to iterate in
         path: path from witch to iterate
+        callback: when given, a function that takes one argument (the selected file) and returns
+                a boolean. If the returned value is false, walk will cancel an return empty
+                list.
+                the callback is usefull to show for example a progress because reading thousands
+                of file from one MTP directory lasts very long.
+        error_callback: when given, a function that takes one argument (the errormessage) and returns
+                a boolean. If the returned value is false, walk will cancel and return empty
+                list.
 
     Returns:
         A tuple with this content:
@@ -878,7 +902,7 @@ def walk(
             A list of PortableDeviceContent for the files in the directory
 
     Exceptions:
-        comtypes.COMError: If something went wrong
+        IOError: If something went wrong
 
     Examples:
         >>> import win_mtp.mtp_access
@@ -900,18 +924,31 @@ def walk(
         del walk_cont[0]
         directories: list[PortableDeviceContent] = []
         files: list[PortableDeviceContent] = []
-        for child in cont.get_children():
-            (name, contenttype, _, _, _, _, _) = child.get_properties()
-            if contenttype in [
-                WPD_CONTENT_TYPE_STORAGE,
-                WPD_CONTENT_TYPE_DIRECTORY,
-            ]:
-                child.full_filename = os.path.join(cont.full_filename, name)
-                directories.append(child)
-            elif contenttype == WPD_CONTENT_TYPE_FILE:
-                child.full_filename = os.path.join(cont.full_filename, name)
-                files.append(child)
-        yield cont.full_filename, directories, files
+        try:
+            for child in cont.get_children():
+                (_, contenttype, _, _, _, _, _) = child.get_properties()
+                if contenttype in [
+                    WPD_CONTENT_TYPE_STORAGE,
+                    WPD_CONTENT_TYPE_DIRECTORY,
+                ]:
+                    # child.full_filename = os.path.join(cont.full_filename, name)
+                    directories.append(child)
+                elif contenttype == WPD_CONTENT_TYPE_FILE:
+                    # child.full_filename = os.path.join(cont.full_filename, name)
+                    files.append(child)
+                if callback and not callback(child.full_filename):
+                    directories = []
+                    files = []
+                    return
+            yield cont.full_filename, sorted(directories, key=lambda ent: ent.full_filename), sorted(
+                files, key=lambda ent: ent.full_filename
+            )
+        except Exception as err:
+            if error_callback is not None:
+                if not error_callback(str(err)):
+                    directories = []
+                    files = []
+                    return
         walk_cont.extend(directories)
 
 
@@ -923,7 +960,7 @@ def makedirs(dev: PortableDevice, path: str) -> Optional[PortableDeviceContent]:
         path: pathname of the dir to create. Any directoriues in path that don't exist
             will e created automatically.
     Exceptions:
-        comtypes.COMError: If something went wrong
+        IOError: If something went wrong
 
     Examples:
         >>> import win_mtp.mtp_access
@@ -932,17 +969,21 @@ def makedirs(dev: PortableDevice, path: str) -> Optional[PortableDeviceContent]:
         >>> str(win_mtp.mtp_access.makedirs(dev[0], n))[:22]
         '<PortableDeviceContent'
     """
-    path_int = ""
-    content: Optional[PortableDeviceContent] = dev.get_content()
-    for dirname in path.split(os.path.sep):
-        if dirname == "":
-            continue
-        path_int = os.path.join(path_int, dirname)
-        ziel_content = get_content_from_device_path(dev, path_int)
-        if not ziel_content:
-            if not content:
-                return None
-            content.create_content(dirname)
+    try:
+        path_int = ""
+        content: Optional[PortableDeviceContent] = dev.get_content()[0]
+        path = path.replace("\\", os.path.sep).replace("/", os.path.sep)
+        for dirname in path.split(os.path.sep):
+            if dirname == "":
+                continue
+            path_int = os.path.join(path_int, dirname)
             ziel_content = get_content_from_device_path(dev, path_int)
-        content = ziel_content
-    return content
+            if not ziel_content:
+                if not content:
+                    return None
+                content.create_content(dirname)
+                ziel_content = get_content_from_device_path(dev, path_int)
+            content = ziel_content
+        return content
+    except comtypes.COMError as err:
+        raise IOError(f"Error creating directory '{path}': {err.args[1]}")

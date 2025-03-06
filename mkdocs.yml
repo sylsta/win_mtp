@@ -1,4 +1,4 @@
-site_name: win_mtp
+site_name: mtp
 
 theme:
   name: "material"
@@ -8,5 +8,6 @@ plugins:
 
 nav:
   - Documentation: index.md
-  - access: access.md
+  - linux_access: linux_access.md
+  - win_access: win_access.md
   - dialog: dialog.md

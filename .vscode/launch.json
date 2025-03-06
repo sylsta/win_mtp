@@ -1,8 +1,8 @@
 {
     "configurations": [
       {
-        "name": "Python: access_test.py",
-        "type": "python",
+        "name": "Python: dialog_test.py",
+        "type": "debugpy",
         "request": "launch",
         "program": "${workspaceFolder}/tests/access_test.py",
         "console": "integratedTerminal",

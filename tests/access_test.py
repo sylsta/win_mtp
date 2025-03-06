@@ -4,29 +4,36 @@ Test program
 
 import locale
 import os
+import platform
+import sys
 import time
 import psutil
 
-from context import win_mtp  # pylint: disable=import-error
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
+if platform.system() == "Windows":
+    import mtp.win_access as mtp_access   # pylint: disable=unused-import,wrong-import-position
+else:
+    import mtp.linux_access as mtp_access   # pylint: disable=unused-import,wrong-import-position
 
 
 # ----------------------------------------------------------------------
 if __name__ == "__main__":
 
-    def display_childs_with_walk(dev: win_mtp.access.PortableDevice, root: str) -> None:
+    def display_childs_with_walk(dev: mtp_access.PortableDevice, root: str) -> None:
         """Show content of device"""
-        for root, dirs, files in win_mtp.access.walk(dev, root):
+        for root, dirs, files in mtp_access.walk(dev, root):
             for directory in dirs:
                 print(f"dir: {directory.full_filename}")
             for file in files:
                 print(f"file: {file.full_filename}")
 
-    def display_child(dev: win_mtp.access.PortableDevice, root: str) -> None:
+    def display_child(dev: mtp_access.PortableDevice, root: str) -> None:
         """Show child content"""
-        if cont := win_mtp.access.get_content_from_device_path(dev, root):
+        if cont := mtp_access.get_content_from_device_path(dev, root):
             for child in cont.get_children():
                 (
-                    cont_name,
+                    _,
                     contenttype,
                     size,
                     date_created,
@@ -34,21 +41,21 @@ if __name__ == "__main__":
                     free,
                     _,
                 ) = child.get_properties()
-                fullpath = os.path.join(root, cont_name) if cont_name is not None else root
+                fullpath = child.full_filename
                 typ = "?"
-                if contenttype == win_mtp.access.WPD_CONTENT_TYPE_STORAGE:
+                if contenttype == mtp_access.WPD_CONTENT_TYPE_STORAGE:
                     typ = "S"
-                elif contenttype == win_mtp.access.WPD_CONTENT_TYPE_DIRECTORY:
+                elif contenttype == mtp_access.WPD_CONTENT_TYPE_DIRECTORY:
                     typ = "D"
-                elif contenttype == win_mtp.access.WPD_CONTENT_TYPE_FILE:
+                elif contenttype == mtp_access.WPD_CONTENT_TYPE_FILE:
                     typ = " "
                 print(f"{typ}  {fullpath} Size: {size} Created: {date_created} ", end="")
                 if typ == "S":
                     print(f"  Capacity: {capacity}  Free: {free}", end="")
                 print()
                 if contenttype in (
-                    win_mtp.access.WPD_CONTENT_TYPE_STORAGE,
-                    win_mtp.access.WPD_CONTENT_TYPE_DIRECTORY,
+                    mtp_access.WPD_CONTENT_TYPE_STORAGE,
+                    mtp_access.WPD_CONTENT_TYPE_DIRECTORY,
                 ):
                     display_child(dev, fullpath)
         else:
@@ -64,19 +71,19 @@ if __name__ == "__main__":
         locale.setlocale(locale.LC_ALL, "")
         starttime = time.time()
         print("Devices:")
-        devicelist = win_mtp.access.get_portable_devices()
-        for _ in range(2):
+        devicelist = mtp_access.get_portable_devices()
+        for _ in range(1):
             # print(memory())
             time.sleep(0.01)
             for dev in devicelist:
                 device_name, device_desc = dev.get_description()
                 print(f"  {device_name}: {device_desc}")
-                cont = dev.get_content()
-                values = cont.get_properties()
-                print(f"  Serial-No.: {values[6]}")
-                print("Content:")
-                display_childs_with_walk(dev, device_name)
-                display_child(dev, device_name)
+                for cont in dev.get_content():
+                    values = cont.get_properties()
+                    print(f"  Serial-No.: {values[6]}")
+                    print("Content:")
+                    display_childs_with_walk(dev, device_name)
+                    display_child(dev, device_name)
         print(f"Runtime: {time.time() - starttime}")
 
     main()
